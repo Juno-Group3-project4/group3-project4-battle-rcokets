@@ -11,10 +11,23 @@ img {max-width: 100%; display: block;}
   text-align: center;
 }
 
+/* FONTS */
+h1, h2 {
+  font-family: 'Orbitron', sans-serif;
+}
 a {
   text-decoration: none;
 }
 
 a:visited {
   color: black;
+}
+
+.indent {
+  list-style: inside circle;
+}
+
+.instructions-list {
+  list-style: inside decimal;
+  margin-bottom: 5px;
 }

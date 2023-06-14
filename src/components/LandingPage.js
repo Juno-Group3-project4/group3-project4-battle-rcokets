@@ -5,8 +5,23 @@ import { Link, Route, Routes } from "react-router-dom";
 const LandingPage = () => {
     return (
         <section>
+            <h2>IT’S A RACE TO MARS…</h2>
+            <p>The future of planet Earth is at risk as it buckles under the strain of human population, consumption and inane TikTok trends. As corporations and global agencies fund missions to make the colonization of Mars possible, rogue AI rockets plan to thwart any form of human migration into space. Join SpaceX in protecting the future of humanity by helping vanquish the evil ‘AI Space Army’ in a <strong>Battle of Rockets</strong>!</p>
             <h2>Instructions</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste eum vero eveniet sint, accusamus molestias non fuga ad quaerat nesciunt consequuntur repudiandae reiciendis quis deleniti, officia harum minus magni explicabo tempora atque ullam quae culpa, rerum corrupti. Necessitatibus, iusto nesciunt, tempora aliquid non, est odit id pariatur voluptates consequuntur aspernatur quaerat corporis ad quas? Quibusdam quam natus praesentium, optio dolorum ea nam nulla neque aut in placeat repudiandae ipsum at laborum laboriosam quis accusamus excepturi nostrum. Nam esse, eos ullam rem laborum laudantium accusamus tempora, et atque itaque rerum? Esse quis minus amet sapiente recusandae, quisquam magnam, maiores doloribus aspernatur ipsa odio libero dolorum? Nemo officia sed quis doloremque deserunt atque hic perspiciatis odio facilis dignissimos, porro, maiores excepturi rem pariatur recusandae explicabo assumenda voluptatum.</p>
+            <ol>
+                <li className="instructions-list">Select your rockets on the 'Rocket Selection' page after clicking play; select up to four rockets for your fleet</li>
+                <li className="instructions-list">Place your rockets on the grid by clicking on the cells provided to place your rockets - each rocket will ocupy a set number of adjacnet cells</li>
+                <li className="instructions-list"> Play Game - it's your turn to attack! Click on a cell on the AI's grid to launch a SpaceX attack
+                    <ul>
+                        <li className="indent">If you hit one of the AI's rockets during your turn, the cell will turn red</li>
+                        <li className="indent">If you miss one of the AI's rockets during your turn, the cell will turn black</li>
+                    </ul>
+                </li>
+                <li className="instructions-list">It's the AI's turn now - they will make their move and attempt to destroy your rockets now</li>
+                <li className="instructions-list">Game will continue until you destroy all of the AI's rockets, or they destroy all of yours</li>
+                <li className="instructions-list">If you win, congratulations! You have successfully protected the future of humanity.</li>
+                <li className="instructions-list">If you lose, you can press "Play again"  to improve your skills and defeat the AI</li>
+            </ol>
             <Link to="/rocket-selection">
                 <button>PLAY GAME</button>
             </Link>
