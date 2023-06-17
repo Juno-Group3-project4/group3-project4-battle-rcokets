@@ -1,7 +1,7 @@
 // PLAYER GRID Component 
 const PlayerGrid = () => {
     return (
-        console.log("hi")
+        <h1>Player Grid</h1>
     )
 }
 
