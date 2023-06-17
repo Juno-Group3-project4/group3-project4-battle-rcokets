@@ -36,7 +36,7 @@ const GetRocket = () => {
 
     const [currentShip, setCurrentShip] = useState(null);
 
-    const handleClick = (e) => {
+    const handleDrop = (e) => {
 
         // e.target.style.border = "1px solid #000";
 
@@ -62,39 +62,40 @@ const GetRocket = () => {
                     if (currentCell) {
                         // Add the grid reference to the shipData array
                         ship.gridRef.push(currentCell.attributes.id.textContent);
+
+                        // change the colour of the cells
                         currentCell.style.backgroundColor="blue";
 
                         // Move to the next sibling cell
                         currentCell = currentCell.nextElementSibling;
                     }
                 }
-
             }
         });
         console.log( shipData[0].gridRef );
-
     };
 
-
-
-    // conditional based on orientation of the ship
-    // VERTICAL //
-    // if (shipData[0].orientation === 'vertical') {
-    //     // storing in an Array the grid Coordinates used to change each cells class to Active
-    //     let currentCell = e.target;
-    // }
-
+    
+    
     const handleDrag = (e) => {
-
         // 2) How many spaces does this ship take up?
         // console.log('spaces: ', Number(e.target.attributes.value.textContent)); // 4
 
         // 3) What orientation is the ship when dropped?
         // console.log('orientation: ', shipOne.orientation); // vertical or horizontal
         setCurrentShip(e.target.attributes.name.textContent) // ShipName (ShipOne)
-
+       
     };
+    
+    // const handleDrop = (e) => {
+    //     e.preventDefault();
+    //     console.log('handleDrop =', e.target);
+        
+    // };
 
+    const handleOnDrag = (e) => {
+        e.preventDefault();
+    };
 
 
 
@@ -151,16 +152,16 @@ const GetRocket = () => {
 
                             {/* Grid row A */}
                             <div className="aRow">
-                                <div className="cell" onClick={handleClick} id="A1" valuex="1" valuey="1"></div>
-                                <div className="cell" onClick={handleClick} id="A2" valuex="1" valuey="2"></div>
-                                <div className="cell" onClick={handleClick} id="A3" valuex="1" valuey="3"></div>
-                                <div className="cell" onClick={handleClick} id="A4" valuex="1" valuey="4"></div>
-                                <div className="cell" onClick={handleClick} id="A5" valuex="1" valuey="5"></div>
-                                <div className="cell" onClick={handleClick} id="A6" valuex="1" valuey="6"></div>
-                                <div className="cell" onClick={handleClick} id="A7" valuex="1" valuey="7"></div>
-                                <div className="cell" onClick={handleClick} id="A8" valuex="1" valuey="8"></div>
-                                <div className="cell" onClick={handleClick} id="A9" valuex="1" valuey="9"></div>
-                                <div className="cell" onClick={handleClick} id="A10" valuex="1" valuey="10"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A1" valuex="1" valuey="1"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A2" valuex="1" valuey="2"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A3" valuex="1" valuey="3"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A4" valuex="1" valuey="4"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A5" valuex="1" valuey="5"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A6" valuex="1" valuey="6"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A7" valuex="1" valuey="7"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A8" valuex="1" valuey="8"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A9" valuex="1" valuey="9"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A10" valuex="1" valuey="10"></div>
                             </div>
 
 
@@ -170,7 +171,7 @@ const GetRocket = () => {
 
                 {/* Ships */}
                 <div className="shipOne">
-                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name="shipOne" />
+                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name="shipOne" draggable="true" />
                 </div>
 
 
