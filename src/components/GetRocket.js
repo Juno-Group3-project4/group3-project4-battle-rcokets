@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import shipOneImg from '../assets/spaceX_rocket_4.png';
-import shipTwo from '../assets/spaceX_rocket_3.png';
+// import shipTwo from '../assets/spaceX_rocket_3.png';
+
+import NPCGrid from './NPCGrid.js';
 
 
 const GetRocket = () => {
@@ -15,7 +17,7 @@ const GetRocket = () => {
             method: 'GET',
             dataResponse: 'json'
         }).then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             GetRockets(response.data)
         })
     }, []);
@@ -84,7 +86,6 @@ const GetRocket = () => {
         // 3) What orientation is the ship when dropped?
         // console.log('orientation: ', shipOne.orientation); // vertical or horizontal
         setCurrentShip(e.target.attributes.name.textContent) // ShipName (ShipOne)
-       
     };
     
     // const handleDrop = (e) => {
@@ -111,14 +112,26 @@ const GetRocket = () => {
                 </select>
             </form>
 
-            <section>
-                <div className="grid__Container">
-                    <h1>Battle Rockets</h1>
+            {/* onDragOver={handleOnDrag} onDrop={handleDrop} */}
+            <section className="gridNPC">
+                <NPCGrid 
+                    handleOnDrag={handleOnDrag}
+                    handleDrop={handleDrop}
+                />
+
+                <div className="shipOne">
+                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" />
+                </div>
+            </section>
+
+            {/* <section> */}
+                {/* <div className="grid__Container"> */}
+                    {/* <h1>Battle Rockets</h1> */}
                     {/* Grid top row */}
-                    <div className="grid__Top__Header">
+                    {/* <div className="grid__Top__Header"> */}
 
                         {/* top row column numbers */}
-                        <div className="cellTopHeader" value="0"></div>
+                        {/* <div className="cellTopHeader" value="0"></div>
                         <div className="cellTopHeader" value="1">A</div>
                         <div className="cellTopHeader" value="2">B</div>
                         <div className="cellTopHeader" value="3">C</div>
@@ -129,13 +142,13 @@ const GetRocket = () => {
                         <div className="cellTopHeader" value="8">H</div>
                         <div className="cellTopHeader" value="9">I</div>
                         <div className="cellTopHeader" value="10">J</div>
-                    </div>
+                    </div> */}
 
                     {/* Grid bottom section */}
-                    <div className="grid__bottom">
+                    {/* <div className="grid__bottom"> */}
 
                         {/* Bottom row header letters */}
-                        <div className="grid__Left__Header">
+                        {/* <div className="grid__Left__Header">
                             <div className="cellLeftHeader" value="1">1</div>
                             <div className="cellLeftHeader" value="2">2</div>
                             <div className="cellLeftHeader" value="3">3</div>
@@ -146,12 +159,12 @@ const GetRocket = () => {
                             <div className="cellLeftHeader" value="8">8</div>
                             <div className="cellLeftHeader" value="9">9</div>
                             <div className="cellLeftHeader" value="10">10</div>
-                        </div>
+                        </div> */}
 
-                        <div className="grid__rightPlayArea">
+                        {/* <div className="grid__rightPlayArea"> */}
 
                             {/* Grid row A */}
-                            <div className="aRow">
+                            {/* <div className="aRow">
                                 <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A1" valuex="1" valuey="1"></div>
                                 <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A2" valuex="1" valuey="2"></div>
                                 <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A3" valuex="1" valuey="3"></div>
@@ -167,15 +180,15 @@ const GetRocket = () => {
 
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Ships */}
-                <div className="shipOne">
-                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name="shipOne" draggable="true" />
-                </div>
+                {/* <div className="shipOne">
+                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" />
+                </div> */}
 
 
-            </section>
+            {/* </section> */}
         </>
     )
 }
