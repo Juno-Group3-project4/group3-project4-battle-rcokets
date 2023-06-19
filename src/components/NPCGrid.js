@@ -6,4 +6,4 @@ const NPCGrid = () => {
     )
 }
 
-export default NonPlayerGrid;
+export default NPCGrid;

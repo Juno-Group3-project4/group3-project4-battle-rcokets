@@ -1,4 +1,3 @@
-import GetRocket from "./GetRocket";
 import { Link, Route, Routes } from "react-router-dom";
 
 // LANDING PAGE Component
