@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import shipOneImg from '../assets/spaceX_rocket_4.png';
-import shipTwo from '../assets/spaceX_rocket_3.png';
+// import shipTwo from '../assets/spaceX_rocket_3.png';
+
+import NPCGrid from './NPCGrid.js';
 
 
 const GetRocket = () => {
@@ -15,7 +17,7 @@ const GetRocket = () => {
             method: 'GET',
             dataResponse: 'json'
         }).then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             GetRockets(response.data)
         })
     }, []);
@@ -84,7 +86,6 @@ const GetRocket = () => {
         // 3) What orientation is the ship when dropped?
         // console.log('orientation: ', shipOne.orientation); // vertical or horizontal
         setCurrentShip(e.target.attributes.name.textContent) // ShipName (ShipOne)
-       
     };
     
     // const handleDrop = (e) => {
@@ -163,18 +164,14 @@ const GetRocket = () => {
                                 <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A9" valuex="1" valuey="9"></div>
                                 <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A10" valuex="1" valuey="10"></div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
 
                 {/* Ships */}
                 <div className="shipOne">
-                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name="shipOne" draggable="true" />
+                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" />
                 </div>
-
-
             </section>
         </>
     )
