@@ -176,3 +176,7 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
 
 export default NPCGrid;
 
+{/* <NPCGrid
+    handleOnDrag={handleOnDrag}
+    handleDrop={handleDrop}
+/> */}
