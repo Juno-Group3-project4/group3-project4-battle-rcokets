@@ -1,10 +1,11 @@
-import './App.css';
+import './App.scss';
 import Header from './components/Header';
 import LandingPage from './components/LandingPage';
-import Footer from './components/Footer'
-import Play from './components/Play'
+import Footer from './components/Footer';
+import Play from './components/Play';
 import GetRocket from './components/GetRocket';
 import { Route, Routes } from 'react-router-dom';
+
 
 function App() {
   return (
