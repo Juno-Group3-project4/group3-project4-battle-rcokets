@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import shipOneImg from '../assets/spaceX_rocket_4.png';
-import shipTwo from '../assets/spaceX_rocket_3.png';
+// import shipTwo from '../assets/spaceX_rocket_3.png';
 
+import NPCGrid from './NPCGrid.js';
 
 
 const GetRocket = () => {
@@ -16,7 +17,7 @@ const GetRocket = () => {
             method: 'GET',
             dataResponse: 'json'
         }).then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             GetRockets(response.data)
         })
     }, []);
@@ -126,11 +127,10 @@ const GetRocket = () => {
     //     // 2) How many spaces does this ship take up?
     //     // console.log('spaces: ', Number(e.target.attributes.value.textContent)); // 4
 
-    //     // 3) What orientation is the ship when dropped?
-    //     // console.log('orientation: ', shipOne.orientation); // vertical or horizontal
-    //     setCurrentShip(e.target.attributes.name.textContent) // ShipName (ShipOne)
-       
-    // };
+        // 3) What orientation is the ship when dropped?
+        // console.log('orientation: ', shipOne.orientation); // vertical or horizontal
+        setCurrentShip(e.target.attributes.name.textContent) // ShipName (ShipOne)
+    };
     
     // // const handleDrop = (e) => {
     // //     e.preventDefault();
@@ -195,34 +195,32 @@ const GetRocket = () => {
 
     //                     <div className="grid__rightPlayArea">
 
-    //                         {/* Grid row A */}
-    //                         <div className="aRow">
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A1" valuex="1" valuey="1"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A2" valuex="1" valuey="2"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A3" valuex="1" valuey="3"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A4" valuex="1" valuey="4"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A5" valuex="1" valuey="5"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A6" valuex="1" valuey="6"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A7" valuex="1" valuey="7"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A8" valuex="1" valuey="8"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A9" valuex="1" valuey="9"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A10" valuex="1" valuey="10"></div>
-    //                         </div>
+                        <div className="grid__rightPlayArea">
 
+                            {/* Grid row A */}
+                            <div className="aRow">
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A1" valuex="1" valuey="1"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A2" valuex="1" valuey="2"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A3" valuex="1" valuey="3"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A4" valuex="1" valuey="4"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A5" valuex="1" valuey="5"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A6" valuex="1" valuey="6"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A7" valuex="1" valuey="7"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A8" valuex="1" valuey="8"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A9" valuex="1" valuey="9"></div>
+                                <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A10" valuex="1" valuey="10"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    //                     </div>
-    //                 </div>
-    //             </div>
-
-    //             {/* Ships */}
-    //             <div className="shipOne">
-    //                 <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name="shipOne" draggable="true" />
-    //             </div>
-
-
-    //         </section>
-    //     </>
-    // )
+                {/* Ships */}
+                <div className="shipOne">
+                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" />
+                </div>
+            </section>
+        </>
+    )
 }
 
 export default GetRocket;
