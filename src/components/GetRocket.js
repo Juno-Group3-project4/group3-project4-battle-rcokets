@@ -25,7 +25,7 @@ const GetRocket = () => {
 
    return (
         <div className="wrapper">
-            <h2>Select up to 3 rockets</h2>
+            <h2>Select up to 3 rockets!</h2>
             <form>
                <ul className="flexContainer">
                 {rockets.map((rocket) => {
@@ -38,12 +38,11 @@ const GetRocket = () => {
                                         <h3>{rocket.name}</h3>
                                         <p className="description">{rocket.description}</p>
                                     </div>
-                                    {/* <p>{`Boosters: ${rocket.boosters}`}</p>
-                                    <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
+                                    {/* <p>{`Boosters: ${rocket.boosters}`}</p> */}
+                                    {/* <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
                                     <p>{`Engine: Number: ${rocket.engines.number}, type: ${rocket.engines.type}, version: ${rocket.engines.version}`}</p> */}
                                 </label>
                             </li>
-                       
                     )
                 })}
                </ul>
