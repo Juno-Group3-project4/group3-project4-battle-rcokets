@@ -81,9 +81,13 @@ import NPCGrid from "./NPCGrid";
             } else {
                 clickShip.style.transform = 'rotate(0)';
                 setShipData(prevShipData => {
+                    // Create a copy of the shipData array
                     const updatedShipData = [...prevShipData];
+                    // Access the "shipOne" object
                     const clickShip = updatedShipData[0];
+                    // Update the orientation property
                     clickShip.orientation = 'vertical';
+                    // Return the updated shipData array
                     return updatedShipData;
                 })
             }
