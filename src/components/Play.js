@@ -8,7 +8,7 @@ const Play = () => {
 
     return (
         <section>
-            <GetRocket />
+            {/* <GetRocket /> */}
             <Score />
             <PlayerGrid />
             {/* <NPCGrid /> */}

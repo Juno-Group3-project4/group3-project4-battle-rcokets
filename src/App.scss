@@ -1,5 +1,7 @@
+@use 'styles/sass/baseStyles';
 @use 'styles/sass/GetRocket';
 @use 'styles/sass/NPCGridStyles';
+@use 'styles/sass/LandingPage';
 
 html {
   line-height: 1.15;
@@ -20,10 +22,6 @@ section {
   display: block
 }
 
-h1 {
-  font-size: 2em;
-  margin: .67em 0
-}
 
 figcaption,
 figure,
@@ -261,14 +259,11 @@ img {
   display: block;
 }
 
-.App {
-  text-align: center;
-}
-
 /* FONTS */
 h1,
 h2 {
   font-family: 'Orbitron', sans-serif;
+  text-align: center;
 }
 
 a {
