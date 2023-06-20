@@ -1,0 +1,52 @@
+
+/* NPCGrid CSS */
+.gridNPC {
+    /* section: */
+    width: 100%;
+}
+
+/* Entire Grid Container */
+.npcGrid_Container {
+    border: 2px solid red;
+    max-width: 600px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 2;
+}
+
+/* All Grid Children */
+.gridCell {
+    background-color: lightpink;
+    border: 1px solid black;
+}
+
+/* Top Header (A-J) */
+.topHeaderContainer {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+}
+
+.bottomGrid {
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+}
+
+/* Left Header (1-10) */
+.leftHeaderContainer {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+}
+
+/* Grid Play Area */
+.gridPlayArea {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
+
+/* Columns within Grid Play Area */
+.column {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+}
