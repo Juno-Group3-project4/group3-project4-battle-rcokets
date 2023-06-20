@@ -1,0 +1,39 @@
+.wrapper {
+    max-width: 1260px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    li {
+        list-style: none;
+        flex-wrap: wrap;
+        label {
+            display: flex;
+            align-items: center;
+            .descriptionContainer {
+                padding-left: 30px;
+            }
+        }
+    }
+    .rocketContainer {
+    width: 50%;
+    background-color: rgb(244, 227, 112);
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin: 20px 40px;
+    }
+}
+
+img {
+    display: block;
+    height: 200px;
+    width: 200px
+}
+
+.description {
+    text-align: left;
+}
