@@ -1,16 +1,17 @@
-import GetRocket from "./GetRocket";
 import { Link, Route, Routes } from "react-router-dom";
+import landing from '../assets/moon-landing-art.png'
 
 // LANDING PAGE Component
 const LandingPage = () => {
     return (
-        <section>
+        <section className="landing-page">
             <h2>IT’S A RACE TO MARS…</h2>
+            <img src={landing} alt="Moon Landing Art" />
             <p>The future of planet Earth is at risk as it buckles under the strain of human population, consumption and inane TikTok trends. As corporations and global agencies fund missions to make the colonization of Mars possible, rogue AI rockets plan to thwart any form of human migration into space. Join SpaceX in protecting the future of humanity by helping vanquish the evil ‘AI Space Army’ in a <strong>Battle of Rockets</strong>!</p>
             <h2>Instructions</h2>
             <ol>
                 <li className="instructions-list">Select your rockets on the 'Rocket Selection' page after clicking play; select up to four rockets for your fleet</li>
-                <li className="instructions-list">Place your rockets on the grid by clicking on the cells provided to place your rockets - each rocket will ocupy a set number of adjacnet cells</li>
+                <li className="instructions-list">Place your rockets on the grid by clicking on the cells provided to place your rockets - each rocket will ocupy a set number of adjacent cells</li>
                 <li className="instructions-list"> Play Game - it's your turn to attack! Click on a cell on the AI's grid to launch a SpaceX attack
                     <ul>
                         <li className="indent">If you hit one of the AI's rockets during your turn, the cell will turn red</li>
