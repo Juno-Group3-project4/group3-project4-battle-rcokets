@@ -31,7 +31,9 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
                                 return (
                                     <div 
                                         className={cell.className} 
-                                        key={cell.id} id={cell.id} valuex={cell.x_value} 
+                                        key={cell.id} 
+                                        id={cell.id} 
+                                        valuex={cell.x_value} 
                                         valuey={cell.y_value}
                                         onDragOver={handleOnDrag}
                                         onDrop={handleDrop}
@@ -176,7 +178,3 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
 
 export default NPCGrid;
 
-{/* <NPCGrid
-    handleOnDrag={handleOnDrag}
-    handleDrop={handleDrop}
-/> */}

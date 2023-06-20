@@ -11,7 +11,7 @@ const Play = () => {
             {/* <GetRocket /> */}
             <Score />
             <PlayerGrid />
-            <NPCGrid />
+            {/* <NPCGrid /> */}
         </section>     
     )
 }
