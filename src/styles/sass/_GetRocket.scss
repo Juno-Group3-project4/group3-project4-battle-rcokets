@@ -1,56 +1,81 @@
 // GET ROCKETS COMPONENT STYLING
+
 .wrapper {
     max-width: 1260px;
     width: 90%;
     margin: 0 auto;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
 .flexContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-content: center;
+    margin-bottom: 40px;
     li {
         list-style: none;
-        flex-wrap: wrap;
         label {
             display: flex;
             align-items: center;
             .descriptionContainer {
                 padding-left: 30px;
+                font-size: 0.8rem;
+                line-height: 1.4;
             }
         }
     }
     .rocketContainer {
-    width: 50%;
-    background-color: rgb(244, 227, 112);
+    width: 47%;
+    height: 390px;
+    background-color: #00DBE0;
+    border: 2px solid #EDA65E;
+    box-shadow: 0px 0px 48px 6px rgba(237, 166, 94, 1);
     border-radius: 20px;
-    padding: 10px 15px;
-    margin: 20px 40px;
+    padding: 25px 20px;
+    margin: 50px 0;
+    position: relative;
+    }
     }
 }
-.shipContainer2 {
-    width: 350px;
-    height: 200px;
-    /* display: flex; */
-    /* align-items: center; */
-    /* justify-content: space-between; */
-    padding-left: 400px;
-    padding-top: 75px;
-    outline: 1px solid green;
-}
 
-.shipOne {
-    width: 50px;
-    height: 200px;
-    margin: 0 4px;
-}
+// .shipContainer2 {
+//     width: 350px;
+//     height: 200px;
+//     /* display: flex; */
+//     /* align-items: center; */
+//     /* justify-content: space-between; */
+//     padding-left: 400px;
+//     padding-top: 75px;
+//     outline: 1px solid green;
+// }
 
-.shipTwo {
-    width: 30px;
-    height: 250px;
-    /* background-color: yellow; */
-    margin: 0 4px;
-}
+// .shipOne {
+//     width: 50px;
+//     height: 200px;
+//     margin: 0 4px;
+// }
+
+// .shipTwo {
+//     width: 30px;
+//     height: 250px;
+//     /* background-color: yellow; */
+//     margin: 0 4px;
+// }
 .description {
     text-align: left;
 }
+
+[type="checkbox"] {
+    border: 2px solid #EDA65E;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 25px;;
+}
+

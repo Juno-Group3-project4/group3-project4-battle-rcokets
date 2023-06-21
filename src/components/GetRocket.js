@@ -23,7 +23,7 @@ const GetRocket = () => {
     
     return (
         <div className="wrapper">
-            <h2>Select up to 3 rockets!</h2>
+            <h2>Select 3 rockets!</h2>
             <form>
                 {/* Map through the Rocket API array stored in rockets state and display on the screen for user to select */}
                 <ul className="flexContainer">
@@ -47,7 +47,7 @@ const GetRocket = () => {
                 </ul>
 
                 <Link to="/play">
-                    <button>START!</button>
+                    <button>START GAME!</button>
                 </Link> 
             </form>
         </div>

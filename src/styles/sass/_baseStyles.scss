@@ -302,20 +302,37 @@ img {
 }
 
 /* FONTS / COLOURS / BUTTONS*/
+body {
+    background-color: #320363;
+}
+
 h1,
 h2 {
     font-family: "Orbitron", sans-serif;
+    color: #FBEBFF;
 }
 
 h1 {
-    color: white;
+    margin-top: 50px;
     font-size: 3rem;
 }
 
+h3 {
+    font-family: "Orbitron", sans-serif;
+    color: #320363;
+}
+
+p {
+    color:#320363;
+}
+
 button {
-    background-color: #9336B4;
-    color: white;
+    font-family: "Orbitron", sans-serif;
+    background-color: #00DBE0;
+    color: #320363;
+    border: 3px solid #EDA65E;
+    box-shadow: 0px 0px 48px 6px rgba(237, 166, 94, 1);
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 20px;
 }
 
