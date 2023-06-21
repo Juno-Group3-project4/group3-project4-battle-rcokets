@@ -12,17 +12,26 @@ form {
     justify-content: center;
     align-items: center;
     margin-top: 60px;
+    margin-bottom: 80px;
 .flexContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     li {
+        display:flex;
         list-style: none;
+        cursor: pointer;
+        li:hover {
+                cursor: pointer;
+            }
         label {
             display: flex;
             align-items: center;
+            img {
+                border-radius: 10px;
+            }
             .descriptionContainer {
                 padding-left: 30px;
                 font-size: 0.8rem;
@@ -31,42 +40,19 @@ form {
         }
     }
     .rocketContainer {
-    width: 47%;
-    height: 390px;
-    background-color: #00DBE0;
-    border: 2px solid #EDA65E;
-    box-shadow: 0px 0px 48px 6px rgba(237, 166, 94, 1);
-    border-radius: 20px;
-    padding: 25px 20px;
-    margin: 50px 0;
-    position: relative;
+        width: 47%;
+        height: 390px;
+        background-color: #00DBE0;
+        border: 2px solid #EDA65E;
+        box-shadow: 0px 0px 48px 6px rgba(237, 166, 94, 1);
+        border-radius: 20px;
+        padding: 25px 20px;
+        margin: 50px 0;
+        position: relative;
     }
     }
 }
 
-// .shipContainer2 {
-//     width: 350px;
-//     height: 200px;
-//     /* display: flex; */
-//     /* align-items: center; */
-//     /* justify-content: space-between; */
-//     padding-left: 400px;
-//     padding-top: 75px;
-//     outline: 1px solid green;
-// }
-
-// .shipOne {
-//     width: 50px;
-//     height: 200px;
-//     margin: 0 4px;
-// }
-
-// .shipTwo {
-//     width: 30px;
-//     height: 250px;
-//     /* background-color: yellow; */
-//     margin: 0 4px;
-// }
 .description {
     text-align: left;
 }
@@ -77,5 +63,12 @@ form {
     height: 30px;
     position: absolute;
     right: 25px;;
+    cursor: pointer;
 }
 
+.rocketContainer {
+    transition: transform 0.2s; 
+    .rocketContainer:hover {
+    transform: scale(1.2);
+  }
+}

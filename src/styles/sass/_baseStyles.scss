@@ -299,6 +299,7 @@ html {
 img {
     max-width: 100%;
     display: block;
+    border-radius: 10px;
 }
 
 /* FONTS / COLOURS / BUTTONS*/
@@ -334,5 +335,16 @@ button {
     box-shadow: 0px 0px 48px 6px rgba(237, 166, 94, 1);
     padding: 20px;
     border-radius: 20px;
+    cursor: pointer;
+    &:hover {
+        font-family: "Orbitron", sans-serif;
+        background-color: #EDA65E;
+        border: 2px solid #00DBE0;
+    }
+    &:focus {
+        font-family: "Orbitron", sans-serif;
+        background-color: #EDA65E;
+        border: 2px solid #00DBE0;
+    }
 }
 
