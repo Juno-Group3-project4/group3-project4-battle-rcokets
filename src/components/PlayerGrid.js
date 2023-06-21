@@ -94,7 +94,19 @@ import NPCGrid from "./NPCGrid";
         }
 
     return (
-        <h1>Player Grid</h1>
+        <>
+            <h1>Player Grid</h1>
+
+            <NPCGrid 
+                handleOnDrag={handleOnDrag}
+                handleDrop={handleDrop}
+            />
+
+            {/* Ships */}
+            <div className="shipOne">
+                <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" onClick={handleOrientation} />
+            </div>
+        </>
         
     )
 }
