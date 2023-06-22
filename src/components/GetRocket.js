@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 
 const GetRocket = () => {
@@ -20,6 +21,14 @@ const GetRocket = () => {
         })
     }, []);
 
+    // useHistory hook to manually redirect the user to the "/play" route once the form is submitted. What is happening right now is the form doesn't have a chance to submit as the button is wrapped in a Link component. Not working as useHistory hook is not being recognised.
+    // const history = useHistory();
+    // // Error handling and form submission function
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log('submitted');
+    //     history.push("/play");
+    // }
     
     return (
         <div className="wrapper">
@@ -32,7 +41,7 @@ const GetRocket = () => {
                             <li className="rocketContainer" key={rocket.id}>
                                 <input type="checkbox" id={`${rocket.id}`} name={rocket.name} value={rocket.name}></input>
                                 <label htmlFor={`${rocket.id}`}>
-                                    <img src={rocket.flickr_images} alt={`an image of ${rocket.name}`} />
+                                    <img src={rocket.flickr_images} alt={`${rocket.name}`} />
                                     <div className="descriptionContainer">
                                         <h3>{rocket.name}</h3>
                                         <p className="description">{rocket.description}</p>
@@ -47,19 +56,17 @@ const GetRocket = () => {
                 </ul>
 
                 <Link to="/play">
-                    <button>START GAME!</button>
+                    <button type="submit">START GAME!</button>
                 </Link> 
             </form>
         </div>
 
-        // need to create a handle Submit function and pass it to the form element <form onSubmit={handleSubmit}
-        //     const handleSubmit = (event) => {
-        //     event.preventDefault();
-        //      error handling if someone doesn't check a max of 3 rockets
-        // }
-            
-        // Create another state and store users selected rockets in state. 
-        // Game will start following submission and will take to player grid component?
+
+        // NEXT STEPS         
+        // Create another state and store users selected rockets in state?
+        // add error handling
+        // Game will start following form submission and will take to player grid component?
+        // Needs to be responsive
 
     )
 }
