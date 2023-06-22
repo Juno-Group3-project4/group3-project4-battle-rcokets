@@ -2,10 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import shipOneImg from '../assets/spaceX_rocket_4.png';
-// import shipTwo from '../assets/spaceX_rocket_3.png';
-
-import NPCGrid from './NPCGrid.js';
+// import { useHistory } from "react-router-dom";
 
 
 const GetRocket = () => {
@@ -24,10 +21,18 @@ const GetRocket = () => {
         })
     }, []);
 
+    // useHistory hook to manually redirect the user to the "/play" route once the form is submitted. What is happening right now is the form doesn't have a chance to submit as the button is wrapped in a Link component. Not working as useHistory hook is not being recognised.
+    // const history = useHistory();
+    // // Error handling and form submission function
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log('submitted');
+    //     history.push("/play");
+    // }
     
     return (
         <div className="wrapper">
-            <h2>Select up to 3 rockets</h2>
+            <h2>Select 3 rockets!</h2>
             <form>
                 {/* Map through the Rocket API array stored in rockets state and display on the screen for user to select */}
                 <ul className="flexContainer">
@@ -36,13 +41,13 @@ const GetRocket = () => {
                             <li className="rocketContainer" key={rocket.id}>
                                 <input type="checkbox" id={`${rocket.id}`} name={rocket.name} value={rocket.name}></input>
                                 <label htmlFor={`${rocket.id}`}>
-                                    <img src={rocket.flickr_images} alt={`an image of ${rocket.name}`} />
+                                    <img src={rocket.flickr_images} alt={`${rocket.name}`} />
                                     <div className="descriptionContainer">
                                         <h3>{rocket.name}</h3>
                                         <p className="description">{rocket.description}</p>
                                     </div>
-                                    {/* <p>{`Boosters: ${rocket.boosters}`}</p>
-                                    <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
+                                    {/* <p>{`Boosters: ${rocket.boosters}`}</p> */}
+                                    {/* <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
                                     <p>{`Engine: Number: ${rocket.engines.number}, type: ${rocket.engines.type}, version: ${rocket.engines.version}`}</p> */}
                                 </label>
                             </li>
@@ -51,29 +56,17 @@ const GetRocket = () => {
                 </ul>
 
                 <Link to="/play">
-                    <button>START!</button>
+                    <button type="submit">START GAME!</button>
                 </Link> 
             </form>
         </div>
 
-    //                     <div className="grid__rightPlayArea">
 
-    //                         {/* Grid row A */}
-    //                         <div className="aRow">
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A1" valuex="1" valuey="1"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A2" valuex="1" valuey="2"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A3" valuex="1" valuey="3"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A4" valuex="1" valuey="4"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A5" valuex="1" valuey="5"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A6" valuex="1" valuey="6"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A7" valuex="1" valuey="7"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A8" valuex="1" valuey="8"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A9" valuex="1" valuey="9"></div>
-    //                             <div className="cell" onDragOver={handleOnDrag} onDrop={handleDrop} id="A10" valuex="1" valuey="10"></div>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
+        // NEXT STEPS         
+        // Create another state and store users selected rockets in state?
+        // add error handling
+        // Game will start following form submission and will take to player grid component?
+        // Needs to be responsive
 
     )
 }
