@@ -4,35 +4,51 @@ import shipTwo from '../assets/spaceX_rocket_3.png';
 import NPCGrid from "./NPCGrid";
 
 // PLAYER GRID Component 
-    const PlayerGrid = () => {
-        
-        // set rocket ship grid data
-        const [shipData, setShipData] = useState([
-            {
-                'shipName': 'shipOne',
-                'spaces': 4,
-                'orientation': 'vertical',
-                'gridRef': []
-            }
-        ]
-        );
+const PlayerGrid = () => {
 
-        // set current ship that user is dragging
-        const [currentShip, setCurrentShip] = useState(null);
+    // set rocket ship grid data
+    const [shipData, setShipData] = useState([
+        {
+            'shipName': 'shipOne',
+            'spaces': 4,
+            'orientation': 'vertical',
+            'playerGridRef': [],
+            'NPCGridRef': []
+        }
+    ]
+    );
+    
+    const allCellDivs = [];
+    // set current ship that user is dragging
+    const [currentShip, setCurrentShip] = useState('');
 
-        // event listener for placing ship on grid
-        const handleDrop = (e) => {
-            // e.target.style.border = "1px solid #000";
-            // 1) storing the dropped Value in a variable
-            const droppedValueX = Number(e.target.attributes.valuex.textContent); // X coordinate
-            const droppedValueY = Number(e.target.attributes.valuey.textContent); // Y coordinate
+    const cells = document.querySelectorAll('.gridCell'); // this creates a node array
+    console.log('cells=', cells );
 
-            console.log('drop X = :', droppedValueX, 'drop y = :', droppedValueY);
-            console.log(e.target);
+    cells.forEach((cell)=>{
+        // storing all cells into an array
+        console.log('cell=', cell );
+        allCellDivs.push(cell);
+    })
 
-            // 4a) calculate the cell range of the ship based off the dropped value and ship spaces and orientation
-            console.log('currentShip', currentShip); // shipOne
-            console.log('spaces = ', currentShip);
+    console.log( 'allCellDivs = ', allCellDivs );
+
+
+    // event listener for placing ship on grid
+    const handleDrop = (e) => {
+        // e.target.style.border = "1px solid #000";
+        // 1) storing the dropped Value in a variable
+        const droppedValueX = Number(e.target.attributes.valuex.textContent); // X coordinate
+        const droppedValueY = Number(e.target.attributes.valuey.textContent); // Y coordinate
+
+        console.log('drop X = :', droppedValueX, 'drop y = :', droppedValueY);
+        console.log(e.target);
+
+        // 4a) calculate the cell range of the ship based off the dropped value and ship spaces and orientation
+        console.log('currentShip', currentShip); // shipOne
+        console.log('spaces = ', currentShip);
+
+        if (shipData[0].orientation === 'vertical') {
 
             shipData.map((ship) => {
                 if (ship.shipName === currentShip) {
@@ -42,7 +58,7 @@ import NPCGrid from "./NPCGrid";
                     for (let j = 0; j < ship.spaces; j++) {
                         if (currentCell) {
                             // Add the grid reference to the shipData array
-                            ship.gridRef.push(currentCell.attributes.id.textContent);
+                            ship.playerGridRef.push(currentCell.attributes.id.textContent);
                             // change the colour of the cells
                             currentCell.style.backgroundColor = "blue";
                             // Move to the next sibling cell
@@ -51,49 +67,93 @@ import NPCGrid from "./NPCGrid";
                     }
                 }
             });
+        } else {
+            console.log('horizontal');
+            shipData.map((ship) => {
+                if (ship.shipName === currentShip) {
+                    let currentCell = e.target;
+                    for (let j = 0; j < ship.spaces; j++) {
+                        if (currentCell) {
+                            // Add the grid reference to the shipData array
+                            ship.playerGridRef.push(currentCell.attributes.id.textContent);
 
-            console.log(shipData[0].gridRef);
-        };
+                            // Find valueY and store in a variable
+                            let currentCellValueY = currentCell.attributes.valuey.textContent;
+                            console.log('currentCellValueY', currentCellValueY);
 
-        // event listener to drag ship to grid
-        const handleDrag = (e) => {
-            setCurrentShip(e.target.attributes.name.textContent) // ShipName (ShipOne)
-        };
-        
-        // event listener for handling onDrag
-        const handleOnDrag = (e) => {
-            e.preventDefault();
-        };
+                            // find the valueX of the currentCell and add 1 to target the next column over
+                            let currentCellValueX = Number(currentCell.attributes.valuex.textContent) + 1;
+                            console.log("currentCellValueX", currentCellValueX);
 
-        // event listener to change ship orientation
-        const handleOrientation = (e) => {
-            const clickShip = e.target;
-            console.log('clicked')
-            if(clickShip.style.transform !== 'rotate(90deg)') {
-                clickShip.style.transform = 'rotate(90deg)';
-                setShipData(prevShipData => {
-                    const updatedShipData = [...prevShipData];
-                    const clickShip = updatedShipData[0];
-                    clickShip.orientation = 'horizontal';
-                    return updatedShipData;
-                })
+                            // create a temporary Array that stores all the div that have the matching valueY as the currentCell
+                            const tempNextCol = allCellDivs.filter(value => currentCellValueY.includes(value.attributes.valuey.textContent));
 
-            } else {
-                clickShip.style.transform = 'rotate(0)';
-                setShipData(prevShipData => {
-                    const updatedShipData = [...prevShipData];
-                    const clickShip = updatedShipData[0];
-                    clickShip.orientation = 'vertical';
-                    return updatedShipData;
-                })
-            }
+                            // iterate through the temporary array and if it finds valuex that matches the currentCells valueX then store that div as the new currentCell
+                            tempNextCol.map((col) => {
+                                if (col.attributes.valuex.textContent.includes(currentCellValueX)) {
+                                    currentCell = col;
+                                }
+                            });
+                        }
+                    } // end of for loop
+                
+                    // Change the color of each cell that represents the ships spaces
+                    // create a new array with all the cell div's that include the gridRefs as id's
+                    const shipOneActiveCells = allCellDivs.filter(value => shipData[0].playGridRef.includes(value.attributes.id.textContent));
+
+                    console.log(shipOneActiveCells);
+                }
+            })
+
         }
+
+
+        console.log(shipData[0].playerGridRef);
+    };
+
+    // event listener to drag ship to grid
+    const handleDrag = (e) => {
+        setCurrentShip(e.target.attributes.name.textContent) // ShipName (ShipOne)
+    };
+
+    // event listener for handling onDrag
+    const handleOnDrag = (e) => {
+        e.preventDefault();
+    };
+
+    // event listener to change ship orientation
+    const handleOrientation = (e) => {
+        const clickShip = e.target;
+        console.log('clicked')
+        if (clickShip.style.transform !== 'rotate(90deg)') {
+            clickShip.style.transform = 'rotate(90deg)';
+            setShipData(prevShipData => {
+                const updatedShipData = [...prevShipData];
+                const clickShip = updatedShipData[0];
+                clickShip.orientation = 'horizontal';
+                return updatedShipData;
+            })
+
+        } else {
+            clickShip.style.transform = 'rotate(0)';
+            setShipData(prevShipData => {
+                // Create a copy of the shipData array
+                const updatedShipData = [...prevShipData];
+                // Access the "shipOne" object
+                const clickShip = updatedShipData[0];
+                // Update the orientation property
+                clickShip.orientation = 'vertical';
+                // Return the updated shipData array
+                return updatedShipData;
+            })
+        }
+    }
 
     return (
         <>
             <h1>Player Grid</h1>
 
-            <NPCGrid 
+            <NPCGrid
                 handleOnDrag={handleOnDrag}
                 handleDrop={handleDrop}
             />
@@ -103,7 +163,7 @@ import NPCGrid from "./NPCGrid";
                 <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" onClick={handleOrientation} />
             </div>
         </>
-        
+
     )
 }
 
