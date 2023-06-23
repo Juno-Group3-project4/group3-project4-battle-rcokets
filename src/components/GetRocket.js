@@ -17,7 +17,7 @@ const GetRocket = () => {
             dataResponse: 'json'
         }).then((response) => {
             // console.log(response.data);
-            GetRockets(response.data)
+            setRockets(response.data)
         })
     }, []);
 
