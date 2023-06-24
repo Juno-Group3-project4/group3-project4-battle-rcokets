@@ -23,7 +23,7 @@ form {
         display:flex;
         list-style: none;
         cursor: pointer;
-        li:hover {
+        &,:hover {
                 cursor: pointer;
             }
         label {
@@ -65,7 +65,7 @@ form {
 
 .rocketContainer {
     transition: transform 0.2s; 
-    .rocketContainer:hover {
-    transform: scale(1.2);
+    &,:hover {
+    transform: scale(1.0);
   }
 }
