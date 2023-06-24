@@ -152,8 +152,10 @@ const PlayerGrid = () => {
     const handleOnDrag = (e) => {
         e.preventDefault();
     };
-    
+
     // TODO - Need to store the clicked ships object into a variable so we can use that in the rest of the logic to replace the hard coded shipData[0] and updatedShipData[0] //
+    // development
+    
     // Function for storing the clicked ship's object into a global variable
     const getShipObj = (shipImg) => {
         console.log('getShipObj function running...');
