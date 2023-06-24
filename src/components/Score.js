@@ -3,7 +3,8 @@ import { useState } from "react";
 
 const Score = () => {
     return (
-        console.log("Hi")
+        
+        <h1>score</h1>
     )
 }
 

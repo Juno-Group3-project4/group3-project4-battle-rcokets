@@ -1,6 +1,8 @@
-import { useState } from "react";
-import shipOneImg from '../assets/spaceX_rocket_4.png';
-import shipTwo from '../assets/spaceX_rocket_3.png';
+import { useState, useRef, useEffect } from "react";
+import shipOneImg from '../assets/falcon1-shipOne.png';
+import shipTwoImg from '../assets/falcon9-shipTwo.png';
+import shipThreeImg from '../assets/falconHeavy-shipThree.png';
+import shipFourImg from '../assets/starShip-shipFour.png';
 import NPCGrid from "./NPCGrid";
 
 // PLAYER GRID Component 
@@ -10,50 +12,71 @@ const PlayerGrid = () => {
     const [shipData, setShipData] = useState([
         {
             'shipName': 'shipOne',
+            'spaces': 2,
+            'orientation': 'vertical',
+            'playerGridRef': [],
+            'NPCGridRef': []
+        },
+        {
+            'shipName': 'shipTwo',
+            'spaces': 3,
+            'orientation': 'vertical',
+            'playerGridRef': [],
+            'NPCGridRef': []
+
+        },
+        {
+            'shipName': 'shipThree',
             'spaces': 4,
             'orientation': 'vertical',
             'playerGridRef': [],
             'NPCGridRef': []
-        }
-    ]
-    );
+        },
+        {
+            'shipName': 'shipFour',
+            'spaces': 5,
+            'orientation': 'vertical',
+            'playerGridRef': [],
+            'NPCGridRef': []
+        },
+    ]);
+
+    // useRef to store all the grids references
+    const allCellDivs = useRef([]);
+
     
-    const allCellDivs = [];
+
+    // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
+    useEffect(() => {
+        const cells = document.querySelectorAll('.gridCell');
+        allCellDivs.current = Array.from(cells);
+    }, []);
+
     // set current ship that user is dragging
     const [currentShip, setCurrentShip] = useState('');
 
-    const cells = document.querySelectorAll('.gridCell'); // this creates a node array
-    console.log('cells=', cells );
-
-    cells.forEach((cell)=>{
-        // storing all cells into an array
-        console.log('cell=', cell );
-        allCellDivs.push(cell);
-    })
-
-    console.log( 'allCellDivs = ', allCellDivs );
-
-
     // event listener for placing ship on grid
     const handleDrop = (e) => {
-        // e.target.style.border = "1px solid #000";
+
+
         // 1) storing the dropped Value in a variable
         const droppedValueX = Number(e.target.attributes.valuex.textContent); // X coordinate
         const droppedValueY = Number(e.target.attributes.valuey.textContent); // Y coordinate
 
-        console.log('drop X = :', droppedValueX, 'drop y = :', droppedValueY);
-        console.log(e.target);
+        // console.log('drop X = :', droppedValueX, 'drop y = :', droppedValueY);
+        // console.log(e.target);
 
         // 4a) calculate the cell range of the ship based off the dropped value and ship spaces and orientation
-        console.log('currentShip', currentShip); // shipOne
-        console.log('spaces = ', currentShip);
+        // console.log('currentShip', currentShip); // shipOne
+        // console.log('spaces = ', currentShip);
 
         if (shipData[0].orientation === 'vertical') {
+            // VERTICAL LOGIC
 
             shipData.map((ship) => {
                 if (ship.shipName === currentShip) {
-                    console.log("true");
-                    console.log(ship.spaces);
+                    // console.log("true");
+                    // console.log(ship.spaces);
                     let currentCell = e.target;
                     for (let j = 0; j < ship.spaces; j++) {
                         if (currentCell) {
@@ -68,47 +91,56 @@ const PlayerGrid = () => {
                 }
             });
         } else {
-            console.log('horizontal');
+            // HORIZONTAL LOGIC
+
             shipData.map((ship) => {
                 if (ship.shipName === currentShip) {
                     let currentCell = e.target;
+
+                    // Find valueY and store in a variable
+                    let currentCellValueY = currentCell.attributes.valuey.textContent;// finds the y value of the click and store in a temp variable (y = 6) This is constant when in horizontal mode
+                    // console.log('currentCellValueY', currentCellValueY);
+
+                    // find the valueX of the currentCell and add 1 to target the next column over
+                    let currentCellValueX = Number(currentCell.attributes.valuex.textContent) + 1;// finds th x value of the click and adds 1 tot eh value and stores in a temp variable (x = 4 + 1 = 5). This helps to target the cell to the right since E would have an valuex of 5
+                    // console.log("currentCellValueX", currentCellValueX);
+
+                    // create a temporary Array that stores all the divs that have the matching valueY as the currentCell
+                    // allCellDivs.current is the array the stores all the references to the grid divs. value is the individual div while the getAttribute method retrieves the valuey attribute for the div and stores that in a variable.
+                    // we return into tempNextCol an array of all the divs that have a matching valuey attribute by using the valueyAttr variable and checking if its undefined or has a value. If it has a value then check if it matches what is stored in the currentCellValueY variable.
+                    let tempNextCol = allCellDivs.current.filter((value) => {
+                        const valueyAttr = value.getAttribute('valuey');
+                        return valueyAttr && currentCellValueY.includes(valueyAttr);
+                    });
+                    // console.log('tempNextCol', tempNextCol);
+
+                    // for each ship space store the PlayerGridRef in an array
                     for (let j = 0; j < ship.spaces; j++) {
                         if (currentCell) {
                             // Add the grid reference to the shipData array
                             ship.playerGridRef.push(currentCell.attributes.id.textContent);
 
-                            // Find valueY and store in a variable
-                            let currentCellValueY = currentCell.attributes.valuey.textContent;
-                            console.log('currentCellValueY', currentCellValueY);
+                            // change the colour of the currentCell
+                            currentCell.style.backgroundColor = "blue";
 
-                            // find the valueX of the currentCell and add 1 to target the next column over
-                            let currentCellValueX = Number(currentCell.attributes.valuex.textContent) + 1;
-                            console.log("currentCellValueX", currentCellValueX);
-
-                            // create a temporary Array that stores all the div that have the matching valueY as the currentCell
-                            const tempNextCol = allCellDivs.filter(value => currentCellValueY.includes(value.attributes.valuey.textContent));
 
                             // iterate through the temporary array and if it finds valuex that matches the currentCells valueX then store that div as the new currentCell
                             tempNextCol.map((col) => {
                                 if (col.attributes.valuex.textContent.includes(currentCellValueX)) {
                                     currentCell = col;
                                 }
+                                // looks at all the divs stored in tempNextCol array and if it finds one that has the valuex that matches the currentCellValueX then store that div(cell) as the new currentCell
+                                // Then the code will loop through again using the new cell reference pushing it to the playerGridRef array - loops through 4 times 
                             });
                         }
                     } // end of for loop
-                
-                    // Change the color of each cell that represents the ships spaces
-                    // create a new array with all the cell div's that include the gridRefs as id's
-                    const shipOneActiveCells = allCellDivs.filter(value => shipData[0].playGridRef.includes(value.attributes.id.textContent));
-
-                    console.log(shipOneActiveCells);
                 }
             })
 
         }
 
-
-        console.log(shipData[0].playerGridRef);
+        // CONSOLE LOG - for seeing all the player grid references for ship placement
+        // console.log(shipData[0].playerGridRef);
     };
 
     // event listener to drag ship to grid
@@ -119,6 +151,25 @@ const PlayerGrid = () => {
     // event listener for handling onDrag
     const handleOnDrag = (e) => {
         e.preventDefault();
+    };
+    
+    // TODO - Need to store the clicked ships object into a variable so we can use that in the rest of the logic to replace the hard coded shipData[0] and updatedShipData[0] //
+    // Function for storing the clicked ship's object into a global variable
+    const getShipObj = (shipImg) => {
+        console.log('getShipObj function running...');
+        // spread of all the objects
+        const shipDataArr = [...shipData];
+
+        // storing the ships name into a variable
+        const shipName = shipImg.getAttribute('name'); // clicked Ship Name
+
+        let clickShipObjTmp = {};
+        // filter through the array and find the image that matches the shipName
+        for (const key in shipDataArr) {
+            if (shipDataArr[key].shipName === shipName) {
+                clickShipObjTmp = shipDataArr[key];
+            }
+        }
     };
 
     // event listener to change ship orientation
@@ -149,9 +200,15 @@ const PlayerGrid = () => {
         }
     }
 
+
+
+
     return (
         <>
             <h1>Player Grid</h1>
+            <p>Drag your ships onto the grid</p>
+            <p>Hover over the cell you want the top of your ship to be</p>
+
 
             <NPCGrid
                 handleOnDrag={handleOnDrag}
@@ -159,8 +216,20 @@ const PlayerGrid = () => {
             />
 
             {/* Ships */}
-            <div className="shipOne">
-                <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" onClick={handleOrientation} />
+            <div className="shipContainer">
+                <div className="shipOne">
+                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="4" name={shipData[0].shipName} draggable="true" onClick={handleOrientation} />
+                </div>
+                <div className="shipTwo">
+                    <img src={shipTwoImg} alt="" onDragStart={handleDrag} value="4" name={shipData[1].shipName} draggable="true" onClick={handleOrientation} />
+                </div>
+                <div className="shipThree">
+                    <img src={shipThreeImg} alt="" onDragStart={handleDrag} value="4" name={shipData[2].shipName} draggable="true" onClick={handleOrientation} />
+                </div>
+                <div className="shipFour">
+                    <img src={shipFourImg} alt="" onDragStart={handleDrag} value="4" name={shipData[3].shipName} draggable="true" onClick={handleOrientation} />
+                </div>
+
             </div>
         </>
 
