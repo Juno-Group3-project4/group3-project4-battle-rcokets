@@ -26,7 +26,7 @@ const GetRocket = () => {
         // console.log(event.target.checked);
       if (event.target.checked) {
         console.log(event.target.value);
-        // use spread operater or create a new array and add users selection
+        // use spread operater to create a new array and add users selection
         setSelectedRockets([...selectedRockets, event.target.value]);
       } else {
         // using filter method to allow the user to remove a selected rocket from the array
