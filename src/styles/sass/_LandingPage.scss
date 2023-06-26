@@ -22,8 +22,10 @@
         justify-content: center;
         padding-left: 0;
         margin-bottom: 70px;
+        line-height: 150%;
         li {
             margin-bottom: 10px;
+            margin-top: 10px;
             font-family: 'Maitree', serif; ;
         }
     }
@@ -33,4 +35,9 @@
     list-style: inside decimal;
     margin-bottom: 5px;
     color: #320363;
+}
+
+.mars-AI-landing-pic {
+    height: 250px;
+    width: 250px;
 }

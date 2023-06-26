@@ -1,13 +1,13 @@
 // GET ROCKET Component
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-// import { useHistory } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 const GetRocket = () => {
     // set rocket data in variable
     const [rockets, setRockets] = useState([]);
+    // store users selected rockets in state.
+    const [selectedRockets, setSelectedRockets] = useState([]);
 
     // call api data on mount
     useEffect(() => {
@@ -21,51 +21,64 @@ const GetRocket = () => {
         })
     }, []);
 
-    // useHistory hook to manually redirect the user to the "/play" route once the form is submitted. What is happening right now is the form doesn't have a chance to submit as the button is wrapped in a Link component. Not working as useHistory hook is not being recognised.
-    // const history = useHistory();
-    // // Error handling and form submission function
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     console.log('submitted');
-    //     history.push("/play");
-    // }
+    // onchange event to listen for users selected choices and update selectedRockets state
+    const handleChange = (event) => {
+        // console.log(event.target.checked);
+      if (event.target.checked) {
+        console.log(event.target.value);
+        // use spread operater to create a new array and add users selection
+        setSelectedRockets([...selectedRockets, event.target.value]);
+      } else {
+        // using filter method to allow the user to remove a selected rocket from the array
+        // setSelectedRockets(selectedRockets.filter(rocket => rocket !== event.target.value))
+      }
+    }
+
+    const navigate = useNavigate();
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('form is submitted');
+        if (selectedRockets.length !== 3 ) {
+            alert("Please only select 3 rockets!!");
+        } else {
+            navigate("/play");
+        }
+    }
     
     return (
         <div className="wrapper">
             <h2>Select 3 rockets!</h2>
-            <form>
+            <form onSubmit={handleSubmit} >
                 {/* Map through the Rocket API array stored in rockets state and display on the screen for user to select */}
                 <ul className="flexContainer">
                     {rockets.map((rocket) => {
                         return (
                             <li className="rocketContainer" key={rocket.id}>
-                                <input type="checkbox" id={`${rocket.id}`} name={rocket.name} value={rocket.name}></input>
+                                <input type="checkbox" id={`${rocket.id}`} name={rocket.name} value={rocket.name} onChange={handleChange}></input>
                                 <label htmlFor={`${rocket.id}`}>
                                     <img src={rocket.flickr_images} alt={`${rocket.name}`} />
                                     <div className="descriptionContainer">
                                         <h3>{rocket.name}</h3>
                                         <p className="description">{rocket.description}</p>
                                     </div>
-                                    {/* <p>{`Boosters: ${rocket.boosters}`}</p> */}
-                                    {/* <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
-                                    <p>{`Engine: Number: ${rocket.engines.number}, type: ${rocket.engines.type}, version: ${rocket.engines.version}`}</p> */}
-                                </label>
+                                    <div className="engineSpecsOverlay">
+                                        <p>{`Boosters: ${rocket.boosters}`}</p>
+                                        <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
+                                        <p>{`Engine: Number: ${rocket.engines.number}, Type: ${rocket.engines.type}, Version: ${rocket.engines.version}`}</p>
+                                    </div>
+                                </label>       
                             </li>
                         )
                     })}
                 </ul>
 
-                <Link to="/play">
-                    <button type="submit">START GAME!</button>
-                </Link> 
+                <button onSubmit={()=>navigate("/play")} type="submit">START GAME!</button>
+
             </form>
         </div>
 
         // NEXT STEPS         
-        // Create another state and store users selected rockets in state?
-        // add error handling
-        // Game will start following form submission and will take to player grid component?
-        // Needs to be responsive
+    //    Final task is to make this getRocket component page responsive 
 
     )
 }

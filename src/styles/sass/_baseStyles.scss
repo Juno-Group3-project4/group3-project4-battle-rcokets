@@ -1,4 +1,6 @@
 // SETUP
+
+
 .wrapper {
     max-width: 1260px;
     width: 90%;
@@ -31,12 +33,6 @@
     border-radius: 20px;
     padding: 10px 15px;
     margin: 20px 40px;
-}
-
-img {
-    display: block;
-    height: 200px;
-    width: 200px;
 }
 
 .description {
@@ -89,6 +85,7 @@ pre {
 a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
+    text-decoration: none;
 }
 
 abbr[title] {
@@ -154,9 +151,6 @@ audio:not([controls]) {
     height: 0;
 }
 
-img {
-    border-style: none;
-}
 
 svg:not(:root) {
     overflow: hidden;
@@ -299,7 +293,6 @@ html {
 img {
     max-width: 100%;
     display: block;
-    border-radius: 10px;
 }
 
 /* FONTS / COLOURS / BUTTONS*/
@@ -311,6 +304,7 @@ h1,
 h2 {
     font-family: "Orbitron", sans-serif;
     color: #FBEBFF;
+    text-align: center;
 }
 
 h1 {
@@ -321,6 +315,12 @@ h1 {
 h3 {
     font-family: "Orbitron", sans-serif;
     color: #320363;
+    
+}
+
+.spaces-title, .placement-instructions {
+    color: white;
+    text-align: center;
 }
 
 p {
