@@ -61,12 +61,12 @@ const GetRocket = () => {
                                         <h3>{rocket.name}</h3>
                                         <p className="description">{rocket.description}</p>
                                     </div>
-                                </label>
-                                <div className="engineSpecs">
-                                    <p>{`Boosters: ${rocket.boosters}`}</p>
-                                    <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
-                                    <p>{`Engine: Number: ${rocket.engines.number}, type: ${rocket.engines.type}, version: ${rocket.engines.version}`}</p>
-                                </div>
+                                    <div className="engineSpecsOverlay">
+                                        <p>{`Boosters: ${rocket.boosters}`}</p>
+                                        <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
+                                        <p>{`Engine: Number: ${rocket.engines.number}, Type: ${rocket.engines.type}, Version: ${rocket.engines.version}`}</p>
+                                    </div>
+                                </label>       
                             </li>
                         )
                     })}
