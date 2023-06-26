@@ -131,7 +131,7 @@ const GenerateComputerGrid = () => {
         return grid;
     }
 
-    // generateRandomLocation();
+    generateRandomLocation();
 
     return (
         <>

@@ -14,7 +14,6 @@
 /* All Grid Children */
 .gridCell {
     background-color: #002C2E;
-    // border: 1px solid #FBEBFF;
     border: 1px solid #00DBE0;
 }
 
@@ -37,10 +36,9 @@
 
 .topHeaderContainer,
 .leftHeaderContainer {
-    // color: #EDA65E;
-    // color: #FBEBFF;
     color: #00DBE0;
     font-weight: bold;
+    
     .gridCell {
         text-align: center;
     }
