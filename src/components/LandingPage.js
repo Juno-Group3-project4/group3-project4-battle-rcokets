@@ -6,7 +6,7 @@ const LandingPage = () => {
     return (
         <section className="landing-page">
             <h2 className="landing-headings">IT’S A RACE TO MARS…</h2>
-            <img src={landing} alt="Moon Landing Art" />
+            <img src={landing} className="mars-AI-landing-pic" alt="Moon Landing Art" />
             <p>The future of planet Earth is at risk as it buckles under the strain of human population, consumption and inane TikTok trends. As corporations and global agencies fund missions to make the colonization of Mars possible, rogue AI rockets plan to thwart any form of human migration into space. Join SpaceX in protecting the future of humanity by helping vanquish the evil ‘AI Space Army’ in a <strong>Battle of Rockets</strong>!</p>
             <h2 className="landing-headings">Instructions</h2>
             <ol>
