@@ -206,8 +206,7 @@ const PlayerGrid = () => {
     const handleOnDrag = (e) => {
         e.preventDefault();
     };
-    
-    // EVENT LISTENER TO CHANGE SHIP ORIENTATION
+
     const handleOrientation = (e) => {
         const clickShip = e.target;
         const shipId = clickShip.getAttribute('name');
