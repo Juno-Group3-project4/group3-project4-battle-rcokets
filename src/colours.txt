@@ -1,0 +1,6 @@
+Dark purple - #320363
+Medium Purple? - #40128B
+Light Purple - #FBEBFF
+Blue - #00DBE0
+Orange - #EDA65E/rgb(237,166,94)
+Yellow - #FF0/rgb(244, 227, 112)

@@ -77,7 +77,6 @@ const GetRocket = () => {
             </form>
         </div>
 
-
         // NEXT STEPS         
     //    Final task is to make this getRocket component page responsive 
 

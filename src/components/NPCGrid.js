@@ -7,7 +7,7 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
     return (
         <>
             {/* Grid Container */}
-            <div className="npcGrid_Container">
+            <div className="npcGridContainer">
                 {/* Top Header */}
                 <div className="topHeaderContainer">
                     {axisLabels[0].xAxis.map((label, index) => {
@@ -26,149 +26,27 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
                     
                     {/* Grid Play Area */}
                     <div className="gridPlayArea">
-                        <div className="column">
-                            {gridData[0].columnA.map((cell) => {
-                                return (
-                                    <div 
-                                        className={cell.className} 
-                                        key={cell.id} 
-                                        id={cell.id} 
-                                        valuex={cell.x_value} 
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-
-                        <div className="column">
-                            {gridData[1].columnB.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[2].columnC.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[3].columnD.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[4].columnE.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[5].columnF.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[6].columnG.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[7].columnH.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[8].columnI.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="column">
-                            {gridData[9].columnJ.map((cell) => {
-                                return (
-                                    <div
-                                        className={cell.className}
-                                        key={cell.id} id={cell.id} valuex={cell.x_value}
-                                        valuey={cell.y_value}
-                                        onDragOver={handleOnDrag}
-                                        onDrop={handleDrop}
-                                    >
-                                    </div>
-                                )
-                            })}
-                        </div>
+                        {gridData.map((gridRow, index) => {
+                            return (
+                                <div key={index} id={index} className="gridRow">
+                                    {gridRow.map((gridColumn) => {
+                                        return (
+                                            <div
+                                                className={gridColumn.className}
+                                                key={gridColumn.id}
+                                                id={gridColumn.id}
+                                                value={gridColumn.id}
+                                                onDragOver={handleOnDrag}
+                                                onDrop={handleDrop}
+                                                valuex={gridColumn.x_value}
+                                                valuey={gridColumn.y_value}
+                                            >
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

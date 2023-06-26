@@ -4,6 +4,7 @@ import shipTwoImg from '../assets/falcon9-shipTwo.png';
 import shipThreeImg from '../assets/falconHeavy-shipThree.png';
 import shipFourImg from '../assets/starShip-shipFour.png';
 import NPCGrid from "./NPCGrid";
+import GenerateComputerGrid from "./GenerateComputerGrid";
 
 
 // PLAYER GRID Component 
@@ -42,11 +43,21 @@ const PlayerGrid = () => {
         },
     ]);
 
+    const cells = document.querySelectorAll('.gridPlayArea .gridCell'); // this creates a node array
+    console.log('cells=', cells );
+
+    cells.forEach((cell)=>{
+        // storing all cells into an array
+        // console.log('cell=', cell );
+        allCellDivs.push(cell);
+    })
+
     // useRef to store all the grids references
     const allCellDivs = useRef([]);
 
     // useRef to store individual rocket divs
     const rocketImage = useRef([]);
+
 
     // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
     useEffect(() => {
@@ -255,6 +266,8 @@ const PlayerGrid = () => {
                 handleOnDrag={handleOnDrag}
                 handleDrop={handleDrop}
             />
+
+            <GenerateComputerGrid />
 
             {/* Ships */}
             <div className="shipContainer">

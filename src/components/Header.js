@@ -1,6 +1,6 @@
 // HEADER Component 
 import { Link } from "react-router-dom";
-import { Typewriter} from "react-simple-typewriter"
+import { Typewriter  } from "react-simple-typewriter"
 
 const Header = () => {
     return (
