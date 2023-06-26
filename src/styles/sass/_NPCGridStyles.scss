@@ -1,23 +1,21 @@
 /* NPCGrid CSS */
-.gridNPC {
-    /* section: */
-    width: 100%;
-}
 
 /* Entire Grid Container */
-.npcGrid_Container {
-    border: 2px solid red;
+.npcGridContainer {
+    // border: 2px solid #EDA65E;
     max-width: 600px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1;
     grid-template-rows: 2;
+    padding: 2%;
 }
 
 /* All Grid Children */
 .gridCell {
-    background-color: lightpink;
-    border: 1px solid black;
+    background-color: #002C2E;
+    // border: 1px solid #FBEBFF;
+    border: 1px solid #00DBE0;
 }
 
 /* Top Header (A-J) */
@@ -37,14 +35,24 @@
     grid-template-rows: repeat(10, 1fr);
 }
 
+.topHeaderContainer,
+.leftHeaderContainer {
+    // color: #EDA65E;
+    // color: #FBEBFF;
+    color: #00DBE0;
+    font-weight: bold;
+    .gridCell {
+        text-align: center;
+    }
+}
+
 /* Grid Play Area */
 .gridPlayArea {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
 }
 
-/* Columns within Grid Play Area */
-.column {
+.gridRow {
     display: grid;
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 1fr);
 }

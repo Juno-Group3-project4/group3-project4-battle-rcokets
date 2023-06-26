@@ -2,6 +2,7 @@ import { useState } from "react";
 import shipOneImg from '../assets/spaceX_rocket_4.png';
 import shipTwo from '../assets/spaceX_rocket_3.png';
 import NPCGrid from "./NPCGrid";
+import GenerateComputerGrid from "./GenerateComputerGrid";
 
 // PLAYER GRID Component 
 const PlayerGrid = () => {
@@ -22,12 +23,12 @@ const PlayerGrid = () => {
     // set current ship that user is dragging
     const [currentShip, setCurrentShip] = useState('');
 
-    const cells = document.querySelectorAll('.gridCell'); // this creates a node array
+    const cells = document.querySelectorAll('.gridPlayArea .gridCell'); // this creates a node array
     console.log('cells=', cells );
 
     cells.forEach((cell)=>{
         // storing all cells into an array
-        console.log('cell=', cell );
+        // console.log('cell=', cell );
         allCellDivs.push(cell);
     })
 
@@ -157,6 +158,8 @@ const PlayerGrid = () => {
                 handleOnDrag={handleOnDrag}
                 handleDrop={handleDrop}
             />
+
+            <GenerateComputerGrid />
 
             {/* Ships */}
             <div className="shipOne">
