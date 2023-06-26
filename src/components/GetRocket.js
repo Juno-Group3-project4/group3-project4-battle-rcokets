@@ -61,7 +61,6 @@ const GetRocket = () => {
             </form>
         </div>
 
-
         // NEXT STEPS         
         // Create another state and store users selected rockets in state?
         // add error handling
