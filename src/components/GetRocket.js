@@ -30,7 +30,7 @@ const GetRocket = () => {
         setSelectedRockets([...selectedRockets, event.target.value]);
       } else {
         // using filter method to allow the user to remove a selected rocket from the array
-        // setSelectedRockets(selectedRockets.filter(rocket => rocket !== event.target.value))
+        setSelectedRockets(selectedRockets.filter(rocket => rocket !== event.target.value))
       }
     }
 
