@@ -56,7 +56,7 @@ const GetRocket = () => {
                             <li className="rocketContainer" key={rocket.id}>
                                 <input type="checkbox" id={`${rocket.id}`} name={rocket.name} value={rocket.name} onChange={handleChange}></input>
                                 <label htmlFor={`${rocket.id}`}>
-                                    <img src={rocket.flickr_images} alt={`${rocket.name}`} />
+                                    <img className="rocket" src={rocket.flickr_images} alt={`${rocket.name}`} />
                                     <div className="descriptionContainer">
                                         <h3>{rocket.name}</h3>
                                         <p className="description">{rocket.description}</p>

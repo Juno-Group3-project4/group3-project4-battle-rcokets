@@ -6,6 +6,13 @@
     margin: 0 auto;
 }
 
+.rocket {
+    display: block;
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+}
+
 form {
     display: flex;
     flex-direction: column;
