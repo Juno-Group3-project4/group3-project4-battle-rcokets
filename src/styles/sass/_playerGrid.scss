@@ -1,4 +1,4 @@
-.shipOne, .shipTwo, .shipThree, .shipFour {
+.Falcon1, .Falcon9, .FalconHeavy, .Starship {
     margin: 0 4px;
     display: flex;
     flex-direction: column;
@@ -6,11 +6,11 @@
     /* background-color: yellow; */
 }
 
-.shipTwo, .shipThree {
+.Falcon9, .FalconHeavy {
     width: 30px;
 }
 
-.shipOne, .shipFour {
+.Falcon1, .Starship {
     width: 50px;
     height: 200px;
 }

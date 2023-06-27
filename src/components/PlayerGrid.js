@@ -13,29 +13,29 @@ const PlayerGrid = () => {
     // set rocket ship grid data
     const [shipData, setShipData] = useState([
         {
-            'shipName': 'shipOne',
-            'spaces': 2,
+            'shipName': 'Falcon1',
+            'spaces': 3,
             'orientation': 'vertical',
             'playerGridRef': [],
             'NPCGridRef': []
         },
         {
-            'shipName': 'shipTwo',
-            'spaces': 3,
+            'shipName': 'Falcon9',
+            'spaces': 4,
             'orientation': 'vertical',
             'playerGridRef': [],
             'NPCGridRef': []
 
         },
         {
-            'shipName': 'shipThree',
+            'shipName': 'FalconHeavy',
             'spaces': 4,
             'orientation': 'vertical',
             'playerGridRef': [],
             'NPCGridRef': []
         },
         {
-            'shipName': 'shipFour',
+            'shipName': 'Starship',
             'spaces': 5,
             'orientation': 'vertical',
             'playerGridRef': [],
@@ -43,14 +43,14 @@ const PlayerGrid = () => {
         },
     ]);
 
-    const cells = document.querySelectorAll('.gridPlayArea .gridCell'); // this creates a node array
-    console.log('cells=', cells );
+    // const cells = document.querySelectorAll('.gridPlayArea .gridCell'); // this creates a node array
+    // console.log('cells=', cells );
 
-    cells.forEach((cell)=>{
-        // storing all cells into an array
-        // console.log('cell=', cell );
-        allCellDivs.push(cell);
-    })
+    // cells.forEach((cell)=>{
+    //     // storing all cells into an array
+    //     // console.log('cell=', cell );
+    //     allCellDivs.push(cell);
+    // })
 
     // useRef to store all the grids references
     const allCellDivs = useRef([]);
@@ -99,7 +99,7 @@ const PlayerGrid = () => {
             }
         })
         allCellDivs.current.forEach((cell) => {
-            cell.style.backgroundColor = 'lightpink'
+            cell.style.backgroundColor = '#002C2E';
         })
         // Reset ShipData state
         setShipData(updatedShipData);
@@ -135,13 +135,17 @@ const PlayerGrid = () => {
         // console.log('currentShip', currentShip); // shipOne
         // console.log('spaces = ', currentShip);
 
-        // VERTICAL LOGIC
-        if (clickedShipObjTmp.orientation === 'vertical') {
+        // HORIZONTAL LOGIC
+        if (clickedShipObjTmp.orientation === 'horizontal') {
             shipData.map((ship) => {
                 if (ship.shipName === currentShip) {
                     // console.log("true");
                     // console.log(ship.spaces);
                     let currentCell = e.target;
+                    console.log(currentCell);
+                    if (currentCell.attribute.valuex < 0) {
+                        alert("Make sure rocket is placed within the grid.")
+                    }
                     for (let j = 0; j < ship.spaces; j++) {
                         if (currentCell) {
                             // Add the grid reference to the shipData array
@@ -158,7 +162,7 @@ const PlayerGrid = () => {
                 }
             });
         } else {
-            // HORIZONTAL LOGIC
+            // VERTICAL LOGIC
             shipData.map((ship) => {
                 if (ship.shipName === currentShip) {
                     let currentCell = e.target;
@@ -166,19 +170,22 @@ const PlayerGrid = () => {
                     for (let j = 0; j < ship.spaces; j++) {
                         if (currentCell) {
                             // Find valueY and store in a variable
-                            let currentCellValueY = currentCell.attributes.valuey.textContent;// finds the y value of the click and store in a temp variable (y = 6) This is constant when in horizontal mode
-                            // console.log('currentCellValueY', currentCellValueY);
+                            let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the y value of the click and store in a temp variable (y = 6) This is constant when in horizontal mode
+                            if(currentCellValueX < 0 || currentCellValueX >= 10){
+                                alert("Make sure rocket is placed within the grid.")
+                            }
+                            console.log('currentCellValueX', currentCellValueX);
 
                             // find the valueX of the currentCell and add 1 to target the next column over
-                            let currentCellValueX = Number(currentCell.attributes.valuex.textContent) + 1;// finds th x value of the click and adds 1 tot eh value and stores in a temp variable (x = 4 + 1 = 5). This helps to target the cell to the right since E would have an valuex of 5
+                            let currentCellValueY = Number(currentCell.attributes.valuey.textContent) + 1;// finds th x value of the click and adds 1 tot eh value and stores in a temp variable (x = 4 + 1 = 5). This helps to target the cell to the right since E would have an valuex of 5
                             // console.log("currentCellValueX", currentCellValueX);
                             
                             // create a temporary Array that stores all the divs that have the matching valueY as the currentCell
                             // allCellDivs.current is the array the stores all the references to the grid divs. value is the individual div while the getAttribute method retrieves the valuey attribute for the div and stores that in a variable.
                             // we return into tempNextCol an array of all the divs that have a matching valuey attribute by using the valueyAttr variable and checking if its undefined or has a value. If it has a value then check if it matches what is stored in the currentCellValueY variable.
                             let tempNextCol = allCellDivs.current.filter((value) => {
-                                const valueyAttr = value.getAttribute('valuey');
-                                return valueyAttr && currentCellValueY.includes(valueyAttr);
+                                const valuexAttr = value.getAttribute('valuex');
+                                return valuexAttr && currentCellValueX.includes(valuexAttr);
                             });
                             // console.log('tempNextCol', tempNextCol);
                             // Add the grid reference to the shipData array
@@ -192,7 +199,7 @@ const PlayerGrid = () => {
 
                             // iterate through the temporary array and if it finds valuex that matches the currentCells valueX then store that div as the new currentCell
                             tempNextCol.map((col) => {
-                                if (col.attributes.valuex.textContent.includes(currentCellValueX)) {
+                                if (col.attributes.valuey.textContent.includes(currentCellValueY)) {
                                     currentCell = col;
                                 }
                                 // looks at all the divs stored in tempNextCol array and if it finds one that has the valuex that matches the currentCellValueX then store that div(cell) as the new currentCell
@@ -271,19 +278,19 @@ const PlayerGrid = () => {
 
             {/* Ships */}
             <div className="shipContainer">
-                <div className="shipOne" ref={(e) => rocketImage.current[0] = e}>
+                <div className="Falcon1" ref={(e) => rocketImage.current[0] = e}>
                     <h3 className="spaces-title">Two Spaces</h3>
                     <img src={shipOneImg} alt="" onDragStart={handleDrag} value="1" name={shipData[0].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
                 </div>
-                <div className="shipTwo" ref={(e) => rocketImage.current[1] = e}>
+                <div className="Falcon9" ref={(e) => rocketImage.current[1] = e}>
                     <h3 className="spaces-title">Three Spaces</h3>
                     <img src={shipTwoImg} alt="" onDragStart={handleDrag} value="2" name={shipData[1].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
                 </div>
-                <div className="shipThree" ref={(e) => rocketImage.current[2] = e}>
+                <div className="FalconHeavy" ref={(e) => rocketImage.current[2] = e}>
                     <h3 className="spaces-title">Four Spaces</h3>
                     <img src={shipThreeImg} alt="" onDragStart={handleDrag} value="3" name={shipData[2].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
                 </div>
-                <div className="shipFour" ref={(e) => rocketImage.current[3] = e}>
+                <div className="Starship" ref={(e) => rocketImage.current[3] = e}>
                     <h3 className="spaces-title">Five Spaces</h3>
                     <img src={shipFourImg} alt="" onDragStart={handleDrag} value="4" name={shipData[3].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
                 </div>
