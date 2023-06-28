@@ -58,12 +58,14 @@ const PlayerGrid = () => {
     // useRef to store individual rocket divs
     const rocketImage = useRef([]);
 
+    const newPlayerGridRef = [];
 
     // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
     useEffect(() => {
         const cells = document.querySelectorAll('.gridCell');
         allCellDivs.current = Array.from(cells);
     }, []);
+
 
     // set current rocket that user is dragging
     const [currentShip, setCurrentShip] = useState('');
@@ -73,7 +75,7 @@ const PlayerGrid = () => {
 
         // Target Ship Divs using useRef Hook
         const ships = rocketImage.current;
-      
+
         // Iterate through with conditionals so that if current placed ship's name equals the classname declared in the JSX
         ships.forEach((ship) => {
             if (ship.className === currentShip) {
@@ -88,9 +90,9 @@ const PlayerGrid = () => {
         const ships = rocketImage.current;
         // Map through shipData and reset playerGridRef to zero
         const updatedShipData = shipData.map((ship) => ({
-        ...ship,
-        playerGridRef:[]
-       }));
+            ...ship,
+            playerGridRef:[]
+        }));
         // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset veritcally
         ships.forEach((ship) => {
             ship.style.display = 'flex';
@@ -110,30 +112,35 @@ const PlayerGrid = () => {
 
         const shipDataArr = [...shipData];
 
-        setCurrentShip(shipDataArr)
+        setCurrentShip(shipDataArr);
+
+        // console.log(shipDataArr);
 
         // Call the Remove Rockets Method immediately upon placement 
-        removeRocket();
+        
+        // removeRocket();
+        
 
         // Create Object to store playerGrid Ref
         let clickedShipObjTmp = {};
         for (const key in shipDataArr) {
             if (shipDataArr[key].shipName === currentShip) {
                 clickedShipObjTmp = shipDataArr[key];
-                console.log(clickedShipObjTmp)
-            }   
+                // console.log(clickedShipObjTmp)
+            }
         }
     
         // 1) storing the dropped Value in a variable - Is this still necessary?*
-        const droppedValueX = Number(e.target.attributes.valuex.textContent); // X coordinate
-        const droppedValueY = Number(e.target.attributes.valuey.textContent); // Y coordinate
-
+        // const droppedValueX = Number(e.target.attributes.valuex.textContent); // X coordinate
+        // const droppedValueY = Number(e.target.attributes.valuey.textContent); // Y coordinate
         // console.log('drop X = :', droppedValueX, 'drop y = :', droppedValueY);
         // console.log(e.target);
 
         // 4a) calculate the cell range of the ship based off the dropped value and ship spaces and orientation
         // console.log('currentShip', currentShip); // shipOne
         // console.log('spaces = ', currentShip);
+
+        
 
         // HORIZONTAL LOGIC
         if (clickedShipObjTmp.orientation === 'horizontal') {
@@ -143,21 +150,45 @@ const PlayerGrid = () => {
                     // console.log(ship.spaces);
                     let currentCell = e.target;
                     console.log(currentCell);
-                    if (currentCell.attribute.valuex < 0) {
-                        alert("Make sure rocket is placed within the grid.")
-                    }
+
+                    // let valid = false;
+
+                    let x = Number(currentCell.getAttribute('valuex'));
+                    console.log(x);
+                    let coord = currentCell.attributes.id.textContent;
+                    console.log(coord);
+                    
+
                     for (let j = 0; j < ship.spaces; j++) {
-                        if (currentCell) {
-                            // Add the grid reference to the shipData array
-                            ship.playerGridRef.push(currentCell.attributes.id.textContent);
-                            // change the colour of the cells
-                            currentCell.style.backgroundColor = "blue";
-                            // Move to the next sibling cell
-                            currentCell = currentCell.nextElementSibling;
-                           
-                            // Error Handling for if User has placed a vertical rocket that extends beyond the gird area
-           
-                        }
+                        if (x - 1 + ship.spaces > 10) {
+                            alert("Oops! Make sure to place the rocket inside of the space grid!");
+                        } else {
+
+                            const gridRefIncl = newPlayerGridRef.includes[currentCell.attributes.id.textContent];
+                            console.log(gridRefIncl);
+
+                            const arr = ['c3', 'd3'];
+
+                            if (arr.includes('e3')) {
+                                console.log('yes');
+                            } else {
+                                console.log('no');
+                            }
+
+                            if(gridRefIncl == false) {
+                                // Add the grid reference to the shipData array
+                                ship.playerGridRef.push(currentCell.attributes.id.textContent);
+                                // change the colour of the cells
+                                currentCell.style.backgroundColor = "blue";
+                                // Move to the next sibling cell
+                                currentCell = currentCell.nextElementSibling;
+
+                                console.log('success!');
+                                // Error Handling for if User has placed a vertical rocket that extends beyond the gird area
+                                removeRocket();
+                            }
+                            
+                        }    
                     }
                 }
             });
@@ -166,23 +197,31 @@ const PlayerGrid = () => {
             shipData.map((ship) => {
                 if (ship.shipName === currentShip) {
                     let currentCell = e.target;
+                    console.log(e.target);
                     // for each ship space store the PlayerGridRef in an array
-                    for (let j = 0; j < ship.spaces; j++) {
-                        if (currentCell) {
-                            // Find valueY and store in a variable
-                            let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the y value of the click and store in a temp variable (y = 6) This is constant when in horizontal mode
-                            if(currentCellValueX < 0 || currentCellValueX >= 10){
-                                alert("Make sure rocket is placed within the grid.")
-                            }
-                            console.log('currentCellValueX', currentCellValueX);
 
-                            // find the valueX of the currentCell and add 1 to target the next column over
-                            let currentCellValueY = Number(currentCell.attributes.valuey.textContent) + 1;// finds th x value of the click and adds 1 tot eh value and stores in a temp variable (x = 4 + 1 = 5). This helps to target the cell to the right since E would have an valuex of 5
-                            // console.log("currentCellValueX", currentCellValueX);
+                    let y = Number(currentCell.getAttribute('valuey'));
+
+                    for (let j = 0; j < ship.spaces; j++) {
+                        if (y - 1 + ship.spaces > 10) {
+                            alert("Oops! Make sure to place the rocket inside of the space grid!");
+                        } else {
+                            // Find valueX and store in a variable
+                            let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the x value of the click and store in a temp variable (x = 6) This is constant when in vertical mode
+
+                            // if(currentCellValueX < 0 || currentCellValueX >= 10){
+                            //     alert("Make sure rocket is placed within the grid.")
+                            // }
+                            
+                            // find the valueY of the currentCell and add 1 to target the next column over
+                            let currentCellValueY = Number(currentCell.attributes.valuey.textContent) + 1;
+                            
+                            // finds the y value of the click and adds 1 to the value and stores in a temp variable (y = 4 + 1 = 5). This helps to target the cell to the right since E would have an valuey of 5
+                            // console.log("currentCellValueY", currentCellValueY);
                             
                             // create a temporary Array that stores all the divs that have the matching valueY as the currentCell
-                            // allCellDivs.current is the array the stores all the references to the grid divs. value is the individual div while the getAttribute method retrieves the valuey attribute for the div and stores that in a variable.
-                            // we return into tempNextCol an array of all the divs that have a matching valuey attribute by using the valueyAttr variable and checking if its undefined or has a value. If it has a value then check if it matches what is stored in the currentCellValueY variable.
+                            // allCellDivs.current is the array the stores all the references to the grid divs. value is the individual div while the getAttribute method retrieves the valuex attribute for the div and stores that in a variable.
+                            // we return into tempNextCol an array of all the divs that have a matching valuex attribute by using the valuexAttr variable and checking if its undefined or has a value. If it has a value then check if it matches what is stored in the currentCellValueX variable.
                             let tempNextCol = allCellDivs.current.filter((value) => {
                                 const valuexAttr = value.getAttribute('valuex');
                                 return valuexAttr && currentCellValueX.includes(valuexAttr);
@@ -191,13 +230,13 @@ const PlayerGrid = () => {
                             // Add the grid reference to the shipData array
                             ship.playerGridRef.push(currentCell.attributes.id.textContent);
 
-                            console.log(currentCell.attributes.id.textContent)
+                            // console.log(currentCell.attributes.id.textContent)
                             
 
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
 
-                            // iterate through the temporary array and if it finds valuex that matches the currentCells valueX then store that div as the new currentCell
+                            // iterate through the temporary array and if it finds valuey that matches the currentCells valueX then store that div as the new currentCell
                             tempNextCol.map((col) => {
                                 if (col.attributes.valuey.textContent.includes(currentCellValueY)) {
                                     currentCell = col;
@@ -205,13 +244,28 @@ const PlayerGrid = () => {
                                 // looks at all the divs stored in tempNextCol array and if it finds one that has the valuex that matches the currentCellValueX then store that div(cell) as the new currentCell
                                 // Then the code will loop through again using the new cell reference pushing it to the playerGridRef array - loops through 4 times 
                             });
+
+
+                            removeRocket();
                         }
                     } // end of for loop
                 }
             })
         }
+
+
         // CONSOLE LOG - for seeing all the player grid references for ship placement
-        console.log(clickedShipObjTmp.playerGridRef)
+        // const totalPlayerGridRef = [];
+        console.log(shipData);
+        for (let key in shipData) {
+            console.log(shipData[key].playerGridRef)
+            const newArray = shipData[key].playerGridRef
+            newArray.map((array) => {
+                console.log(array)
+                newPlayerGridRef.push(array);
+                console.log(newPlayerGridRef);
+            })
+        }
     };
 
 

@@ -11,7 +11,7 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
                 {/* Top Header */}
                 <div className="topHeaderContainer">
                     {axisLabels[0].xAxis.map((label, index) => {
-                        return <div className="topHeader gridCell" key={index} value={label.value}>{label.textContent}</div>
+                        return <div className="topHeader  gridCell" key={index} value={label.value}>{label.textContent}</div>
                     })}
                 </div>
                 
@@ -35,7 +35,7 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
                                                 className={gridColumn.className}
                                                 key={gridColumn.id}
                                                 id={gridColumn.id}
-                                                value={gridColumn.id}
+                                                // value={gridColumn.id}
                                                 onDragOver={handleOnDrag}
                                                 onDrop={handleDrop}
                                                 valuex={gridColumn.x_value}

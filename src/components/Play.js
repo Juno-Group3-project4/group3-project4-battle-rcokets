@@ -1,8 +1,8 @@
 // PLAY Component
-import GetRocket from "./GetRocket";
+// import GetRocket from "./GetRocket";
 import Score from "./Score";
 import PlayerGrid from "./PlayerGrid";
-import NPCGrid from "./NPCGrid";
+// import NPCGrid from "./NPCGrid";
 
 const Play = () => {
 
