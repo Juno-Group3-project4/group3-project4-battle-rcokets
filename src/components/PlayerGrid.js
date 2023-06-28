@@ -126,7 +126,7 @@ const PlayerGrid = () => {
         for (const key in shipDataArr) {
             if (shipDataArr[key].shipName === currentShip) {
                 clickedShipObjTmp = shipDataArr[key];
-                // console.log(clickedShipObjTmp)
+                console.log(clickedShipObjTmp)
             }
         }
     
@@ -139,8 +139,6 @@ const PlayerGrid = () => {
         // 4a) calculate the cell range of the ship based off the dropped value and ship spaces and orientation
         // console.log('currentShip', currentShip); // shipOne
         // console.log('spaces = ', currentShip);
-
-        
 
         // HORIZONTAL LOGIC
         if (clickedShipObjTmp.orientation === 'horizontal') {
@@ -155,8 +153,8 @@ const PlayerGrid = () => {
 
                     let x = Number(currentCell.getAttribute('valuex'));
                     console.log(x);
-                    let coord = currentCell.attributes.id.textContent;
-                    console.log(coord);
+                    // let coord = currentCell.attributes.id.textContent;
+                    // console.log(coord);
                     
 
                     for (let j = 0; j < ship.spaces; j++) {
@@ -164,18 +162,19 @@ const PlayerGrid = () => {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
                         } else {
 
-                            const gridRefIncl = newPlayerGridRef.includes[currentCell.attributes.id.textContent];
-                            console.log(gridRefIncl);
+                            // const gridRefIncl = newPlayerGridRef.includes[currentCell.attributes.id.textContent];
+                            // console.log(gridRefIncl);
 
-                            const arr = ['c3', 'd3'];
+                            // const arr = ['c3', 'd3'];
 
-                            if (arr.includes('e3')) {
-                                console.log('yes');
-                            } else {
-                                console.log('no');
-                            }
+                            // if (arr.includes('e3')) {
+                            //     console.log('yes');
+                            // } else {
+                            //     console.log('no');
+                            // }
+                            // if (gridRefIncl == false)
 
-                            if(gridRefIncl == false) {
+                            
                                 // Add the grid reference to the shipData array
                                 ship.playerGridRef.push(currentCell.attributes.id.textContent);
                                 // change the colour of the cells
@@ -186,7 +185,6 @@ const PlayerGrid = () => {
                                 console.log('success!');
                                 // Error Handling for if User has placed a vertical rocket that extends beyond the gird area
                                 removeRocket();
-                            }
                             
                         }    
                     }

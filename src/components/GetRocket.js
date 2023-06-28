@@ -24,14 +24,14 @@ const GetRocket = () => {
     // onchange event to listen for users selected choices and update selectedRockets state
     const handleChange = (event) => {
         // console.log(event.target.checked);
-      if (event.target.checked) {
+        if (event.target.checked) {
         console.log(event.target.value);
         // use spread operater to create a new array and add users selection
         setSelectedRockets([...selectedRockets, event.target.value]);
-      } else {
+        } else {
         // using filter method to allow the user to remove a selected rocket from the array
         setSelectedRockets(selectedRockets.filter(rocket => rocket !== event.target.value))
-      }
+        }
     }
 
     const navigate = useNavigate();
@@ -76,6 +76,7 @@ const GetRocket = () => {
 
             </form>
         </div>
+
 
         // NEXT STEPS         
     //    Final task is to make this getRocket component page responsive 
