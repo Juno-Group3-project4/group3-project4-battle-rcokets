@@ -126,7 +126,7 @@ const PlayerGrid = () => {
         for (const key in shipDataArr) {
             if (shipDataArr[key].shipName === currentShip) {
                 clickedShipObjTmp = shipDataArr[key];
-                // console.log(clickedShipObjTmp)
+                console.log(clickedShipObjTmp)
             }
         }
     
