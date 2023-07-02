@@ -79,13 +79,13 @@ const PlayerGrid = () => {
     const handleReset = () => {
         // Target Ship Divs using useRef Hook
         const ships = rocketImage.current;
-        // Map through shipData and reset playerGridRef to zero
+        // When user clicks reset grid button, we map through shipData and reset all the data in the shipData array
         const updatedShipData = shipData.map((ship) => ({
             ...ship,
             playerGridRef:[],
             orientation: "vertical"
         }));
-        // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset veritcally
+        // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset vertically
         ships.forEach((ship) => {
             ship.style.display = 'flex';
             if (ship.children[1].style.transform === 'rotate(90deg)') {
@@ -97,6 +97,7 @@ const PlayerGrid = () => {
         })
         // Reset ShipData state
         setShipData(updatedShipData);
+        
     }
 
     // event listener for placing ship on grid
@@ -106,7 +107,8 @@ const PlayerGrid = () => {
         const shipDataArr = [...shipData];
 
         // Store in a new State 
-        setCurrentShip(shipDataArr);
+        // setCurrentShip(shipDataArr);
+        console.log('shipDataArr', shipDataArr)
 
         // Create Object to store playerGrid Ref
         let clickedShipObjTmp = {};
@@ -127,6 +129,7 @@ const PlayerGrid = () => {
                     for (let j = 0; j < ship.spaces; j++) {
                         if (x - 1 + ship.spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
+                            return;
                         } else {                    
                                 // Add the grid reference to the shipData array
                                 ship.playerGridRef.push(currentCell.attributes.id.textContent);
@@ -151,6 +154,7 @@ const PlayerGrid = () => {
                     for (let j = 0; j < ship.spaces; j++) {
                         if (y - 1 + ship.spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
+                            return;
                         } else {
                             // Find valueX and store in a variable
                             let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the x value of the click and store in a temp variable (x = 6) This is constant when in vertical mode
@@ -188,6 +192,7 @@ const PlayerGrid = () => {
         }
 
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
+
         for (let key in shipData) {
             const newArray = shipData[key].playerGridRef
             newArray.map((array) => {
@@ -223,7 +228,10 @@ const PlayerGrid = () => {
             })
             clickedShipObjTmp.playerGridRef = [];
         }
-        console.log(newPlayerGridRef)
+        console.log("newPlayerGridRef", newPlayerGridRef);
+        console.log("duplicates", duplicates);
+        console.log("discardedData", discardedData);
+
     };
 
     // event listener to drag ship to grid
