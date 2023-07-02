@@ -25,7 +25,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
 
-
     // return array that only includes data for rockets selected by user
     const rocketsToDisplay = shipDataArray.filter((ship) => {
         return selectedRockets.some((removeItem) => removeItem === ship.stringName);
@@ -270,9 +269,8 @@ const PlayerGrid = ({ selectedRockets }) => {
             <p className="placement-instructions">Drag your ships onto the grid</p>
             <p className="placement-instructions">Hover over the cell you want the top of your ship to be</p>
             <p className="placement-instructions">Left click on a rocket to deploy it in a horizontal attack position</p>
-            {rocketsPlaced ? <button className="launch" onClick={handleReset} >LAUNCH GAME</button> : (
-                <button className="reset-button" onClick={handleReset} >RESET GRID</button>
-            )}
+            {rocketsPlaced ? <button className="launch" onClick={handleReset} >LAUNCH GAME</button> : null}
+            <button className="reset-button" onClick={handleReset} >RESET GRID</button>
 
             <BattleGrid
                 handleOnDrag={handleOnDrag}

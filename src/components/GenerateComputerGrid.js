@@ -1,5 +1,7 @@
 // import { useState } from 'react';
 
+import BattleGrid from "./BattleGrid";
+
 const GenerateComputerGrid = () => {
     // const [updatedNPCRocketData, setUpdatedNPCRocketData] = useState([]);
 
@@ -135,7 +137,7 @@ const GenerateComputerGrid = () => {
 
     return (
         <>
-            <h1></h1>
+            <BattleGrid />
         </>
     )
 }
