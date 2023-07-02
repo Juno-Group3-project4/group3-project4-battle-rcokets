@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import BattleGrid from "./BattleGrid";
 
 import BattleGrid from "./BattleGrid";
 
@@ -46,6 +47,7 @@ const GenerateComputerGrid = () => {
                 {
                     gridValue: `${col.column}` + row,
                     rocket: false
+
                 }
             )
         })

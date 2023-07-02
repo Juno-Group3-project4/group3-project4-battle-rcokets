@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
-// import GenerateComputerGrid from "./GenerateComputerGrid";
+import GenerateComputerGrid from "./GenerateComputerGrid";
+import Score from "./Score";
 
 
 // PLAYER GRID Component 
@@ -14,6 +15,8 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [currentShip, setCurrentShip] = useState('');
 
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
+    // useState to launch game (Non player grid will be displayed)
+    const [readyToLaunch, setReadyToLaunch] = useState(false);
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -71,13 +74,13 @@ const PlayerGrid = ({ selectedRockets }) => {
     const handleReset = () => {
         // Target Ship Divs using useRef Hook
         const ships = rocketImage.current;
-        // Map through shipData and reset playerGridRef to zero
+        // When user clicks reset grid button, we map through shipData and reset all the data in the shipData array
         const updatedShipData = shipData.map((ship) => ({
             ...ship,
             playerGridRef:[],
             orientation: "vertical"
         }));
-        // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset veritcally
+        // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset vertically
         ships.forEach((ship) => {
             ship.style.display = 'flex';
             if (ship.children[1].style.transform === 'rotate(90deg)') {
@@ -89,6 +92,8 @@ const PlayerGrid = ({ selectedRockets }) => {
         })
         // Reset shipData state
         setShipData(updatedShipData);
+        setRocketsPlaced(false);
+        
     }
 
     // event listener for placing ship on grid
@@ -98,14 +103,14 @@ const PlayerGrid = ({ selectedRockets }) => {
         const shipDataArr = [...shipData];
 
         // Store in a new State 
-        setCurrentShip(shipDataArr); 
-        // ? => originally defined as a string
-        
+        setCurrentShip(shipDataArr);
+
         // Create Object to store playerGrid Ref
         let clickedShipObjTmp = {};
         for (const key in shipDataArr) {
             if (shipDataArr[key].shipName === currentShip) {
                 clickedShipObjTmp = shipDataArr[key];
+                // console.log(clickedShipObjTmp)
             }
         }
     
@@ -120,16 +125,16 @@ const PlayerGrid = ({ selectedRockets }) => {
                         if (x - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
                             return;
-                        } else {
-                            // Add the grid reference to the shipData array
-                            shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
-                            // change the colour of the cells
-                            currentCell.style.backgroundColor = "blue";
-                            // Move to the next sibling cell
-                            currentCell = currentCell.nextElementSibling;
-                            // Remove Rocket from display
-                            removeRocket();
-                        }
+                        } else {                    
+                                // Add the grid reference to the shipData array
+                                shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
+                                // change the colour of the cells
+                                currentCell.style.backgroundColor = "blue";
+                                // Move to the next sibling cell
+                                currentCell = currentCell.nextElementSibling;
+                                // Remove Rocket from display
+                                removeRocket();
+                        }    
                     }
                 }
             }
@@ -148,6 +153,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                         } else {
                             // Find valueX and store in a variable
                             let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the x value of the click and store in a temp variable (x = 6) This is constant when in vertical mode
+
 
                             // find the valueY of the currentCell and add 1 to target the next column over
                             let currentCellValueY = Number(currentCell.attributes.valuey.textContent) + 1;
@@ -178,6 +184,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         }
 
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
+
         for (let key in shipData) {
             const newArray = shipData[key].playerGridRef;
             newArray.map((array) => {
@@ -214,7 +221,15 @@ const PlayerGrid = ({ selectedRockets }) => {
             })
             clickedShipObjTmp.playerGridRef = [];
         }
-        console.log(newPlayerGridRef)
+
+        if (newPlayerGridRef.length === 11 || newPlayerGridRef.length === 12 || newPlayerGridRef.length === 13) {
+            setRocketsPlaced(!false);
+        };
+
+        console.log("newPlayerGridRef", newPlayerGridRef);
+        console.log("duplicates", duplicates);
+        console.log("discardedData", discardedData);
+
     };
 
     // event listener to drag ship to grid
@@ -262,21 +277,41 @@ const PlayerGrid = ({ selectedRockets }) => {
         }
     };
 
-
+    const handleLaunch = () => {
+        setReadyToLaunch(true);
+    }
+    
     return (
         <>
-            <h1>Player Grid</h1>
-            <p className="placement-instructions">Drag your ships onto the grid</p>
-            <p className="placement-instructions">Hover over the cell you want the top of your ship to be</p>
-            <p className="placement-instructions">Left click on a rocket to deploy it in a horizontal attack position</p>
-            {rocketsPlaced ? <button className="launch" onClick={handleReset} >LAUNCH GAME</button> : null}
+            { !readyToLaunch ? 
+            <> 
+                <p className="placement-instructions"> Drag your ships onto the grid</p>
+                <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
+                <p className="placement-instructions"> Left click on a rocket to deploy it in a horizontal attack position</p> 
+            </>
+            : null
+            }
+            {rocketsPlaced ? <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button> : null}
             <button className="reset-button" onClick={handleReset} >RESET GRID</button>
+            <div className="gridContainers">
+                <div className="playerGridContainer">
+                    <h2>Player Grid</h2>
+                    <BattleGrid
+                        handleOnDrag={handleOnDrag}
+                        handleDrop={handleDrop}
 
-            <BattleGrid
-                handleOnDrag={handleOnDrag}
-                handleDrop={handleDrop}
-            />
-
+                    />
+                </div>
+                <div className="nonPlayerGridContainer">
+                    {readyToLaunch ?
+                        <>
+                            <h2>Computer Grid</h2>
+                            <GenerateComputerGrid />
+                            <Score />
+                        </>
+                        : null}
+                </div>
+            </div>
             {/* Ships */}
             <div className="shipContainer">
                 {rocketsToDisplay.map((rocket, index) => {
@@ -293,10 +328,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                     )
                 })}
             </div>
-
-            {/* <GenerateComputerGrid /> */}
         </>
-
     )
 }
 
