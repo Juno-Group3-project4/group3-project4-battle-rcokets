@@ -23,7 +23,7 @@ const LandingPage = () => {
                 <li className="instructions-list">If you win, congratulations! You have successfully protected the future of humanity.</li>
                 <li className="instructions-list">If you lose, you can press "Play again"  to improve your skills and defeat the AI.</li>
             </ol>
-            <Link to="/rocket-selection">
+            <Link to="/play">
                 <button>PLAY GAME</button>
             </Link>
         </section>

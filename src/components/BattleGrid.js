@@ -1,9 +1,8 @@
-// NON-PLAYER GRID Component
-
+// BATTLEGRID Component
 import axisLabels from "./axisLabels.js";
 import gridData from "./gridData.js";
 
-const NPCGrid = ({ handleOnDrag, handleDrop }) => {
+const BattleGrid = ({ handleOnDrag, handleDrop }) => {
     return (
         <>
             {/* Grid Container */}
@@ -54,5 +53,5 @@ const NPCGrid = ({ handleOnDrag, handleDrop }) => {
     )
 }
 
-export default NPCGrid;
+export default BattleGrid;
 
