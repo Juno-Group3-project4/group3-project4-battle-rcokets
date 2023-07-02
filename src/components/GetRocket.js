@@ -1,13 +1,16 @@
 // GET ROCKET Component
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import Form from "./Form";
+import PlayerGrid from "./PlayerGrid";
 
 const GetRocket = () => {
     // set rocket data in variable
     const [rockets, setRockets] = useState([]);
     // store users selected rockets in state.
     const [selectedRockets, setSelectedRockets] = useState([]);
+    // stateful variable for form submission
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
     // call api data on mount
     useEffect(() => {
@@ -34,53 +37,26 @@ const GetRocket = () => {
         }
     }
 
-    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('form is submitted');
-        if (selectedRockets.length !== 3 ) {
+        // console.log('form is submitted');
+        if (selectedRockets.length !== 3) {
             alert("Please only select 3 rockets!!");
         } else {
-            navigate("/play");
+            setFormSubmitted(!false);
         }
     }
-    
+
     return (
         <div className="wrapper">
-            <h2>Select 3 rockets!</h2>
-            <form onSubmit={handleSubmit} >
-                {/* Map through the Rocket API array stored in rockets state and display on the screen for user to select */}
-                <ul className="flexContainer">
-                    {rockets.map((rocket) => {
-                        return (
-                            <li className="rocketContainer" key={rocket.id}>
-                                <input type="checkbox" id={`${rocket.id}`} name={rocket.name} value={rocket.name} onChange={handleChange}></input>
-                                <label htmlFor={`${rocket.id}`}>
-                                    <img className="rocket" src={rocket.flickr_images} alt={`${rocket.name}`} />
-                                    <div className="descriptionContainer">
-                                        <h3>{rocket.name}</h3>
-                                        <p className="description">{rocket.description}</p>
-                                    </div>
-                                    <div className="engineSpecsOverlay">
-                                        <p>{`Boosters: ${rocket.boosters}`}</p>
-                                        <p>{`Height: ${rocket.height.meters} meters, ${rocket.height.feet} feet`}</p>
-                                        <p>{`Engine: Number: ${rocket.engines.number}, Type: ${rocket.engines.type}, Version: ${rocket.engines.version}`}</p>
-                                    </div>
-                                </label>       
-                            </li>
-                        )
-                    })}
-                </ul>
-
-                <button onSubmit={()=>navigate("/play")} type="submit">START GAME!</button>
-
-            </form>
+            {formSubmitted ? <PlayerGrid selectedRockets={selectedRockets} /> : (
+                <Form
+                    rockets={rockets}
+                    submitForm={handleSubmit}
+                    handleChange={handleChange}
+                />
+            )}
         </div>
-
-
-        // NEXT STEPS         
-    //    Final task is to make this getRocket component page responsive 
-
     )
 }
 

@@ -1,55 +1,46 @@
 import { useState, useRef, useEffect } from "react";
-import shipOneImg from '../assets/falcon1-shipOne.png';
-import shipTwoImg from '../assets/falcon9-shipTwo.png';
-import shipThreeImg from '../assets/falconHeavy-shipThree.png';
-import shipFourImg from '../assets/starShip-shipFour.png';
-import NPCGrid from "./NPCGrid";
-import GenerateComputerGrid from "./GenerateComputerGrid";
+import BattleGrid from "./BattleGrid";
+import shipDataArray from "./shipDataArray";
+// import GenerateComputerGrid from "./GenerateComputerGrid";
 
 
 // PLAYER GRID Component 
-const PlayerGrid = () => {
+const PlayerGrid = ({ selectedRockets }) => {
 
+    // STATEFUL VARIABLES:
     // set rocket ship grid data
-    const [shipData, setShipData] = useState([
-        {
-            'shipName': 'Falcon1',
-            'spaces': 3,
-            'orientation': 'vertical',
-            'playerGridRef': [],
-            'NPCGridRef': []
-        },
-        {
-            'shipName': 'Falcon9',
-            'spaces': 4,
-            'orientation': 'vertical',
-            'playerGridRef': [],
-            'NPCGridRef': []
+    const [shipData, setShipData] = useState([]);
+    // set current rocket that user is dragging
+    const [currentShip, setCurrentShip] = useState('');
 
-        },
-        {
-            'shipName': 'FalconHeavy',
-            'spaces': 4,
-            'orientation': 'vertical',
-            'playerGridRef': [],
-            'NPCGridRef': []
-        },
-        {
-            'shipName': 'Starship',
-            'spaces': 5,
-            'orientation': 'vertical',
-            'playerGridRef': [],
-            'NPCGridRef': []
-        },
-    ]);
+    const [rocketsPlaced, setRocketsPlaced] = useState(false);
 
-    // useRef to store all the grids references
+    // MUTABLE (useRef) VARIABLES:
+    // store all the grids references
     const allCellDivs = useRef([]);
-
-    // useRef to store individual rocket divs
+    // store individual rocket divs
     const rocketImage = useRef([]);
 
+    // DEFINED GLOBAL VARIABLES:
+    // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
+
+
+    // return array that only includes data for rockets selected by user
+    const rocketsToDisplay = shipDataArray.filter((ship) => {
+        return selectedRockets.some((removeItem) => removeItem === ship.stringName);
+    }).map((filteredShip) => {
+        return (
+            {
+                stringName: filteredShip.stringName,
+                imageSource: filteredShip.image,
+                shipName: filteredShip.shipName,
+                spaces: filteredShip.spaces,
+                orientation: filteredShip.orientation,
+                playerGridRef: filteredShip.playerGridRef
+            }
+        )
+    }) // used rocketsToDisplay array (regular variable) in jsx to return images onto dom
 
     // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
     useEffect(() => {
@@ -57,9 +48,11 @@ const PlayerGrid = () => {
         allCellDivs.current = Array.from(cells);
     }, []);
 
-
-    // set current rocket that user is dragging
-    const [currentShip, setCurrentShip] = useState('');
+    useEffect(() => {
+        // update shipData with rocket data of user selected rockets only
+        setShipData(rocketsToDisplay);
+    }, []); // read u can use >1 useEffect in same component
+    // terminal says: React Hook useEffect has a missing dependency: 'rocketsToDisplay'. Either include it or remove the dependency array
 
     // METHOD TO REMOVE ROCKET FROM DISPLAY ONCE PLACED ON GRID
     const removeRocket = () => {
@@ -95,7 +88,7 @@ const PlayerGrid = () => {
         allCellDivs.current.forEach((cell) => {
             cell.style.backgroundColor = '#002C2E';
         })
-        // Reset ShipData state
+        // Reset shipData state
         setShipData(updatedShipData);
     }
 
@@ -106,8 +99,9 @@ const PlayerGrid = () => {
         const shipDataArr = [...shipData];
 
         // Store in a new State 
-        setCurrentShip(shipDataArr);
-
+        setCurrentShip(shipDataArr); 
+        // ? => originally defined as a string
+        
         // Create Object to store playerGrid Ref
         let clickedShipObjTmp = {};
         for (const key in shipDataArr) {
@@ -118,84 +112,83 @@ const PlayerGrid = () => {
     
         // HORIZONTAL LOGIC
         if (clickedShipObjTmp.orientation === 'horizontal') {
-            shipData.map((ship) => {
-                if (ship.shipName === currentShip) {
+            for (let i = 0; i < shipData.length; i++) {
+                if (shipData[i].shipName === currentShip) {
                     let currentCell = e.target;
                     let x = Number(currentCell.getAttribute('valuex'));
 
-                    for (let j = 0; j < ship.spaces; j++) {
-                        if (x - 1 + ship.spaces > 10) {
+                    for (let j = 0; j < shipData[i].spaces; j++) {
+                        if (x - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
-                        } else {                    
-                                // Add the grid reference to the shipData array
-                                ship.playerGridRef.push(currentCell.attributes.id.textContent);
-                                // change the colour of the cells
-                                currentCell.style.backgroundColor = "blue";
-                                // Move to the next sibling cell
-                                currentCell = currentCell.nextElementSibling;
-                                // Remove Rocket from display
-                                removeRocket();
-                        }    
+                            return;
+                        } else {
+                            // Add the grid reference to the shipData array
+                            shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
+                            // change the colour of the cells
+                            currentCell.style.backgroundColor = "blue";
+                            // Move to the next sibling cell
+                            currentCell = currentCell.nextElementSibling;
+                            // Remove Rocket from display
+                            removeRocket();
+                        }
                     }
                 }
-            });
+            }
         } else {
             // VERTICAL LOGIC
-            shipData.map((ship) => {
-                if (ship.shipName === currentShip) {
+            for (let i = 0; i < shipData.length; i++) {
+                if (shipData[i].shipName === currentShip) {
                     let currentCell = e.target;
-    
+
                     let y = Number(currentCell.getAttribute('valuey'));
 
-                    for (let j = 0; j < ship.spaces; j++) {
-                        if (y - 1 + ship.spaces > 10) {
+                    for (let j = 0; j < shipData[i].spaces; j++) {
+                        if (y - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
+                            return;
                         } else {
                             // Find valueX and store in a variable
                             let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the x value of the click and store in a temp variable (x = 6) This is constant when in vertical mode
 
                             // find the valueY of the currentCell and add 1 to target the next column over
                             let currentCellValueY = Number(currentCell.attributes.valuey.textContent) + 1;
-                            
-                            // create a temporary Array that stores all the divs that have the matching valueY as the currentCell
-                            // allCellDivs.current is the array the stores all the references to the grid divs. value is the individual div while the getAttribute method retrieves the valuex attribute for the div and stores that in a variable.
-                            // we return into tempNextCol an array of all the divs that have a matching valuex attribute by using the valuexAttr variable and checking if its undefined or has a value. If it has a value then check if it matches what is stored in the currentCellValueX variable.
+
                             let tempNextCol = allCellDivs.current.filter((value) => {
                                 const valuexAttr = value.getAttribute('valuex');
                                 return valuexAttr && currentCellValueX.includes(valuexAttr);
                             });
                             // Add the grid reference to the shipData array
-                            ship.playerGridRef.push(currentCell.attributes.id.textContent);
+                            shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
 
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
 
                             // iterate through the temporary array and if it finds valuey that matches the currentCells valueX then store that div as the new currentCell
-                            tempNextCol.map((col) => {
-                                if (col.attributes.valuey.textContent.includes(currentCellValueY)) {
-                                    currentCell = col;
+                            for (let i = 0; i < tempNextCol.length; i++) {
+                                if (tempNextCol[i].attributes.valuey.textContent.includes(currentCellValueY)) {
+                                    currentCell = tempNextCol[i];
                                 }
                                 // looks at all the divs stored in tempNextCol array and if it finds one that has the valuex that matches the currentCellValueX then store that div(cell) as the new currentCell
                                 // Then the code will loop through again using the new cell reference pushing it to the playerGridRef array - loops through 4 times 
-                            });
+                            };
                             removeRocket();
                         }
                     } // end of for loop
                 }
-            })
+            }
         }
 
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
         for (let key in shipData) {
-            const newArray = shipData[key].playerGridRef
+            const newArray = shipData[key].playerGridRef;
             newArray.map((array) => {
                 newPlayerGridRef.push(array);
             })
         }
 
         // ERROR HANDLING to check for duplicates in Array (i.e. user places rocket on a grid where another rocket exists)
-        let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !==index) 
-
+        let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !==index);
+        
         // Array for storing cells which aren't located in the newPlayerGridref, but are also part of the the placement with one or more duplicate values
         let discardedData = [];
         for (let item in clickedShipObjTmp.playerGridRef) {
@@ -205,8 +198,9 @@ const PlayerGrid = () => {
             }
         }
 
+
         // If cell grid is located both within the discarded Data array and duplicates array, run an alert message for user - then put Rocket back in display and clear its playerGridRef array
-        if (duplicates.length > 0 && discardedData.length > 0) {
+        if (duplicates.length > 0 && discardedData.length >= 0) {
             alert("Oops! Make sure you are not placing rockets in a cell where another rocket already exists.")
             allCellDivs.current.forEach((cell) => {
                 if (discardedData.includes(cell.id)) {
@@ -240,6 +234,7 @@ const PlayerGrid = () => {
 
         if (clickShip.style.transform !== 'rotate(90deg)') {
             clickShip.style.transform = 'rotate(90deg)';
+
             setShipData(prevShipData => {
                 // Create a copy of the shipData array
                 const updatedShipData = [...prevShipData];
@@ -253,6 +248,7 @@ const PlayerGrid = () => {
             });
         } else {
             clickShip.style.transform = 'rotate(0)';
+
             setShipData(prevShipData => {
                 // Create a copy of the shipData array
                 const updatedShipData = [...prevShipData];
@@ -274,36 +270,33 @@ const PlayerGrid = () => {
             <p className="placement-instructions">Drag your ships onto the grid</p>
             <p className="placement-instructions">Hover over the cell you want the top of your ship to be</p>
             <p className="placement-instructions">Left click on a rocket to deploy it in a horizontal attack position</p>
-            <button className="reset-button" onClick={handleReset} >RESET GRID</button>
+            {rocketsPlaced ? <button className="launch" onClick={handleReset} >LAUNCH GAME</button> : (
+                <button className="reset-button" onClick={handleReset} >RESET GRID</button>
+            )}
 
-    
-            <NPCGrid
+            <BattleGrid
                 handleOnDrag={handleOnDrag}
                 handleDrop={handleDrop}
             />
 
-            <GenerateComputerGrid />
-
             {/* Ships */}
             <div className="shipContainer">
-                <div className="Falcon1" ref={(e) => rocketImage.current[0] = e}>
-                    <h3 className="spaces-title">Three Spaces</h3>
-                    <img src={shipOneImg} alt="" onDragStart={handleDrag} value="1" name={shipData[0].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                </div>
-                <div className="Falcon9" ref={(e) => rocketImage.current[1] = e}>
-                    <h3 className="spaces-title">Four Spaces</h3>
-                    <img src={shipTwoImg} alt="" onDragStart={handleDrag} value="2" name={shipData[1].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                </div>
-                <div className="FalconHeavy" ref={(e) => rocketImage.current[2] = e}>
-                    <h3 className="spaces-title">Four Spaces</h3>
-                    <img src={shipThreeImg} alt="" onDragStart={handleDrag} value="3" name={shipData[2].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                </div>
-                <div className="Starship" ref={(e) => rocketImage.current[3] = e}>
-                    <h3 className="spaces-title">Five Spaces</h3>
-                    <img src={shipFourImg} alt="" onDragStart={handleDrag} value="4" name={shipData[3].shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                </div>
-
+                {rocketsToDisplay.map((rocket, index) => {
+                    return (
+                        <div
+                            key={index}
+                            className={rocket.shipName}
+                            ref={(e) => rocketImage.current[index] = e}
+                        >
+                            <h3 className="spaces-title">{rocket.stringName}</h3>
+                            <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
+                            <p>{rocket.spaces}</p>
+                        </div>
+                    )
+                })}
             </div>
+
+            {/* <GenerateComputerGrid /> */}
         </>
 
     )

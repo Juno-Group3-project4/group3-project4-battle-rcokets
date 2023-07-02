@@ -1,16 +1,13 @@
 // PLAY Component
-// import GetRocket from "./GetRocket";
-import Score from "./Score";
-import PlayerGrid from "./PlayerGrid";
-// import NPCGrid from "./NPCGrid";
+// import Score from "./Score";
+import GetRocket from "./GetRocket";
 
 const Play = () => {
 
     return (
         <section>
-            <Score />
-            <PlayerGrid />
-            {/* <NPCGrid /> */}
+            {/* <Score /> */}
+            <GetRocket />
         </section>     
     )
 }

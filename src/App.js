@@ -1,9 +1,8 @@
 import './App.scss';
 import Header from './components/Header';
 import LandingPage from './components/LandingPage';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Play from './components/Play';
-import GetRocket from './components/GetRocket';
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -13,8 +12,7 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path = "/" element={<LandingPage />} />
-          <Route path="/rocket-selection" element={<GetRocket />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/play" element={<Play />} />
         </Routes>
       </main>
