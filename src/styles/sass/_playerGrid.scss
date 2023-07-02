@@ -33,3 +33,14 @@
     margin-bottom: 30px;
     margin-top: 40px;
 }
+
+.gridContainers {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height:auto;
+   .playerGridContainer,
+   .nonPlayerGridContainer {
+    flex-grow: 1;
+   }
+}

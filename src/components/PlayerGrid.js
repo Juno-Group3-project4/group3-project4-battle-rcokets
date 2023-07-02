@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
-// import GenerateComputerGrid from "./GenerateComputerGrid";
+import GenerateComputerGrid from "./GenerateComputerGrid";
+import Score from "./Score";
 
 
 // PLAYER GRID Component 
@@ -14,6 +15,8 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [currentShip, setCurrentShip] = useState('');
 
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
+    // useState to launch game (Non player grid will be displayed)
+    const [readyToLaunch, setReadyToLaunch] = useState(false);
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -90,6 +93,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         })
         // Reset shipData state
         setShipData(updatedShipData);
+        setRocketsPlaced(false);
         
     }
 
@@ -124,7 +128,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                             return;
                         } else {                    
                                 // Add the grid reference to the shipData array
-                                ship.playerGridRef.push(currentCell.attributes.id.textContent);
+                                shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
                                 // change the colour of the cells
                                 currentCell.style.backgroundColor = "blue";
                                 // Move to the next sibling cell
@@ -146,6 +150,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                     for (let j = 0; j < shipData[i].spaces; j++) {
                         if (y - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
+                            return;
                         } else {
                             // Find valueX and store in a variable
                             let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the x value of the click and store in a temp variable (x = 6) This is constant when in vertical mode
@@ -217,6 +222,11 @@ const PlayerGrid = ({ selectedRockets }) => {
             })
             clickedShipObjTmp.playerGridRef = [];
         }
+
+        if (newPlayerGridRef.length === 11 || newPlayerGridRef.length === 12 || newPlayerGridRef.length === 13) {
+            setRocketsPlaced(!false);
+        };
+
         console.log("newPlayerGridRef", newPlayerGridRef);
         console.log("duplicates", duplicates);
         console.log("discardedData", discardedData);
@@ -268,22 +278,42 @@ const PlayerGrid = ({ selectedRockets }) => {
         }
     };
 
-
+    const handleLaunch = () => {
+       setReadyToLaunch(true) 
+       
+    }
+    
     return (
         <>
-            <h1>Player Grid</h1>
-            <p className="placement-instructions">Drag your ships onto the grid</p>
-            <p className="placement-instructions">Hover over the cell you want the top of your ship to be</p>
-            <p className="placement-instructions">Left click on a rocket to deploy it in a horizontal attack position</p>
-            {rocketsPlaced ? <button className="launch" onClick={handleReset} >LAUNCH GAME</button> : (
-                <button className="reset-button" onClick={handleReset} >RESET GRID</button>
-            )}
+           { !readyToLaunch ? 
+           <> 
+                <p className="placement-instructions"> Drag your ships onto the grid</p>
+                <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
+                <p className="placement-instructions"> Left click on a rocket to deploy it in a horizontal attack position</p> 
+            </>
+            : null
+         }
+            {rocketsPlaced ? <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button> : null}
+            <button className="reset-button" onClick={handleReset} >RESET GRID</button>
+            <div className="gridContainers">
+                <div className="playerGridContainer">
+                    <h2>Player Grid</h2>
+                    <BattleGrid
+                        handleOnDrag={handleOnDrag}
+                        handleDrop={handleDrop}
 
-            <BattleGrid
-                handleOnDrag={handleOnDrag}
-                handleDrop={handleDrop}
-            />
-
+                    />
+                </div>
+                <div className="nonPlayerGridContainer">
+                    {readyToLaunch ?
+                        <>
+                            <h2>Computer Grid</h2>
+                            <GenerateComputerGrid />
+                            <Score />
+                        </>
+                        : null}
+                </div>
+            </div>
             {/* Ships */}
             <div className="shipContainer">
                 {rocketsToDisplay.map((rocket, index) => {
@@ -301,7 +331,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 })}
             </div>
 
-            {/* <GenerateComputerGrid /> */}
+            
         </>
 
     )
