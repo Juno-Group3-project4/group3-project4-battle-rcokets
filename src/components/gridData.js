@@ -28,6 +28,6 @@ const gridData = gridRows.map((row) => {
             }
         )
     })
-})
+});
 
 export default gridData;
