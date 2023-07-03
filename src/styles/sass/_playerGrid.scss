@@ -20,6 +20,9 @@
     justify-content: space-around;
     margin-top: 20px;
     padding-bottom: 50px;
+    & .rocket-spaces {
+        color: white;
+    }
 }
 
 .rocket-image {
@@ -27,11 +30,11 @@
     width: 200px;
 }
 
-.reset-button {
+.reset-button, .launch, .back-button {
     margin: 0 auto;
     display: block;
     margin-bottom: 30px;
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 .gridContainers {
@@ -44,3 +47,4 @@
     flex-grow: 1;
    }
 }
+

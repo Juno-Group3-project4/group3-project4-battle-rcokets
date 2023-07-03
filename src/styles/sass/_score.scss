@@ -1,3 +1,26 @@
-.scoreboard {
+.scoreBoard {
     display: flex;
+    background-color: #00DBE0;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 10px;
+    justify-content: space-around;
+    .player, .nonplayer {
+        display: flex;
+        flex-direction: column;
+        border: 5px dotted #EDA65E;
+        padding: 10px;
+        margin: 10px;
+        width: 50%;
+        .score {
+            background-color: grey;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 10px;
+            text-align: center;
+            .score-total {
+                font-size: 1.5rem;
+            }
+        }
+    }
 }
