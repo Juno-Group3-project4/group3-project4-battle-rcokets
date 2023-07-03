@@ -10,7 +10,7 @@ const LandingPage = () => {
             <p>The future of planet Earth is at risk as it buckles under the strain of human population, consumption and inane TikTok trends. As corporations and global agencies fund missions to make the colonization of Mars possible, rogue AI rockets plan to thwart any form of human migration into space. Join SpaceX in protecting the future of humanity by helping vanquish the evil ‘AI Space Army’ in a <strong>Battle of Rockets</strong>!</p>
             <h2 className="landing-headings">Instructions</h2>
             <ol>
-                <li className="instructions-list">Select your rockets on the 'Rocket Selection' page after clicking play; select up to four rockets for your fleet.</li>
+                <li className="instructions-list">Select your rockets on the 'Rocket Selection' page after clicking play; select three rockets for your fleet.</li>
                 <li className="instructions-list">Place your rockets on the grid by clicking on the cells provided to place your rockets - each rocket will ocupy a set number of adjacent cells.</li>
                 <li className="instructions-list"> Play Game - it's your turn to attack! Click on a cell on the AI's grid to launch a SpaceX attack.
                     <ul>

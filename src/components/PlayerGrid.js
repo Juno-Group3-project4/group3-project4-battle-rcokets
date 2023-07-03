@@ -18,6 +18,9 @@ const PlayerGrid = ({ selectedRockets }) => {
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
 
+    const [toggleDisplay, setToggleDisplay] = useState(false);
+   
+
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
     const allCellDivs = useRef([]);
@@ -94,6 +97,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         // Reset shipData state
         setShipData(updatedShipData);
         setRocketsPlaced(false);
+        setReadyToLaunch(false);
         
     }
 
@@ -223,14 +227,17 @@ const PlayerGrid = ({ selectedRockets }) => {
             clickedShipObjTmp.playerGridRef = [];
         }
 
-        if (newPlayerGridRef.length === 11 || newPlayerGridRef.length === 12 || newPlayerGridRef.length === 13) {
+        if (
+            shipData[0].playerGridRef.length === shipData[0].spaces &&
+            shipData[1].playerGridRef.length === shipData[1].spaces &&
+            shipData[2].playerGridRef.length === shipData[2].spaces
+        ) {
             setRocketsPlaced(!false);
         };
-
         console.log("newPlayerGridRef", newPlayerGridRef);
         console.log("duplicates", duplicates);
         console.log("discardedData", discardedData);
-
+        return newPlayerGridRef;
     };
 
     // event listener to drag ship to grid
@@ -280,40 +287,43 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     const handleLaunch = () => {
        setReadyToLaunch(true) 
-       
+       setToggleDisplay(true);
     }
     
     return (
         <>
-           { !readyToLaunch ? 
-           <> 
-                <p className="placement-instructions"> Drag your ships onto the grid</p>
-                <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
-                <p className="placement-instructions"> Left click on a rocket to deploy it in a horizontal attack position</p> 
-            </>
-            : null
-         }
-            {rocketsPlaced ? <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button> : null}
-            <button className="reset-button" onClick={handleReset} >RESET GRID</button>
+            {readyToLaunch ? null :
+                <div>
+                    <p className="placement-instructions"> Drag your ships onto the grid</p>
+                    <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
+                    <p className="placement-instructions"> Left click on a rocket to deploy it in a horizontal attack position</p>
+                    {rocketsPlaced ? <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button> : null}
+                    <button className="reset-button" onClick={handleReset} >RESET GRID</button>
+                </div>
+            }
+
             <div className="gridContainers">
                 <div className="playerGridContainer">
                     <h2>Player Grid</h2>
                     <BattleGrid
                         handleOnDrag={handleOnDrag}
                         handleDrop={handleDrop}
-
                     />
                 </div>
-                <div className="nonPlayerGridContainer">
+                
+                <div className="nonPlayerGridContainer" style={{display: readyToLaunch ? 'block' : 'none'}} >
                     {readyToLaunch ?
                         <>
                             <h2>Computer Grid</h2>
                             <GenerateComputerGrid />
-                            <Score />
                         </>
                         : null}
-                </div>
-            </div>
+                </div> 
+            </div> 
+            {readyToLaunch ? <> 
+                <Score />  
+                <button className="back-button" onClick={handleReset}>BACK! <i class="fa-solid fa-rotate-left"></i></button>
+                </>: null}
             {/* Ships */}
             <div className="shipContainer">
                 {rocketsToDisplay.map((rocket, index) => {
@@ -325,7 +335,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                         >
                             <h3 className="spaces-title">{rocket.stringName}</h3>
                             <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                            <p>{rocket.spaces}</p>
+                            <p className="rocket-spaces">{rocket.spaces}</p>
                         </div>
                     )
                 })}
