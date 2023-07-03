@@ -1,25 +1,18 @@
 // import { useState } from 'react';
 import BattleGrid from "./BattleGrid";
 
-const GenerateComputerGrid = () => {
+const GenerateComputerGrid = ({ userRocketSizes, rocketRefs }) => {
     // const [updatedNPCRocketData, setUpdatedNPCRocketData] = useState([]);
 
-    // computer rocket data
-    const npcRocketData = [
-        {
-            spaces: 5,
-            NPCGridRef: [],
-        },
-        {
-            spaces: 4,
-            NPCGridRef: [],
-        },
-        {
-            spaces: 3,
-            NPCGridRef: [],
-        }
-    ];
-
+    // generate rocket data for computer grid based on user's rocket selection (passed as props)
+    const npcRocketData = userRocketSizes.map((rocketSize) => {
+        return (
+            {
+                spaces: rocketSize,
+                NPCGridRef: []
+            }
+        )
+    })
 
     // variables
     const gridSize = 10;
@@ -45,11 +38,29 @@ const GenerateComputerGrid = () => {
                 {
                     gridValue: `${col.column}` + row,
                     rocket: false
-
                 }
             )
         })
     })
+
+    const generateRandomNumber = Math.floor(Math.random() * gridSize);
+
+    
+
+    const generateComputerGuess = () => {
+        let col = generateRandomNumber;
+        let row = generateRandomNumber;
+        let discardedGuesses = [];
+        
+        let computerGuess = grid[row][col].gridValue;
+        
+        if(rocketRefs.includes(computerGuess)) {
+            return true;
+
+        }
+    }
+
+    console.log(generateComputerGuess());
 
     // function to generate random locations (x, y values & orientation)
     const generateRandomLocation = () => {
@@ -61,8 +72,8 @@ const GenerateComputerGrid = () => {
             // randomize orientation
             let orientation = orientations[Math.floor(Math.random() * orientations.length)];
             // random x & y values
-            let x = Math.floor(Math.random() * gridSize);
-            let y = Math.floor(Math.random() * gridSize);
+            let x = generateRandomNumber;
+            let y = generateRandomNumber;
 
             // check if location is valid
             let validRocket = verifyLocation(orientation, x, y, rocketObj, grid);
@@ -109,7 +120,7 @@ const GenerateComputerGrid = () => {
                     x + i >= gridSize ||
                     // no rocket present
                     grid[y][x + i]?.rocket === true ||
-                    // in not undefined
+                    // is not undefined
                     grid[y][x + i] === undefined
                 ) return false;
             }
@@ -133,7 +144,7 @@ const GenerateComputerGrid = () => {
         return grid;
     }
 
-    // generateRandomLocation();
+    generateRandomLocation();
 
     return (
         <>

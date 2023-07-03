@@ -4,7 +4,6 @@ import shipDataArray from "./shipDataArray";
 import GenerateComputerGrid from "./GenerateComputerGrid";
 import Score from "./Score";
 
-
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
 
@@ -13,7 +12,10 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [shipData, setShipData] = useState([]);
     // set current rocket that user is dragging
     const [currentShip, setCurrentShip] = useState('');
+    // array of player's grid refs to be passed as props to GenerateComputerGrid
+    const [rocketRefs, setRocketRefs] = useState([]);
 
+    // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
@@ -31,7 +33,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
 
-
     // return array that only includes data for rockets selected by user
     const rocketsToDisplay = shipDataArray.filter((ship) => {
         return selectedRockets.some((removeItem) => removeItem === ship.stringName);
@@ -48,6 +49,13 @@ const PlayerGrid = ({ selectedRockets }) => {
         )
     }) // used rocketsToDisplay array (regular variable) in jsx to return images onto dom
 
+    // filter sizes of each user selected rocket to pass as props to GenerateComputerGrid, so player & NPC have same number of targets
+    const userRocketSizes = [];
+    rocketsToDisplay.filter((rocket) => {
+        userRocketSizes.push(rocket.spaces);
+        return userRocketSizes;
+    });
+    
     // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
     useEffect(() => {
         const cells = document.querySelectorAll('.gridCell');
@@ -108,7 +116,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         const shipDataArr = [...shipData];
 
         // Store in a new State 
-        setCurrentShip(shipDataArr);
+        // setCurrentShip(shipDataArr);
 
         // Create Object to store playerGrid Ref
         let clickedShipObjTmp = {};
@@ -130,7 +138,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                         if (x - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
                             return;
-                        } else {                    
+                        } else {
                                 // Add the grid reference to the shipData array
                                 shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
                                 // change the colour of the cells
@@ -159,7 +167,6 @@ const PlayerGrid = ({ selectedRockets }) => {
                             // Find valueX and store in a variable
                             let currentCellValueX = currentCell.attributes.valuex.textContent;// finds the x value of the click and store in a temp variable (x = 6) This is constant when in vertical mode
 
-
                             // find the valueY of the currentCell and add 1 to target the next column over
                             let currentCellValueY = Number(currentCell.attributes.valuey.textContent) + 1;
 
@@ -167,6 +174,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                                 const valuexAttr = value.getAttribute('valuex');
                                 return valuexAttr && currentCellValueX.includes(valuexAttr);
                             });
+
                             // Add the grid reference to the shipData array
                             shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
 
@@ -189,7 +197,6 @@ const PlayerGrid = ({ selectedRockets }) => {
         }
 
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
-
         for (let key in shipData) {
             const newArray = shipData[key].playerGridRef;
             newArray.map((array) => {
@@ -209,7 +216,6 @@ const PlayerGrid = ({ selectedRockets }) => {
             }
         }
 
-
         // If cell grid is located both within the discarded Data array and duplicates array, run an alert message for user - then put Rocket back in display and clear its playerGridRef array
         if (duplicates.length > 0 && discardedData.length >= 0) {
             alert("Oops! Make sure you are not placing rockets in a cell where another rocket already exists.")
@@ -227,17 +233,17 @@ const PlayerGrid = ({ selectedRockets }) => {
             clickedShipObjTmp.playerGridRef = [];
         }
 
+        // if all rockets placed on grid, then update rocketsPlaced state to display launch button
         if (
-            shipData[0].playerGridRef.length === shipData[0].spaces &&
-            shipData[1].playerGridRef.length === shipData[1].spaces &&
-            shipData[2].playerGridRef.length === shipData[2].spaces
-        ) {
+                shipData[0].playerGridRef.length === shipData[0].spaces && 
+                shipData[1].playerGridRef.length === shipData[1].spaces && 
+                shipData[2].playerGridRef.length === shipData[2].spaces
+            ) {
             setRocketsPlaced(!false);
         };
-        console.log("newPlayerGridRef", newPlayerGridRef);
-        console.log("duplicates", duplicates);
-        console.log("discardedData", discardedData);
-        return newPlayerGridRef;
+        setRocketRefs(newPlayerGridRef);
+        console.log(newPlayerGridRef);
+
     };
 
     // event listener to drag ship to grid
@@ -286,8 +292,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     };
 
     const handleLaunch = () => {
-       setReadyToLaunch(true) 
-       setToggleDisplay(true);
+        setReadyToLaunch(true);
     }
     
     return (
@@ -315,7 +320,9 @@ const PlayerGrid = ({ selectedRockets }) => {
                     {readyToLaunch ?
                         <>
                             <h2>Computer Grid</h2>
-                            <GenerateComputerGrid />
+                            <GenerateComputerGrid 
+                                userRocketSizes={userRocketSizes}
+                                rocketRefs={rocketRefs}
                         </>
                         : null}
                 </div> 
@@ -340,10 +347,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                     )
                 })}
             </div>
-
-            
         </>
-
     )
 }
 
