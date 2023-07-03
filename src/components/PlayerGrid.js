@@ -21,7 +21,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [readyToLaunch, setReadyToLaunch] = useState(false);
 
     const [toggleDisplay, setToggleDisplay] = useState(false);
-   
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -323,6 +322,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                             <GenerateComputerGrid 
                                 userRocketSizes={userRocketSizes}
                                 rocketRefs={rocketRefs}
+                            />
                         </>
                         : null}
                 </div> 
