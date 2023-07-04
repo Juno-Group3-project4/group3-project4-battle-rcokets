@@ -17,10 +17,14 @@ const playerTurn = (selectedGrid) => {
 
         // if 'hit', change grid cell to red
         selectedGrid.style.backgroundColor = "red";
-
+        // remove selected grid from newNPCGridRef array
+        const refPosition = newNPCGridRef.indexOf(selectedGrid.id); // returns index position of selectedGrid.id in newNPCGridRef array 
+        newNPCGridRef.splice(refPosition, 1); // starting at position ‘refPosition’ (determined from line above), remove 1 item from array
+        
         // then, remove it from newNPCGridRef array
-        newNPCGridRef.splice(selectedGrid.id, 1);
+        // newNPCGridRef.splice(selectedGrid.id, 1);
         console.log('newNPCGridRef updated', newNPCGridRef);
+
 
         // update health bar
         let turnScore = newNPCGridRef.length * clickCount;
