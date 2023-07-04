@@ -18,8 +18,8 @@ const playerTurn = (selectedGrid, playerGridDivRef) => {
         selectedGrid.style.backgroundColor = "red";
 
         // stores number of targets to hit (Health Bar)
-        const arrayLength = newNPCGridRef.length;
-        
+        const arrayLength = newNPCGridRef.length; // return length of the computers ship array
+
         // remove selected grid from newNPCGridRef array
         const refPosition = newNPCGridRef.indexOf(selectedGrid.id); // returns index position of selectedGrid.id in newNPCGridRef array 
         

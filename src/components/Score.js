@@ -1,8 +1,23 @@
 // SCORE Component
-import { useState } from "react";
-import { Typewriter } from "react-simple-typewriter"
+import { newNPCGridRef } from "./GenerateComputerGrid";
+import { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
+import PlayerGrid from "./PlayerGrid";
 
-const Score = () => {
+const Score = ({playerOneFleetLength}) => {
+
+    const [playerTurnScore, setPlayerTurnScore] = useState(0);
+    const [playerFleetLength, setPlayerFleetLength] = useState(0);
+    const [NPCFleetLength, setNPCFleetLength] = useState(0);
+  
+    useEffect(() => {
+        setNPCFleetLength(newNPCGridRef.length);
+        setPlayerFleetLength(playerOneFleetLength);
+
+    }, [])
+
+    console.log('playerOneFleetLength', playerOneFleetLength );
+
     return (
         <>
         <h2>
@@ -19,7 +34,7 @@ const Score = () => {
                       <p className="score-total">0</p> 
                     </div>
                     <p>STATUS:
-                        <span id="playerStatus"></span>
+                        <span id="playerStatus">{playerFleetLength}</span>
                     </p>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">
@@ -32,7 +47,7 @@ const Score = () => {
                         <p className="score-total">0</p>
                     </div>
                     <p>STATUS:
-                        <span id="nonPlayerStatus"></span>
+                        <span id="nonPlayerStatus">{NPCFleetLength}</span>
                     </p>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">

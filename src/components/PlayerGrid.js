@@ -21,6 +21,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     // new player grid div ref
     // const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
     const playerGridDivRef = useRef([]);
+    console.log('playerGridDivRef-->', playerGridDivRef.current.length );
 
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
@@ -359,7 +360,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 </div> 
             </div> 
             {readyToLaunch ? <> 
-                <Score />  
+                <Score playerOneFleetLength={playerGridDivRef.current.length} />  
                 <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
                 </>: null}
             {/* Ships */}
