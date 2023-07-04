@@ -2,7 +2,7 @@
 import axisLabels from "./axisLabels.js";
 import gridData from "./gridData.js";
 
-const BattleGrid = ({ handleOnDrag, handleDrop }) => {
+const BattleGrid = ({ handleOnDrag, handleDrop, handleClick }) => {
     return (
         <>
             {/* Grid Container */}
@@ -34,9 +34,9 @@ const BattleGrid = ({ handleOnDrag, handleDrop }) => {
                                                 className={gridColumn.className}
                                                 key={gridColumn.id}
                                                 id={gridColumn.id}
-                                                // value={gridColumn.id}
                                                 onDragOver={handleOnDrag}
                                                 onDrop={handleDrop}
+                                                onClick={handleClick}
                                                 valuex={gridColumn.x_value}
                                                 valuey={gridColumn.y_value}
                                             >

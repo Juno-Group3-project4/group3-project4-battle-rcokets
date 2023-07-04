@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import BattleGrid from "./BattleGrid";
 
-const GenerateComputerGrid = ({ userRocketSizes, rocketRefs }) => {
+const GenerateComputerGrid = ({ userRocketSizes, rocketRefs, handleClick }) => {
     // const [updatedNPCRocketData, setUpdatedNPCRocketData] = useState([]);
 
     // generate rocket data for computer grid based on user's rocket selection (passed as props)
@@ -43,15 +43,13 @@ const GenerateComputerGrid = ({ userRocketSizes, rocketRefs }) => {
         })
     })
 
-    const generateRandomNumber = Math.floor(Math.random() * gridSize);
-
     
+    const generateRandomNumber = Math.floor(Math.random() * gridSize);
 
     const generateComputerGuess = () => {
         let col = generateRandomNumber;
         let row = generateRandomNumber;
-        let discardedGuesses = [];
-        
+
         let computerGuess = grid[row][col].gridValue;
         
         if(rocketRefs.includes(computerGuess)) {
@@ -64,6 +62,8 @@ const GenerateComputerGrid = ({ userRocketSizes, rocketRefs }) => {
 
     // function to generate random locations (x, y values & orientation)
     const generateRandomLocation = () => {
+        // Reset the array before populating with new values
+        newNPCGridRef.length = 0; 
         // variable to store orientations
         const orientations = ['vertical', 'horizontal'];
 
@@ -91,7 +91,14 @@ const GenerateComputerGrid = ({ userRocketSizes, rocketRefs }) => {
             // if location valid, place ships on grid
             if (validRocket) {
                 placeShip(orientation, x, y, grid, rocketObj);
-                console.log(rocketObj.NPCGridRef);
+
+                const valuesArray = rocketObj.NPCGridRef;
+
+                for (let j = 0; j < valuesArray.length; j++) {
+                    newNPCGridRef.push(valuesArray[j]);
+                }
+
+                console.log("newNPCGridRef", newNPCGridRef);
             }
         });
         console.log(grid);
@@ -148,9 +155,12 @@ const GenerateComputerGrid = ({ userRocketSizes, rocketRefs }) => {
 
     return (
         <>
-            <BattleGrid />
+            <BattleGrid 
+                handleClick={handleClick}
+            />
         </>
     )
 }
 
+export const newNPCGridRef = [];
 export default GenerateComputerGrid;
