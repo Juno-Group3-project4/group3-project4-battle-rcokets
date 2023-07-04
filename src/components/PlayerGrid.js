@@ -320,16 +320,17 @@ const PlayerGrid = ({ selectedRockets }) => {
                     {readyToLaunch ?
                         <>
                             <h2>Computer Grid</h2>
-                            <GenerateComputerGrid 
+                            <GenerateComputerGrid
                                 userRocketSizes={userRocketSizes}
                                 rocketRefs={rocketRefs}
+                            />
                         </>
                         : null}
                 </div> 
             </div> 
             {readyToLaunch ? <> 
                 <Score />  
-                <button className="back-button" onClick={handleReset}>BACK! <i class="fa-solid fa-rotate-left"></i></button>
+                <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
                 </>: null}
             {/* Ships */}
             <div className="shipContainer">
@@ -350,5 +351,6 @@ const PlayerGrid = ({ selectedRockets }) => {
         </>
     )
 }
+
 
 export default PlayerGrid;
