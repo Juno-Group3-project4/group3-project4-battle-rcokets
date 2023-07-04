@@ -16,20 +16,28 @@ const Score = () => {
                 <div className="player">
                     <div className="score">
                       <h3>PLAYER:</h3> 
-                      <p className="score-total">200</p> 
+                      <p className="score-total">0</p> 
                     </div>
-                    <p>Hit:</p>
-                    <p>Missed:</p>
-                    <p>Rocket Destroyed:</p>
+                    <p>STATUS:
+                        <span id="playerStatus"></span>
+                    </p>
+                    <p>Fleet Destruction:</p>
+                    <div className="fleetBarCont">
+                        <div className="playerFleetBar"></div>
+                    </div>
                 </div>
                 <div className="nonplayer">
                     <div className="score">
                         <h3>NON-PLAYER:</h3>
-                        <p className="score-total">150</p>
+                        <p className="score-total">0</p>
                     </div>
-                    <p>Hit:</p>
-                    <p>Missed:</p>
-                    <p>Rocket Destroyed:</p>
+                    <p>STATUS:
+                        <span id="nonPlayerStatus"></span>
+                    </p>
+                    <p>Fleet Destruction:</p>
+                    <div className="fleetBarCont">
+                        <div className="nonPlayerFleetBar"></div>
+                    </div>
                 </div>
             </div>
         </>

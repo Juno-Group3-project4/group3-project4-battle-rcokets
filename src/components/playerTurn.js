@@ -4,31 +4,35 @@ import npcTurn from "./npcTurn";
 let clickCount = 100;
 
 // Function to determine which player's turn it is
-const playerTurn = (selectedGrid) => {
-    // stores number of targets to hit
-    const arrayLength = newNPCGridRef.length;
-
+const playerTurn = (selectedGrid, playerGridDivRef) => {
+    console.log('PLAYER TURN BEGINS');
+    
     // human player logic 
     console.log(selectedGrid);
     console.log("gridRef", newNPCGridRef);
-
+    
     if(newNPCGridRef.includes(selectedGrid.id)) {
         console.log("yes");
-
+        
         // if 'hit', change grid cell to red
         selectedGrid.style.backgroundColor = "red";
+
+        // stores number of targets to hit (Health Bar)
+        const arrayLength = newNPCGridRef.length;
+        
         // remove selected grid from newNPCGridRef array
         const refPosition = newNPCGridRef.indexOf(selectedGrid.id); // returns index position of selectedGrid.id in newNPCGridRef array 
-        newNPCGridRef.splice(refPosition, 1); // starting at position ‘refPosition’ (determined from line above), remove 1 item from array
         
         // then, remove it from newNPCGridRef array
+        newNPCGridRef.splice(refPosition, 1); // starting at position ‘refPosition’ (determined from line above), remove 1 item from array
+        
         // newNPCGridRef.splice(selectedGrid.id, 1);
         console.log('newNPCGridRef updated', newNPCGridRef);
 
 
-        // update health bar
+        // update clickCounter
         let turnScore = newNPCGridRef.length * clickCount;
-        console.log("turn score", turnScore);
+        console.log("turn score", turnScore); // use for score board
         
         // trigger message => "hit" (simple <p> tag on screen => "status: hit emoji/sound effect?")
 
@@ -47,6 +51,8 @@ const playerTurn = (selectedGrid) => {
     console.log(clickCount);
 
     // call new function called NPC turn
+    console.log( '...END PLAYERS TURN...' );
+    npcTurn(playerGridDivRef);
 
 
     // confirm if grid cell has rocket placed there
@@ -62,5 +68,9 @@ const playerTurn = (selectedGrid) => {
                             // 4) update turn state
 
 }
+
+const scoreCalc = () => {
+
+};
 
 export default playerTurn;
