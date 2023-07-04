@@ -3,6 +3,9 @@ import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
 import GenerateComputerGrid from "./GenerateComputerGrid";
 import Score from "./Score";
+import playerTurn from "./playerTurn";
+import npcTurn from "./npcTurn";
+import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -14,6 +17,8 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [currentShip, setCurrentShip] = useState('');
     // array of player's grid refs to be passed as props to GenerateComputerGrid
     const [rocketRefs, setRocketRefs] = useState([]);
+    // new player grid div ref
+    const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
 
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
@@ -21,14 +26,13 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [readyToLaunch, setReadyToLaunch] = useState(false);
 
     const [toggleDisplay, setToggleDisplay] = useState(false);
-   
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
     const allCellDivs = useRef([]);
     // store individual rocket divs
     const rocketImage = useRef([]);
-
+    
     // DEFINED GLOBAL VARIABLES:
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
@@ -111,6 +115,7 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     // event listener for placing ship on grid
     const handleDrop = (e) => {
+        playerGridDivRef.length = 0;
 
         // Spread of shipData useState 
         const shipDataArr = [...shipData];
@@ -181,6 +186,16 @@ const PlayerGrid = ({ selectedRockets }) => {
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
 
+                            console.log(currentCell);
+                            setPlayerGridDivRef((prevArray) => [...prevArray, currentCell]);
+
+                            // const tempArray = [];
+                            // tempArray.push(currentCell);
+
+                            // for (let i = 0; i < tempArray.length; i++) {
+                            //     (tempArray[i]);
+                            // }
+
                             // iterate through the temporary array and if it finds valuey that matches the currentCells valueX then store that div as the new currentCell
                             for (let i = 0; i < tempNextCol.length; i++) {
                                 if (tempNextCol[i].attributes.valuey.textContent.includes(currentCellValueY)) {
@@ -195,7 +210,8 @@ const PlayerGrid = ({ selectedRockets }) => {
                 }
             }
         }
-
+        console.log(playerGridDivRef);
+        
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
         for (let key in shipData) {
             const newArray = shipData[key].playerGridRef;
@@ -294,7 +310,16 @@ const PlayerGrid = ({ selectedRockets }) => {
     const handleLaunch = () => {
         setReadyToLaunch(true);
     }
-    
+
+    // handle click for each div in grid
+    const handleClick = (e) => {
+        let selectedGrid = e.target;
+        console.log(selectedGrid);
+
+        playerTurn(selectedGrid);
+        npcTurn(playerGridDivRef);
+    }
+
     return (
         <>
             {readyToLaunch ? null :
@@ -320,7 +345,8 @@ const PlayerGrid = ({ selectedRockets }) => {
                     {readyToLaunch ?
                         <>
                             <h2>Computer Grid</h2>
-                            <GenerateComputerGrid
+                            <GenerateComputerGrid 
+                                handleClick={handleClick}
                                 userRocketSizes={userRocketSizes}
                                 rocketRefs={rocketRefs}
                             />
