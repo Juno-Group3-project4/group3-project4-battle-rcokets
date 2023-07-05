@@ -7,6 +7,7 @@ import playerTurn from "./playerTurn";
 import npcTurn from "./npcTurn";
 import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
 
+
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
 
@@ -18,7 +19,9 @@ const PlayerGrid = ({ selectedRockets }) => {
     // array of player's grid refs to be passed as props to GenerateComputerGrid
     const [rocketRefs, setRocketRefs] = useState([]);
     // new player grid div ref
-    const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
+    // const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
+    const playerGridDivRef = useRef([]);
+    console.log('playerGridDivRef-->', playerGridDivRef.current.length );
 
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
@@ -148,6 +151,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                                 shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
                                 // change the colour of the cells
                                 currentCell.style.backgroundColor = "blue";
+                                playerGridDivRef.current.push(currentCell);
                                 // Move to the next sibling cell
                                 currentCell = currentCell.nextElementSibling;
                                 // Remove Rocket from display
@@ -185,9 +189,9 @@ const PlayerGrid = ({ selectedRockets }) => {
 
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
-
+                            playerGridDivRef.current.push(currentCell);
                             console.log(currentCell);
-                            setPlayerGridDivRef((prevArray) => [...prevArray, currentCell]);
+                            // setPlayerGridDivRef((prevArray) => [...prevArray, currentCell]);
 
                             // const tempArray = [];
                             // tempArray.push(currentCell);
@@ -317,8 +321,8 @@ const PlayerGrid = ({ selectedRockets }) => {
         let selectedGrid = e.target;
         console.log(selectedGrid);
 
-        playerTurn(selectedGrid);
-        npcTurn(playerGridDivRef);
+        playerTurn(selectedGrid, playerGridDivRef);
+
     }
 
     return (
@@ -356,7 +360,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 </div> 
             </div> 
             {readyToLaunch ? <> 
-                <Score />  
+                <Score playerOneFleetLength={playerGridDivRef.current.length} />  
                 <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
                 </>: null}
             {/* Ships */}
