@@ -333,7 +333,7 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
     const handleGameEnd = (status) => {
-        if (NPCPlayerGridRef === 0) {
+        if (playerGridDivRef === 0) {
         setGameStatus(true);
         setOpenModal(true);
         } else
