@@ -344,7 +344,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         if (newNPCGridRef === 0) {
         setGameStatus(true);
         setOpenModal(true);
-        } else
+        } else 
         setGameStatus(false);
         setOpenModal(true);
     };

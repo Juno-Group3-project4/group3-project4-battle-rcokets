@@ -1,5 +1,6 @@
 import { newNPCGridRef } from "./GenerateComputerGrid"; 
-// import npcTurn from "./npcTurn";
+import npcTurn from "./npcTurn";
+import boomSound from "../sounds/boom.wav"
 
 let clickCount = 100;
 
@@ -37,7 +38,9 @@ const playerTurn = (selectedGrid, playerGridDivRef) => {
         } else {
         // if 'miss' change grid cell to yellow
         selectedGrid.style.backgroundColor = "yellow";
-
+        // create an audio object to play sounds
+        const audio = new Audio(boomSound);
+        audio.play();
         // message => "miss" (simple <p> tag on screen => "status: miss emoji/sound effect?")
         }
 
