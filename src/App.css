@@ -409,6 +409,46 @@ form .flexContainer .rocketContainer {
   cursor: pointer;
 }
 
+@media (max-width: 599px) {
+  Form .flexContainer {
+    flex-direction: column;
+    padding-left: 0;
+  }
+  Form .flexContainer .rocketContainer {
+    width: 100%;
+  }
+  Form .flexContainer li label {
+    flex-direction: column;
+  }
+  Form .flexContainer li label .descriptionContainer {
+    padding-left: 0;
+    font-size: 0.7rem;
+    line-height: 1.3;
+  }
+  [type=checkbox] {
+    width: 20px;
+    height: 20px;
+  }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+  Form .flexContainer {
+    flex-direction: column;
+  }
+  Form .flexContainer .rocketContainer {
+    width: 100%;
+  }
+  Form .flexContainer h2 {
+    font-size: 80%;
+  }
+}
+@media (min-width: 901px) and (max-width: 1120px) {
+  form .flexContainer li label {
+    flex-direction: column;
+  }
+  form .flexContainer li label .descriptionContainer {
+    font-size: 0.7rem;
+  }
+}
 /* NPCGrid CSS */
 /* Entire Grid Container */
 .npcGridContainer {
@@ -586,7 +626,25 @@ form .flexContainer .rocketContainer {
 .scoreBoard .nonplayer .score .score-total {
   font-size: 1.5rem;
 }
-
+.scoreBoard .player .fleetBarCont,
+.scoreBoard .nonplayer .fleetBarCont {
+  border: 1px solid #000;
+  width: 100%;
+  height: 20px;
+  padding: 3px;
+}
+.scoreBoard .player .fleetBarCont .nonPlayerFleetBar,
+.scoreBoard .nonplayer .fleetBarCont .nonPlayerFleetBar {
+  width: 100%;
+  background-color: green;
+  height: 100%;
+}
+.scoreBoard .player .fleetBarCont .playerFleetBar,
+.scoreBoard .nonplayer .fleetBarCont .playerFleetBar {
+  width: 100%;
+  background-color: green;
+  height: 100%;
+}
 
 .backGroundContainer {
   height: 100vh;
@@ -617,24 +675,4 @@ form .flexContainer .rocketContainer {
 .backGroundContainer .modalContainer .btnContainer .playAgainBtn,
 .backGroundContainer .modalContainer .btnContainer .closeGameBtn {
   margin: 10px 15px;
-
-.scoreBoard .player .fleetBarCont,
-.scoreBoard .nonplayer .fleetBarCont {
-  border: 1px solid #000;
-  width: 100%;
-  height: 20px;
-  padding: 3px;
-}
-.scoreBoard .player .fleetBarCont .nonPlayerFleetBar,
-.scoreBoard .nonplayer .fleetBarCont .nonPlayerFleetBar {
-  width: 100%;
-  background-color: green;
-  height: 100%;
-}
-.scoreBoard .player .fleetBarCont .playerFleetBar,
-.scoreBoard .nonplayer .fleetBarCont .playerFleetBar {
-  width: 100%;
-  background-color: green;
-  height: 100%;
-
 }/*# sourceMappingURL=App.css.map */
