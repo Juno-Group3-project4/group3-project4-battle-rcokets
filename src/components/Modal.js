@@ -9,7 +9,7 @@ const Modal = ( { open, gameStatus, closeModal} ) => {
             <div className="modalContainer">
                 <h2> {gameStatus ?
                     <Typewriter
-                            words={[' CONGRATULATIONS YOU WIN!!!']}
+                        words={[' CONGRATULATIONS YOU WIN!!!']}
                         loop={1}
                         typeSpeed={70}
                     /> :
