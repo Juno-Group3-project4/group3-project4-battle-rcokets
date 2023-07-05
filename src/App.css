@@ -565,7 +565,8 @@ form .flexContainer .rocketContainer {
   padding: 10px;
   justify-content: space-around;
 }
-.scoreBoard .player, .scoreBoard .nonplayer {
+.scoreBoard .player,
+.scoreBoard .nonplayer {
   display: flex;
   flex-direction: column;
   border: 5px dotted #EDA65E;
@@ -573,16 +574,19 @@ form .flexContainer .rocketContainer {
   margin: 10px;
   width: 50%;
 }
-.scoreBoard .player .score, .scoreBoard .nonplayer .score {
+.scoreBoard .player .score,
+.scoreBoard .nonplayer .score {
   background-color: grey;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 10px;
   text-align: center;
 }
-.scoreBoard .player .score .score-total, .scoreBoard .nonplayer .score .score-total {
+.scoreBoard .player .score .score-total,
+.scoreBoard .nonplayer .score .score-total {
   font-size: 1.5rem;
 }
+
 
 .backGroundContainer {
   height: 100vh;
@@ -613,4 +617,24 @@ form .flexContainer .rocketContainer {
 .backGroundContainer .modalContainer .btnContainer .playAgainBtn,
 .backGroundContainer .modalContainer .btnContainer .closeGameBtn {
   margin: 10px 15px;
+
+.scoreBoard .player .fleetBarCont,
+.scoreBoard .nonplayer .fleetBarCont {
+  border: 1px solid #000;
+  width: 100%;
+  height: 20px;
+  padding: 3px;
+}
+.scoreBoard .player .fleetBarCont .nonPlayerFleetBar,
+.scoreBoard .nonplayer .fleetBarCont .nonPlayerFleetBar {
+  width: 100%;
+  background-color: green;
+  height: 100%;
+}
+.scoreBoard .player .fleetBarCont .playerFleetBar,
+.scoreBoard .nonplayer .fleetBarCont .playerFleetBar {
+  width: 100%;
+  background-color: green;
+  height: 100%;
+
 }/*# sourceMappingURL=App.css.map */
