@@ -1,9 +1,22 @@
-import './App.css';
+import './App.scss';
+import Header from './components/Header';
+import LandingPage from './components/LandingPage';
+// import Footer from './components/Footer';
+import Play from './components/Play';
+import { Routes, Route } from 'react-router-dom';
+
 
 function App() {
   return (
     <div className="App">
-      <h1>Battle Rockets</h1>
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/play" element={<Play />} />
+        </Routes>
+      </main>
+      {/* <Footer /> */}
     </div>
   );
 }

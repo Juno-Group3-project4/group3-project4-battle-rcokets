@@ -1,0 +1,56 @@
+/* NPCGrid CSS */
+
+/* Entire Grid Container */
+.npcGridContainer {
+    // border: 2px solid #EDA65E;
+    max-width: 600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 2;
+    padding: 2%;
+}
+
+/* All Grid Children */
+.gridCell {
+    background-color: #002C2E;
+    border: 1px solid #00DBE0;
+}
+
+/* Top Header (A-J) */
+.topHeaderContainer {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+}
+
+.bottomGrid {
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+}
+
+/* Left Header (1-10) */
+.leftHeaderContainer {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+}
+
+.topHeaderContainer,
+.leftHeaderContainer {
+    color: #00DBE0;
+    font-weight: bold;
+    
+    .gridCell {
+        text-align: center;
+    }
+}
+
+/* Grid Play Area */
+.gridPlayArea {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+}
+
+.gridRow {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}

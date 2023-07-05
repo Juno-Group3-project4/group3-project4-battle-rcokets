@@ -1,0 +1,50 @@
+.Falcon1, .Falcon9, .FalconHeavy, .Starship {
+    margin: 0 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: yellow; */
+}
+
+.Falcon9, .FalconHeavy {
+    width: 30px;
+}
+
+.Falcon1, .Starship {
+    width: 50px;
+    height: 200px;
+}
+
+.shipContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding-bottom: 50px;
+    & .rocket-spaces {
+        color: white;
+    }
+}
+
+.rocket-image {
+    height: 200px;
+    width: 200px;
+}
+
+.reset-button, .launch, .back-button {
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.gridContainers {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height:auto;
+   .playerGridContainer,
+   .nonPlayerGridContainer {
+    flex-grow: 1;
+   }
+}
+
