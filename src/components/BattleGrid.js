@@ -40,6 +40,7 @@ const BattleGrid = ({ handleOnDrag, handleDrop, handleClick }) => {
                                                 valuex={gridColumn.x_value}
                                                 valuey={gridColumn.y_value}
                                             >
+                                                <span className="sr-only">{gridColumn.id}</span>
                                             </div>
                                         )
                                     })}

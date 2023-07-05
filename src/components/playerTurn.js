@@ -1,5 +1,5 @@
 import { newNPCGridRef } from "./GenerateComputerGrid"; 
-import npcTurn from "./npcTurn";
+// import npcTurn from "./npcTurn";
 
 let clickCount = 100;
 
@@ -18,8 +18,9 @@ const playerTurn = (selectedGrid) => {
         // if 'hit', change grid cell to red
         selectedGrid.style.backgroundColor = "red";
 
-        // then, remove it from newNPCGridRef array
-        newNPCGridRef.splice(selectedGrid.id, 1);
+        // remove selected grid from newNPCGridRef array
+        // const refPosition = newNPCGridRef.indexOf(selectedGrid.id);
+        newNPCGridRef.splice(newNPCGridRef.indexOf(selectedGrid.id), 1);
         console.log('newNPCGridRef updated', newNPCGridRef);
 
         // update health bar
