@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
-import GenerateComputerGrid from "./GenerateComputerGrid";
+import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
 import playerTurn from "./playerTurn";
 import npcTurn from "./npcTurn";
-// import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
+import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
+import Modal from "./Modal";
+
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -17,12 +19,24 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [currentShip, setCurrentShip] = useState('');
     // array of player's grid refs to be passed as props to GenerateComputerGrid
     const [rocketRefs, setRocketRefs] = useState([]);
+    // new player grid div ref
+    // const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
+    const playerGridDivRef = useRef([]);
+    console.log('playerGridDivRef-->', playerGridDivRef.current.length );
 
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
-
+    // usState to manage open/close Modal based on Game status
+    const [openModal, setOpenModal] = useState(false);
+    // useState to track game progress. State will update to "win" or "lose"
+    const [gameStatus, setGameStatus] = useState(false);
+    // useState to show modal if player's rocket has been fully attacked (OPTIONAL)
+    const [attackedModal, setAttackedModal] = useState(false);
+    // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
+    const [destroyedModal, setDestroyedModal] = useState(false);
+ 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
     const allCellDivs = useRef([]);
@@ -144,6 +158,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                                 shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
                                 // change the colour of the cells
                                 currentCell.style.backgroundColor = "blue";
+                                playerGridDivRef.current.push(currentCell);
                                 // Move to the next sibling cell
                                 currentCell = currentCell.nextElementSibling;
                                 // Remove Rocket from display
@@ -181,6 +196,16 @@ const PlayerGrid = ({ selectedRockets }) => {
 
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
+                            playerGridDivRef.current.push(currentCell);
+                            console.log(currentCell);
+                            // setPlayerGridDivRef((prevArray) => [...prevArray, currentCell]);
+
+                            // const tempArray = [];
+                            // tempArray.push(currentCell);
+
+                            // for (let i = 0; i < tempArray.length; i++) {
+                            //     (tempArray[i]);
+                            // }
 
                             // iterate through the temporary array and if it finds valuey that matches the currentCells valueX then store that div as the new currentCell
                             for (let i = 0; i < tempNextCol.length; i++) {
@@ -196,7 +221,8 @@ const PlayerGrid = ({ selectedRockets }) => {
                 }
             }
         }
-
+        console.log(playerGridDivRef);
+        
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
         for (let key in shipData) {
             const newArray = shipData[key].playerGridRef;
@@ -300,10 +326,27 @@ const PlayerGrid = ({ selectedRockets }) => {
     const handleClick = (e) => {
         let selectedGrid = e.target;
         console.log(selectedGrid);
-    
-        playerTurn(selectedGrid);
-        npcTurn(allCellDivs.current);
+
+        playerTurn(selectedGrid, playerGridDivRef);
+
     }
+
+    // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
+    const handleGameEnd = (status) => {
+        if (NPCPlayerGridRef === 0) {
+        setGameStatus(true);
+        setOpenModal(true);
+        } else
+        setGameStatus(false);
+        setOpenModal(true);
+    };
+
+    // function to close the modal
+    const closeModal = (e) => {
+        console.log('clicked');
+        setOpenModal(false);
+       
+    };
 
     return (
         <>
@@ -340,7 +383,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 </div> 
             </div> 
             {readyToLaunch ? <> 
-                <Score />  
+                <Score playerOneFleetLength={playerGridDivRef.current.length} />  
                 <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
                 </>: null}
             {/* Ships */}
@@ -359,11 +402,11 @@ const PlayerGrid = ({ selectedRockets }) => {
                     )
                 })}
             </div>
+            <Modal 
+                open={openModal} gameStatus={gameStatus === true} onClick={closeModal} />
         </>
     )
 }
 
-export default PlayerGrid;
 
-// prop drilling
-// call back function
+export default PlayerGrid;
