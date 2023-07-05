@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import BattleGrid from "./BattleGrid";
 
-const GenerateComputerGrid = ({ userRocketSizes, rocketRefs, handleClick }) => {
+const GenerateComputerGrid = ({ userRocketSizes, rocketRefs, handleClick}) => {
     // const [updatedNPCRocketData, setUpdatedNPCRocketData] = useState([]);
 
     // generate rocket data for computer grid based on user's rocket selection (passed as props)

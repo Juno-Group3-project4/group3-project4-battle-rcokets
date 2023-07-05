@@ -2,7 +2,8 @@
 import axisLabels from "./axisLabels.js";
 import gridData from "./gridData.js";
 
-const BattleGrid = ({ handleOnDrag, handleDrop, handleClick }) => {
+const BattleGrid = ({ handleOnDrag, handleDrop, handleClick}) => {
+
     return (
         <>
             {/* Grid Container */}

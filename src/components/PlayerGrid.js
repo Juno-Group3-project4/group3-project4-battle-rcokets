@@ -4,10 +4,9 @@ import shipDataArray from "./shipDataArray";
 import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
 import playerTurn from "./playerTurn";
-import npcTurn from "./npcTurn";
-import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
+// import npcTurn from "./npcTurn";
+// import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
 import Modal from "./Modal";
-
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -28,6 +27,8 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
+    // useState to store rocket sizes to pass to GenerateComputerGrid
+    const [rocketSizes, setRocketSizes] = useState();
     // usState to manage open/close Modal based on Game status
     const [openModal, setOpenModal] = useState(false);
     // useState to track game progress. State will update to "win" or "lose"
@@ -36,7 +37,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [attackedModal, setAttackedModal] = useState(false);
     // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
     const [destroyedModal, setDestroyedModal] = useState(false);
- 
+
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
     const allCellDivs = useRef([]);
@@ -61,14 +62,25 @@ const PlayerGrid = ({ selectedRockets }) => {
                 playerGridRef: filteredShip.playerGridRef
             }
         )
-    }) // used rocketsToDisplay array (regular variable) in jsx to return images onto dom
-
-    // filter sizes of each user selected rocket to pass as props to GenerateComputerGrid, so player & NPC have same number of targets
-    const userRocketSizes = [];
-    rocketsToDisplay.filter((rocket) => {
-        userRocketSizes.push(rocket.spaces);
-        return userRocketSizes;
     });
+
+    // terminal says: React Hook useEffect has a missing dependency: 'rocketsToDisplay'. Either include it or remove the dependency array
+    useEffect(() => {
+        // update shipData with rocket data of user selected rockets only
+        setShipData(rocketsToDisplay);
+
+        // filter sizes of each user selected rocket into an array
+        if (rocketsToDisplay) {
+            const userRocketSizes = [];
+            rocketsToDisplay.filter((rocket) => {
+                userRocketSizes.push(rocket.spaces);
+            });
+
+            // update state; pass as props to NPC component to equalize target numbers
+            setRocketSizes(userRocketSizes);
+        }
+    }, []);
+
     
     // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
     useEffect(() => {
@@ -77,12 +89,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     }, []);
 
     // console.log("allCellDivsCurrent", allCellDivs.current);
-
-    useEffect(() => {
-        // update shipData with rocket data of user selected rockets only
-        setShipData(rocketsToDisplay);
-    }, []); // read u can use >1 useEffect in same component
-    // terminal says: React Hook useEffect has a missing dependency: 'rocketsToDisplay'. Either include it or remove the dependency array
 
     // METHOD TO REMOVE ROCKET FROM DISPLAY ONCE PLACED ON GRID
     const removeRocket = () => {
@@ -158,6 +164,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                                 shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
                                 // change the colour of the cells
                                 currentCell.style.backgroundColor = "blue";
+
                                 playerGridDivRef.current.push(currentCell);
                                 // Move to the next sibling cell
                                 currentCell = currentCell.nextElementSibling;
@@ -196,6 +203,7 @@ const PlayerGrid = ({ selectedRockets }) => {
 
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
+
                             playerGridDivRef.current.push(currentCell);
                             console.log(currentCell);
                             // setPlayerGridDivRef((prevArray) => [...prevArray, currentCell]);
@@ -333,7 +341,7 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
     const handleGameEnd = (status) => {
-        if (NPCPlayerGridRef === 0) {
+        if (newNPCGridRef === 0) {
         setGameStatus(true);
         setOpenModal(true);
         } else
@@ -345,7 +353,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     const closeModal = (e) => {
         console.log('clicked');
         setOpenModal(false);
-       
     };
 
     return (
@@ -375,7 +382,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                             <h2>Computer Grid</h2>
                             <GenerateComputerGrid 
                                 handleClick={handleClick}
-                                userRocketSizes={userRocketSizes}
+                                userRocketSizes={rocketSizes}
                                 rocketRefs={rocketRefs}
                             />
                         </>
@@ -407,6 +414,5 @@ const PlayerGrid = ({ selectedRockets }) => {
         </>
     )
 }
-
 
 export default PlayerGrid;
