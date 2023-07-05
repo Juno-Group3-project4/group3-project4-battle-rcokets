@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
-import GenerateComputerGrid from "./GenerateComputerGrid";
+import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
 import playerTurn from "./playerTurn";
 import npcTurn from "./npcTurn";
 import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
+import Modal from "./Modal";
 
 
 // PLAYER GRID Component 
@@ -27,9 +28,15 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
-
-    const [toggleDisplay, setToggleDisplay] = useState(false);
-
+    // usState to manage open/close Modal based on Game status
+    const [openModal, setOpenModal] = useState(false);
+    // useState to track game progress. State will update to "win" or "lose"
+    const [gameStatus, setGameStatus] = useState(false);
+    // useState to show modal if player's rocket has been fully attacked (OPTIONAL)
+    const [attackedModal, setAttackedModal] = useState(false);
+    // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
+    const [destroyedModal, setDestroyedModal] = useState(false);
+ 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
     const allCellDivs = useRef([]);
@@ -214,7 +221,6 @@ const PlayerGrid = ({ selectedRockets }) => {
                 }
             }
         }
-
         console.log(playerGridDivRef);
         
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
@@ -325,6 +331,23 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     }
 
+    // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
+    const handleGameEnd = (status) => {
+        if (NPCPlayerGridRef === 0) {
+        setGameStatus(true);
+        setOpenModal(true);
+        } else
+        setGameStatus(false);
+        setOpenModal(true);
+    };
+
+    // function to close the modal
+    const closeModal = (e) => {
+        console.log('clicked');
+        setOpenModal(false);
+       
+    };
+
     return (
         <>
             {readyToLaunch ? null :
@@ -379,8 +402,11 @@ const PlayerGrid = ({ selectedRockets }) => {
                     )
                 })}
             </div>
+            <Modal 
+                open={openModal} gameStatus={gameStatus === true} onClick={closeModal} />
         </>
     )
 }
+
 
 export default PlayerGrid;
