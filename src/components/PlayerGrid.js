@@ -28,7 +28,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
-    // usState to manage open/close Modal based on Game status
+    // useState to manage open/close Modal based on Game status
     const [openModal, setOpenModal] = useState(false);
     // useState to track game progress. State will update to "win" or "lose"
     const [gameStatus, setGameStatus] = useState(false);
@@ -333,10 +333,11 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
     const handleGameEnd = (status) => {
-        if (NPCPlayerGridRef === 0) {
+        // it should be newNPCgridRef array placed in the if statement
+        if (newNPCGridRef === 0) {
         setGameStatus(true);
         setOpenModal(true);
-        } else
+        } else 
         setGameStatus(false);
         setOpenModal(true);
     };
