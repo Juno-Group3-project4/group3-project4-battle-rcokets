@@ -25,15 +25,13 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
-
-    const [toggleDisplay, setToggleDisplay] = useState(false);
     // usState to manage open/close Modal based on Game status
     const [openModal, setOpenModal] = useState(false);
     // useState to track game progress. State will update to "win" or "lose"
     const [gameStatus, setGameStatus] = useState(false);
-    // useState to show modal if player's rocket has been fully attacked
+    // useState to show modal if player's rocket has been fully attacked (OPTIONAL)
     const [attackedModal, setAttackedModal] = useState(false);
-    // useState to show modal if player has fully destroyed the nonplayer's rocket
+    // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
     const [destroyedModal, setDestroyedModal] = useState(false);
  
     // MUTABLE (useRef) VARIABLES:
