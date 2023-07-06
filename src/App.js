@@ -1,7 +1,7 @@
 import './App.scss';
 import Header from './components/Header';
 import LandingPage from './components/LandingPage';
-// import Footer from './components/Footer';
+import Footer from './components/Footer';
 import Play from './components/Play';
 import { Routes, Route } from 'react-router-dom';
 

@@ -311,6 +311,15 @@ button:focus {
   border: 2px solid #00DBE0;
 }
 
+footer {
+  background-color: #00DBE0;
+  padding: 2px;
+  margin-top: 5px;
+}
+footer .footer-text, footer .juno-link {
+  text-align: center;
+}
+
 .wrapper {
   max-width: 1260px;
   width: 90%;
@@ -504,6 +513,18 @@ form .flexContainer .rocketContainer {
   grid-template-columns: repeat(10, 1fr);
 }
 
+.gridCell.div {
+  cursor: pointer;
+}
+.gridCell.div:hover, .gridCell.div:focus {
+  background-color: #00DBE0;
+  border: 2px solid #002C2E;
+}
+
+.gridCell.div.targeted {
+  pointer-events: none;
+}
+
 .landing-page {
   margin: 30px;
   padding: 70px 95px;
@@ -589,12 +610,20 @@ form .flexContainer .rocketContainer {
 .gridContainers {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: auto;
 }
 .gridContainers .playerGridContainer,
 .gridContainers .nonPlayerGridContainer {
   flex-grow: 1;
+}
+
+.hit-message {
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: "Orbitron", sans-serif;
 }
 
 .scoreBoard {

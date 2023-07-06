@@ -37,6 +37,9 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [attackedModal, setAttackedModal] = useState(false);
     // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
     const [destroyedModal, setDestroyedModal] = useState(false);
+    // useState to handle Hit/Miss message upon use turn
+    const [hit, setHit] = useState(false);
+    const [hitVisible, setHitVisible] = useState(false);
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -112,7 +115,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         const updatedShipData = shipData.map((ship) => ({
             ...ship,
             playerGridRef:[],
-            orientation: "vertical"
+            orientation: "vertical",
         }));
         // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset vertically
         ships.forEach((ship) => {
@@ -124,11 +127,21 @@ const PlayerGrid = ({ selectedRockets }) => {
         allCellDivs.current.forEach((cell) => {
             cell.style.backgroundColor = '#002C2E';
         })
-        // Reset shipData state
+     
+        // Reset all State
         setShipData(updatedShipData);
+        setCurrentShip('');
+        setRocketRefs([]);
+        playerGridDivRef.current = [];
         setRocketsPlaced(false);
         setReadyToLaunch(false);
-        
+        setOpenModal(false);
+        setGameStatus(false);
+        setAttackedModal(false);
+        setDestroyedModal(false);
+        setHitVisible(false);
+        setHitVisible(false);
+        console.log(newPlayerGridRef, "RESET SUCCESS")
     }
 
     // event listener for placing ship on grid
@@ -137,7 +150,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         const shipDataArr = [...shipData];
 
         // Store in a new State 
-        // setCurrentShip(shipDataArr);
+        setCurrentShip(shipDataArr);
 
         // Create Object to store playerGrid Ref
         let clickedShipObjTmp = {};
@@ -205,7 +218,6 @@ const PlayerGrid = ({ selectedRockets }) => {
                             currentCell.style.backgroundColor = "blue";
 
                             playerGridDivRef.current.push(currentCell);
-                            console.log(currentCell);
                             // setPlayerGridDivRef((prevArray) => [...prevArray, currentCell]);
 
                             // const tempArray = [];
@@ -330,14 +342,26 @@ const PlayerGrid = ({ selectedRockets }) => {
         setReadyToLaunch(true);
     }
 
+    const handleHit = (hit) => {
+        if (hit) {
+            setHit('HIT! \uD83D\uDCA5')
+        }   else {
+            setHit('MISS! Try Again.')
+        }
+        setHitVisible(true)
+    };
+
     // handle click for each div in grid
     const handleClick = (e) => {
         let selectedGrid = e.target;
         console.log(selectedGrid);
-
-        playerTurn(selectedGrid, playerGridDivRef);
+        if (selectedGrid) {
+            selectedGrid.className = 'gridCell div targeted';
+        }
+        playerTurn(selectedGrid, playerGridDivRef, handleHit);
         npcTurn(playerGridDivRef, allCellDivs.current);
     }
+    
 
     // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
     const handleGameEnd = (status) => {
@@ -355,9 +379,10 @@ const PlayerGrid = ({ selectedRockets }) => {
         setOpenModal(false);
     };
 
+
     return (
         <>
-            {readyToLaunch ? null :
+            {readyToLaunch  ? null :
                 <div>
                     <p className="placement-instructions"> Drag your ships onto the grid</p>
                     <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
@@ -366,7 +391,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                     <button className="reset-button" onClick={handleReset} >RESET GRID</button>
                 </div>
             }
-
+            {hitVisible && <p className="hit-message">{hit}</p>}
             <div className="gridContainers">
                 <div className="playerGridContainer">
                     <h2>Player Grid</h2>

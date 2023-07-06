@@ -5,7 +5,7 @@ import boomSound from "../sounds/boom.wav"
 let clickCount = 100;
 
 // Function to determine which player's turn it is
-const playerTurn = (selectedGrid, playerGridDivRef) => {
+const playerTurn = (selectedGrid, playerGridDivRef, handleHit) => {
         console.log('PLAYER TURN BEGINS');
 
         // human player logic 
@@ -32,6 +32,7 @@ const playerTurn = (selectedGrid, playerGridDivRef) => {
         console.log("turn score", turnScore); // use for score board
         
         // trigger message => "hit" (simple <p> tag on screen => "status: hit emoji/sound effect?")
+        handleHit(true);
 
         // computer turn => return key word to end turn? => style to indicate computer's turn; grey out other grid?
 
@@ -42,6 +43,7 @@ const playerTurn = (selectedGrid, playerGridDivRef) => {
         const audio = new Audio(boomSound);
         audio.play();
         // message => "miss" (simple <p> tag on screen => "status: miss emoji/sound effect?")
+        handleHit(false);
         }
 
         // update click count on each guess/click on grid
