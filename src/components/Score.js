@@ -33,9 +33,6 @@ const Score = ({playerOneFleetLength}) => {
                         <h3>PLAYER:</h3> 
                         <p className="score-total">0</p> 
                     </div>
-                    <p>STATUS:
-                        <span id="playerStatus">{playerFleetLength}</span>
-                    </p>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">
                         <div className="playerFleetBar"></div>
@@ -46,9 +43,6 @@ const Score = ({playerOneFleetLength}) => {
                         <h3>NON-PLAYER:</h3>
                         <p className="score-total">0</p>
                     </div>
-                    <p>STATUS:
-                        <span id="nonPlayerStatus">{NPCFleetLength}</span>
-                    </p>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">
                         <div className="nonPlayerFleetBar"></div>
