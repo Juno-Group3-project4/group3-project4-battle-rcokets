@@ -45,7 +45,7 @@ const playerTurn = (selectedGrid, playerGridDivRef, handleHit) => {
         // create an audio object to play sounds
         const audio1 = new Audio(boomSound);
         audio1.play();
-       
+        
         // message => "miss" (simple <p> tag on screen => "status: miss emoji/sound effect?")
         handleHit(false);
         }

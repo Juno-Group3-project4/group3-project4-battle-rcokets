@@ -130,20 +130,15 @@ form {
                 width: 20px;
                 height: 20px;
             }
-         }
+        }
     }
 }
 
 // **** MOBILE/TABLET RESPONSIVE DESIGN **** //
 @media (min-width: 600px) and (max-width: 900px) {
-<<<<<<< HEAD
     Form .flexContainer {
-        flex-direction: column;
-=======
-   Form .flexContainer {
             padding-left: 0;
             flex-direction: column;
->>>>>>> a62ce51d1547b1e95670282d157bf544ee2b500b
         .rocketContainer {
             width: 100%;
         }  
@@ -161,18 +156,12 @@ form {
             .descriptionContainer {
                 font-size: 0.7rem;
             }
-<<<<<<< HEAD
-        }
-    }
-}
-=======
             .engineSpecsOverlay {
                 background-color: rgba(0, 0, 0, 0.9);
                 p {
                 line-height: 1.6;
                 }
             }
-           }
         }
+    }
 }
->>>>>>> a62ce51d1547b1e95670282d157bf544ee2b500b
