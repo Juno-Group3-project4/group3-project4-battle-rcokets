@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import { newNPCGridRef } from "./GenerateComputerGrid";
 import boomSound from "../sounds/boom.wav"
+=======
+import { newNPCGridRef } from "./GenerateComputerGrid"; 
+import npcTurn from "./npcTurn";
+import boomSound from "../sounds/boom.wav";
+import arcadeExplosion from "../sounds/arcade-Explo-A.wav"
+>>>>>>> a62ce51d1547b1e95670282d157bf544ee2b500b
 
 let clickCount = 100;
 
@@ -16,6 +23,8 @@ const playerTurn = (selectedGrid, playerGridDivRef) => {
         
         // if 'hit', change grid cell to red
         selectedGrid.style.backgroundColor = "red";
+        const audio2 = new Audio(arcadeExplosion);
+        audio2.play();
 
         // stores number of targets to hit (Health Bar)
         const arrayLength = newNPCGridRef.length; // return length of the computers ship array
@@ -38,8 +47,9 @@ const playerTurn = (selectedGrid, playerGridDivRef) => {
         // if 'miss' change grid cell to yellow
         selectedGrid.style.backgroundColor = "yellow";
         // create an audio object to play sounds
-        const audio = new Audio(boomSound);
-        audio.play();
+        const audio1 = new Audio(boomSound);
+        audio1.play();
+       
         // message => "miss" (simple <p> tag on screen => "status: miss emoji/sound effect?")
         }
 

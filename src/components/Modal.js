@@ -1,9 +1,14 @@
 // MODAL (Error handling) Component
 import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
+import battleSounds from "../sounds/battle-sounds.wav";
+
 
 const Modal = ( { open, gameStatus, closeModal} ) => {
-    if (open === false) return null;
+    if (open === false) return null; 
+    const audio3 = new Audio(battleSounds);
+    audio3.play();
+
     return (
         <div className="backGroundContainer">
             <div className="modalContainer">
