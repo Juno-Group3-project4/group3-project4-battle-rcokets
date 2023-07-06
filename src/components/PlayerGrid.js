@@ -5,8 +5,8 @@ import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
 import playerTurn from "./playerTurn";
 // import npcTurn from "./npcTurn";
-// import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
 import Modal from "./Modal";
+import npcTurn from "./npcTurn";
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -336,7 +336,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         console.log(selectedGrid);
 
         playerTurn(selectedGrid, playerGridDivRef);
-
+        npcTurn(playerGridDivRef, allCellDivs.current);
     }
 
     // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
