@@ -3,10 +3,9 @@ import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
 import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
-import playerTurn from "./playerTurn";
-// import npcTurn from "./npcTurn";
-import Modal from "./Modal";
 import npcTurn from "./npcTurn";
+import playerTurn from "./playerTurn";
+import Modal from "./Modal";
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -16,13 +15,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [shipData, setShipData] = useState([]);
     // set current rocket that user is dragging
     const [currentShip, setCurrentShip] = useState('');
-    // array of player's grid refs to be passed as props to GenerateComputerGrid
-    const [rocketRefs, setRocketRefs] = useState([]);
-    // new player grid div ref
-    // const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
-    const playerGridDivRef = useRef([]);
-    console.log('playerGridDivRef-->', playerGridDivRef.current.length );
-
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
@@ -43,6 +35,9 @@ const PlayerGrid = ({ selectedRockets }) => {
     const allCellDivs = useRef([]);
     // store individual rocket divs
     const rocketImage = useRef([]);
+    // store player grid cell references for placed rockets
+    const playerGridDivRef = useRef([]);
+    console.log('playerGridDivRef-->', playerGridDivRef.current.length);
 
     // DEFINED GLOBAL VARIABLES:
     // store all player's grid references into one consolidated array
@@ -276,9 +271,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             ) {
             setRocketsPlaced(!false);
         };
-        setRocketRefs(newPlayerGridRef);
         console.log(newPlayerGridRef);
-
     };
 
     // event listener to drag ship to grid
@@ -335,6 +328,10 @@ const PlayerGrid = ({ selectedRockets }) => {
         let selectedGrid = e.target;
         console.log(selectedGrid);
 
+        if(selectedGrid) {
+            selectedGrid.className = "gridCell div targeted"
+        }
+
         playerTurn(selectedGrid, playerGridDivRef);
         npcTurn(playerGridDivRef, allCellDivs.current);
     }
@@ -383,7 +380,6 @@ const PlayerGrid = ({ selectedRockets }) => {
                             <GenerateComputerGrid 
                                 handleClick={handleClick}
                                 userRocketSizes={rocketSizes}
-                                rocketRefs={rocketRefs}
                             />
                         </>
                         : null}

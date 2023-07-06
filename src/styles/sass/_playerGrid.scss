@@ -42,9 +42,10 @@
     justify-content: center;
     width: 100%;
     height:auto;
-   .playerGridContainer,
-   .nonPlayerGridContainer {
-    flex-grow: 1;
-   }
+
+    .playerGridContainer,
+    .nonPlayerGridContainer {
+        flex-grow: 1;
+    }
 }
 

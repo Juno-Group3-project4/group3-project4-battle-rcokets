@@ -1,5 +1,4 @@
-import { newNPCGridRef } from "./GenerateComputerGrid"; 
-import npcTurn from "./npcTurn";
+import { newNPCGridRef } from "./GenerateComputerGrid";
 import boomSound from "../sounds/boom.wav"
 
 let clickCount = 100;

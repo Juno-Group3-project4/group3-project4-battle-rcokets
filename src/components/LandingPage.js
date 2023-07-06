@@ -11,11 +11,11 @@ const LandingPage = () => {
             <h2 className="landing-headings">Instructions</h2>
             <ol>
                 <li className="instructions-list">Select your rockets on the 'Rocket Selection' page after clicking play; select three rockets for your fleet.</li>
-                <li className="instructions-list">Place your rockets on the grid by clicking on the cells provided to place your rockets - each rocket will ocupy a set number of adjacent cells.</li>
+                <li className="instructions-list">Place your space fleet on the grid by dragging your rockets onto a selected cell - each rocket will occupy a set number of adjacent cells.</li>
                 <li className="instructions-list"> Play Game - it's your turn to attack! Click on a cell on the AI's grid to launch a SpaceX attack.
                     <ul>
                         <li className="indent">If you hit one of the AI's rockets during your turn, the cell will turn red.</li>
-                        <li className="indent">If you miss one of the AI's rockets during your turn, the cell will turn black.</li>
+                        <li className="indent">If you miss one of the AI's rockets during your turn, the cell will turn yellow.</li>
                     </ul>
                 </li>
                 <li className="instructions-list">It's the AI's turn now - they will make their move and attempt to destroy your rockets now.</li>

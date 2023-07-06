@@ -9,7 +9,7 @@ const Score = ({playerOneFleetLength}) => {
     const [playerTurnScore, setPlayerTurnScore] = useState(0);
     const [playerFleetLength, setPlayerFleetLength] = useState(0);
     const [NPCFleetLength, setNPCFleetLength] = useState(0);
-  
+
     useEffect(() => {
         setNPCFleetLength(newNPCGridRef.length);
         setPlayerFleetLength(playerOneFleetLength);
@@ -30,8 +30,8 @@ const Score = ({playerOneFleetLength}) => {
             <div className="scoreBoard">
                 <div className="player">
                     <div className="score">
-                      <h3>PLAYER:</h3> 
-                      <p className="score-total">0</p> 
+                        <h3>PLAYER:</h3> 
+                        <p className="score-total">0</p> 
                     </div>
                     <p>STATUS:
                         <span id="playerStatus">{playerFleetLength}</span>

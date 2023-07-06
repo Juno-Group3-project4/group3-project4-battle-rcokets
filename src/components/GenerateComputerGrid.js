@@ -1,9 +1,7 @@
 // import { useState } from 'react';
 import BattleGrid from "./BattleGrid";
 
-const GenerateComputerGrid = ({ userRocketSizes, rocketRefs, handleClick}) => {
-    // const [updatedNPCRocketData, setUpdatedNPCRocketData] = useState([]);
-
+const GenerateComputerGrid = ({ userRocketSizes, handleClick}) => {
     // generate rocket data for computer grid based on user's rocket selection (passed as props)
     const npcRocketData = userRocketSizes.map((rocketSize) => {
         return (
@@ -43,22 +41,7 @@ const GenerateComputerGrid = ({ userRocketSizes, rocketRefs, handleClick}) => {
         })
     })
 
-    
-    const generateRandomNumber = Math.floor(Math.random() * gridSize);
-
-    // const generateComputerGuess = () => {
-    //     let col = generateRandomNumber;
-    //     let row = generateRandomNumber;
-
-    //     let computerGuess = grid[row][col].gridValue;
-        
-    //     if(rocketRefs.includes(computerGuess)) {
-    //         return true;
-
-    //     }
-    // }
-
-    // console.log(generateComputerGuess());
+    let generateRandomNumber = Math.floor(Math.random() * gridSize);
 
     // function to generate random locations (x, y values & orientation)
     const generateRandomLocation = () => {
