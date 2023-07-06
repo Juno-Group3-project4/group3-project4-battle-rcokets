@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-import { newNPCGridRef } from "./GenerateComputerGrid";
-import boomSound from "../sounds/boom.wav"
-=======
 import { newNPCGridRef } from "./GenerateComputerGrid"; 
 import npcTurn from "./npcTurn";
 import boomSound from "../sounds/boom.wav";
 import arcadeExplosion from "../sounds/arcade-Explo-A.wav"
->>>>>>> a62ce51d1547b1e95670282d157bf544ee2b500b
 
 let clickCount = 100;
 
