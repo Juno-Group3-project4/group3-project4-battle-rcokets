@@ -54,3 +54,16 @@
     display: grid;
     grid-template-columns: repeat(10, 1fr);
 }
+
+.gridCell.div {
+    cursor: pointer;
+    &:hover,
+    &:focus {
+        background-color: #00DBE0;
+        border: 2px solid #002C2E;
+    }
+}
+
+.gridCell.div.targeted {
+    pointer-events: none;
+}
