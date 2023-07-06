@@ -334,6 +334,9 @@ const PlayerGrid = ({ selectedRockets }) => {
     const handleClick = (e) => {
         let selectedGrid = e.target;
         console.log(selectedGrid);
+        if (selectedGrid) {
+            selectedGrid.className = 'gridCell div targeted';
+        }
 
         playerTurn(selectedGrid, playerGridDivRef);
         npcTurn(playerGridDivRef, allCellDivs.current);

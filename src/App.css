@@ -504,6 +504,18 @@ form .flexContainer .rocketContainer {
   grid-template-columns: repeat(10, 1fr);
 }
 
+.gridCell.div {
+  cursor: pointer;
+}
+.gridCell.div:hover, .gridCell.div:focus {
+  background-color: #00DBE0;
+  border: 2px solid #002C2E;
+}
+
+.gridCell.div.targeted {
+  pointer-events: none;
+}
+
 .landing-page {
   margin: 30px;
   padding: 70px 95px;
