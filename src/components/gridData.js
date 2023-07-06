@@ -22,7 +22,7 @@ const gridData = gridRows.map((row) => {
         return (
             {
                 id: `${col.column}` + row,
-                className: 'gridCell',
+                className: 'gridCell div',
                 x_value: `${index + 1}`,
                 y_value: `${row}`
             }
