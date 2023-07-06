@@ -41,3 +41,43 @@
     height: 250px;
     width: 250px;
 }
+
+// *********** MEDIA QUERIES BELOW !!!!!!! ************** //
+// **** MOBILE RESPONSIVE DESIGN **** //
+@media (max-width: 697px) {
+    .landing-page {
+       padding: 10px 15px 40px 15px; 
+            h2 {
+                margin-top: 40px;
+            }
+            img {
+                margin-bottom: 45px;
+                height: 220px;
+                width: 220px;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            ol {
+                margin-bottom: 30px;
+            .instructions-list {
+                font-size: 0.8rem;
+                line-height: 1.1;
+            }
+        }
+            
+    }
+}
+// **** TABLET RESPONSIVE DESIGN **** //
+@media (min-width: 698px) and (max-width: 900px) {
+    .landing-page {
+        padding: 0px 15px 40px 15px;
+        h2 .landing-headings {
+            margin-top: 50px;
+        }
+        img {
+            margin-bottom: 45px;
+        }
+        }
+    }
+

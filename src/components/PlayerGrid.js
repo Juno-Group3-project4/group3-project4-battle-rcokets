@@ -8,6 +8,7 @@ import playerTurn from "./playerTurn";
 import Modal from "./Modal";
 import npcTurn from "./npcTurn";
 
+
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
 
@@ -54,7 +55,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     // return array that only includes data for rockets selected by user
     const rocketsToDisplay = shipDataArray.filter((ship) => {
         return selectedRockets.some((removeItem) => removeItem === ship.stringName);
-    }).map((filteredShip) => {
+    }).map((filteredShip) => { 
         return (
             {
                 stringName: filteredShip.stringName,
@@ -66,6 +67,8 @@ const PlayerGrid = ({ selectedRockets }) => {
             }
         )
     });
+
+   
 
     // terminal says: React Hook useEffect has a missing dependency: 'rocketsToDisplay'. Either include it or remove the dependency array
     useEffect(() => {
@@ -167,7 +170,6 @@ const PlayerGrid = ({ selectedRockets }) => {
                 if (shipData[i].shipName === currentShip) {
                     let currentCell = e.target;
                     let x = Number(currentCell.getAttribute('valuex'));
-
                     for (let j = 0; j < shipData[i].spaces; j++) {
                         if (x - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
@@ -213,6 +215,8 @@ const PlayerGrid = ({ selectedRockets }) => {
 
                             // Add the grid reference to the shipData array
                             shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
+                            console.log("playerGridRef", shipData[i].playerGridRef);
+
 
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
@@ -249,10 +253,14 @@ const PlayerGrid = ({ selectedRockets }) => {
             newArray.map((array) => {
                 newPlayerGridRef.push(array);
             })
+            console.log("newPlayerGridRef", newPlayerGridRef);
+            
+        
         }
 
         // ERROR HANDLING to check for duplicates in Array (i.e. user places rocket on a grid where another rocket exists)
         let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !==index);
+        console.log("Duplicates", duplicates);
         
         // Array for storing cells which aren't located in the newPlayerGridref, but are also part of the the placement with one or more duplicate values
         let discardedData = [];
@@ -289,7 +297,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             setRocketsPlaced(!false);
         };
         setRocketRefs(newPlayerGridRef);
-        console.log(newPlayerGridRef);
+        console.log("newPlayerGridRef", newPlayerGridRef);
 
     };
 
@@ -357,6 +365,8 @@ const PlayerGrid = ({ selectedRockets }) => {
         console.log(selectedGrid);
         if (selectedGrid) {
             selectedGrid.className = 'gridCell div targeted';
+        }        if (selectedGrid) {
+            selectedGrid.className = "gridCell div targeted";
         }
         playerTurn(selectedGrid, playerGridDivRef, handleHit);
         npcTurn(playerGridDivRef, allCellDivs.current);
