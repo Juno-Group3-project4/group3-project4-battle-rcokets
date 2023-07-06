@@ -329,7 +329,6 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 60px;
   margin-bottom: 80px;
 }
 form .flexContainer {
@@ -364,7 +363,7 @@ form .flexContainer li .engineSpecsOverlay {
   position: absolute;
   top: 0;
   left: 0px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   height: 100%;
   width: 100%;
   border-radius: 20px;
@@ -413,6 +412,7 @@ form .flexContainer .rocketContainer {
   Form .flexContainer {
     flex-direction: column;
     padding-left: 0;
+    margin-bottom: 30px;
   }
   Form .flexContainer .rocketContainer {
     width: 100%;
@@ -420,18 +420,29 @@ form .flexContainer .rocketContainer {
   Form .flexContainer li label {
     flex-direction: column;
   }
+  Form .flexContainer li label .rocket {
+    width: 150px;
+    height: 150px;
+  }
   Form .flexContainer li label .descriptionContainer {
     padding-left: 0;
     font-size: 0.7rem;
     line-height: 1.3;
   }
-  [type=checkbox] {
+  Form .flexContainer li label .engineSpecsOverlay {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  Form .flexContainer li label .engineSpecsOverlay p {
+    line-height: 1.6;
+  }
+  Form .flexContainer li label [type=checkbox] {
     width: 20px;
     height: 20px;
   }
 }
 @media (min-width: 600px) and (max-width: 900px) {
   Form .flexContainer {
+    padding-left: 0;
     flex-direction: column;
   }
   Form .flexContainer .rocketContainer {
@@ -447,6 +458,17 @@ form .flexContainer .rocketContainer {
   }
   form .flexContainer li label .descriptionContainer {
     font-size: 0.7rem;
+  }
+  form .flexContainer li label .engineSpecsOverlay {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  form .flexContainer li label .engineSpecsOverlay p {
+    line-height: 1.6;
+  }
+}
+@media (max-width: 399px) {
+  h1 {
+    font-size: 2.3rem;
   }
 }
 /* NPCGrid CSS */
@@ -559,6 +581,40 @@ form .flexContainer .rocketContainer {
   width: 250px;
 }
 
+@media (max-width: 697px) {
+  .landing-page {
+    padding: 10px 15px 40px 15px;
+  }
+  .landing-page h2 {
+    margin-top: 40px;
+  }
+  .landing-page img {
+    margin-bottom: 45px;
+    height: 220px;
+    width: 220px;
+  }
+  .landing-page p {
+    font-size: 0.9rem;
+  }
+  .landing-page ol {
+    margin-bottom: 30px;
+  }
+  .landing-page ol .instructions-list {
+    font-size: 0.8rem;
+    line-height: 1.1;
+  }
+}
+@media (min-width: 698px) and (max-width: 900px) {
+  .landing-page {
+    padding: 0px 15px 40px 15px;
+  }
+  .landing-page h2 .landing-headings {
+    margin-top: 50px;
+  }
+  .landing-page img {
+    margin-bottom: 45px;
+  }
+}
 .Falcon1, .Falcon9, .FalconHeavy, .Starship {
   margin: 0 4px;
   display: flex;
