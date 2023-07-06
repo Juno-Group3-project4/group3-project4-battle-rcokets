@@ -5,7 +5,7 @@ import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
 import playerTurn from "./playerTurn";
 import npcTurn from "./npcTurn";
-import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
+// import { playerGridDivRef, addToPlayerGridDivRef } from "./playerGridUtils";
 import Modal from "./Modal";
 
 
