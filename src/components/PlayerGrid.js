@@ -346,9 +346,6 @@ const PlayerGrid = ({ selectedRockets }) => {
             selectedGrid.className = 'gridCell div targeted';
         }
 
-        if (selectedGrid) {
-            selectedGrid.className = "gridCell div targeted";
-        }
         playerTurn(selectedGrid, playerGridDivRef);
         npcTurn(playerGridDivRef, allCellDivs.current);
     }
