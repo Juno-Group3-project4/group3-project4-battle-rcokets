@@ -1,7 +1,8 @@
 // import { useState } from 'react';
 import BattleGrid from "./BattleGrid";
+// import { useState } from "react";
 
-const GenerateComputerGrid = ({ userRocketSizes, handleClick}) => {
+const GenerateComputerGrid = ({ userRocketSizes, handleClick, readyToLaunch }) => {
     // generate rocket data for computer grid based on user's rocket selection (passed as props)
     const npcRocketData = userRocketSizes.map((rocketSize) => {
         return (
@@ -80,11 +81,10 @@ const GenerateComputerGrid = ({ userRocketSizes, handleClick}) => {
                 for (let j = 0; j < valuesArray.length; j++) {
                     newNPCGridRef.push(valuesArray[j]);
                 }
-
-                console.log("newNPCGridRef", newNPCGridRef);
             }
         });
-        console.log(grid);
+        // console.log(grid);
+        console.log("newNPCGridRef", newNPCGridRef);
         return grid;
     }
 
@@ -134,7 +134,9 @@ const GenerateComputerGrid = ({ userRocketSizes, handleClick}) => {
         return grid;
     }
 
-    generateRandomLocation();
+
+    // generateRandomLocation();
+    
 
     return (
         <>

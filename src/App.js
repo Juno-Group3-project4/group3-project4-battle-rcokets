@@ -2,7 +2,7 @@ import './App.scss';
 import Header from './components/Header';
 import LandingPage from './components/LandingPage';
 import Footer from './components/Footer';
-import Play from './components/Play';
+import GetRocket from './components/GetRocket';
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -13,10 +13,10 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/play" element={<Play />} />
+          <Route path="/getrocket" element={<GetRocket />} />
         </Routes>
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

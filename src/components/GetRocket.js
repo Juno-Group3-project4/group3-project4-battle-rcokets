@@ -28,7 +28,7 @@ const GetRocket = () => {
     const handleChange = (event) => {
         // console.log(event.target.checked);
         if (event.target.checked) {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         // use spread operater to create a new array and add users selection
         setSelectedRockets([...selectedRockets, event.target.value]);
         } else {

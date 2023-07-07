@@ -12,9 +12,13 @@ const playerTurn = (selectedGrid, playerGridDivRef, handleHit) => {
         // human player logic 
         console.log(selectedGrid);
         console.log("gridRef", newNPCGridRef);
+
+        let copyNPCGridRef = JSON.parse(JSON.stringify(newNPCGridRef));
+        console.log("copyNPCGridRef", copyNPCGridRef)
         
         if(newNPCGridRef.includes(selectedGrid.id)) {
                 console.log("yes");
+        
         
         // if 'hit', change grid cell to red
         selectedGrid.style.backgroundColor = "red";
@@ -24,12 +28,12 @@ const playerTurn = (selectedGrid, playerGridDivRef, handleHit) => {
         // stores number of targets to hit (Health Bar)
         const arrayLength = newNPCGridRef.length; // return length of the computers ship array
 
-        // remove selected grid from newNPCGridRef array
-        newNPCGridRef.splice(newNPCGridRef.indexOf(selectedGrid.id), 1); 
+        // remove selected grid from copyNPCGridRef array
+        copyNPCGridRef.splice(copyNPCGridRef.indexOf(selectedGrid.id), 1); 
         
         // newNPCGridRef.splice(selectedGrid.id, 1);
         console.log('newNPCGridRef updated', newNPCGridRef);
-
+        console.log("copyNPCGridRef updated", copyNPCGridRef)
         // update clickCounter
         let turnScore = newNPCGridRef.length * clickCount;
         console.log("turn score", turnScore); // use for score board
