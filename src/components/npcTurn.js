@@ -1,7 +1,7 @@
 
 const npcTurn = (playerGridDivRef, allCellDivs) => {
-    console.log( 'COMPUTERS TURN BEGINS' );
-    console.log('playerGridDivRef=>>',playerGridDivRef);
+    // console.log( 'COMPUTERS TURN BEGINS' );
+    // console.log('playerGridDivRef=>>',playerGridDivRef);
 
     setTimeout(() => {
         const randomGrid = () => {
@@ -12,21 +12,21 @@ const npcTurn = (playerGridDivRef, allCellDivs) => {
                 return generateRandomNumber;
             };
             let NPCRandomCellGuess = `${generateRandomLetter[randomNumber()]}${randomRowNumber[randomNumber()]}`;
-            console.log('NPCRandomCellGuess', NPCRandomCellGuess);
+            // console.log('NPCRandomCellGuess', NPCRandomCellGuess);
             return NPCRandomCellGuess;
         };
 
         const computerGuess = randomGrid();
-        console.log(allCellDivs);
+        // console.log(allCellDivs);
 
         allCellDivs.forEach((gridDivRef) => {
             if(gridDivRef.id === computerGuess && gridDivRef.style.backgroundColor === "blue") {
                 gridDivRef.style.backgroundColor = "red";
                 
-                console.log('yes');
+                // console.log('yes');
             } else if (gridDivRef.id === computerGuess && gridDivRef.style.backgroundColor !== "blue"){
                 gridDivRef.style.backgroundColor = "yellow";
-                console.log('nope');
+                // console.log('nope');
             }
         })
         
@@ -36,7 +36,7 @@ const npcTurn = (playerGridDivRef, allCellDivs) => {
         // => if hit => filter through allCellDivs & find div with matching id and change bg colour to red
             // => if miss => filter thru allcelldivs & target div with matching id and change bg colour to yellow
     
-    console.log('...END COMPUTERS TURN...');
+    // console.log('...END COMPUTERS TURN...');
 }
 
 export default npcTurn;

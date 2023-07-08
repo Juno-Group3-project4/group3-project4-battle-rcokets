@@ -1,8 +1,8 @@
 // GET ROCKET Component
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Form from "./Form";
-import PlayerGrid from "./PlayerGrid";
+// import Form from "./Form";
+// import PlayerGrid from "./PlayerGrid";
 
 const GetRocket = () => {
     // set rocket data in variable
@@ -60,4 +60,4 @@ const GetRocket = () => {
     )
 }
 
-export default GetRocket;
+// export default GetRocket;

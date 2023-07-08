@@ -1,18 +1,5 @@
-// import { useState } from 'react';
-import BattleGrid from "./BattleGrid";
-// import { useState } from "react";
 
-const GenerateComputerGrid = ({ userRocketSizes, handleClick, readyToLaunch }) => {
-    // generate rocket data for computer grid based on user's rocket selection (passed as props)
-    const npcRocketData = userRocketSizes.map((rocketSize) => {
-        return (
-            {
-                spaces: rocketSize,
-                NPCGridRef: []
-            }
-        )
-    })
-
+const GenerateComputerGrid = (props) => {
     // variables
     const gridSize = 10;
     const gridCols = [
@@ -47,7 +34,7 @@ const GenerateComputerGrid = ({ userRocketSizes, handleClick, readyToLaunch }) =
     // function to generate random locations (x, y values & orientation)
     const generateRandomLocation = () => {
         // Reset the array before populating with new values
-        newNPCGridRef.length = 0; 
+        // newNPCGridRef.length = 0;
         // variable to store orientations
         const orientations = ['vertical', 'horizontal'];
 
@@ -75,16 +62,8 @@ const GenerateComputerGrid = ({ userRocketSizes, handleClick, readyToLaunch }) =
             // if location valid, place ships on grid
             if (validRocket) {
                 placeShip(orientation, x, y, grid, rocketObj);
-
-                const valuesArray = rocketObj.NPCGridRef;
-
-                for (let j = 0; j < valuesArray.length; j++) {
-                    newNPCGridRef.push(valuesArray[j]);
-                }
             }
         });
-        // console.log(grid);
-        console.log("newNPCGridRef", newNPCGridRef);
         return grid;
     }
 
@@ -110,7 +89,7 @@ const GenerateComputerGrid = ({ userRocketSizes, handleClick, readyToLaunch }) =
                     x + i >= gridSize ||
                     // no rocket present
                     grid[y][x + i]?.rocket === true ||
-                    // is not undefined
+                    // in not undefined
                     grid[y][x + i] === undefined
                 ) return false;
             }
@@ -121,11 +100,14 @@ const GenerateComputerGrid = ({ userRocketSizes, handleClick, readyToLaunch }) =
 
     const placeShip = (orientation, x, y, grid, rocketObj) => {
         if (orientation === 'vertical') {
+            rocketObj.NPCGridRef.length = 0;
             for (let i = 0; i < rocketObj.spaces; i++) {
                 grid[y + i][x].rocket = true;
                 rocketObj.NPCGridRef.push(grid[y + i][x].gridValue);
             }
+
         } else if (orientation === 'horizontal') {
+            rocketObj.NPCGridRef.length = 0;
             for (let i = 0; i < rocketObj.spaces; i++) {
                 grid[y][x + i].rocket = true;
                 rocketObj.NPCGridRef.push(grid[y][x + i].gridValue);
@@ -134,18 +116,37 @@ const GenerateComputerGrid = ({ userRocketSizes, handleClick, readyToLaunch }) =
         return grid;
     }
 
-
-    // generateRandomLocation();
-    
+    generateRandomLocation();
 
     return (
         <>
-            <BattleGrid 
-                handleClick={handleClick}
-            />
+            <h2>Computer Grid</h2>
+            {props.children}
         </>
     )
 }
 
-export const newNPCGridRef = [];
+// computer rocket data
+export const npcRocketData = [
+    {
+        stringName: 'Falcon 1',
+        spaces: 3,
+        NPCGridRef: [],
+    },
+    {
+        stringName: 'Falcon 9',
+        spaces: 4,
+        NPCGridRef: [],
+    },
+    {
+        stringName: 'Falcon Heavy',
+        spaces: 4,
+        NPCGridRef: [],
+    },
+    {
+        stringName: 'Starship',
+        spaces: 5,
+        NPCGridRef: [],
+    }
+];
 export default GenerateComputerGrid;

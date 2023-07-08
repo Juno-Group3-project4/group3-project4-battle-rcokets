@@ -55,7 +55,7 @@
     grid-template-columns: repeat(10, 1fr);
 }
 
-.gridCell.div {
+.gridCell.div.npcDiv {
     cursor: pointer;
     &:hover,
     &:focus {

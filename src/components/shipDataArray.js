@@ -12,7 +12,8 @@ const shipDataArray = [
         'spaces': 3,
         'orientation': 'vertical',
         'playerGridRef': [],
-        'NPCGridRef': []
+        'NPCGridRef': [],
+        'attackedGridCells': []
     },
     {
         'stringName': 'Falcon 9',
@@ -21,7 +22,8 @@ const shipDataArray = [
         'spaces': 4,
         'orientation': 'vertical',
         'playerGridRef': [],
-        'NPCGridRef': []
+        'NPCGridRef': [],
+        'attackedCells': []
 
     },
     {
@@ -31,7 +33,8 @@ const shipDataArray = [
         'spaces': 4,
         'orientation': 'vertical',
         'playerGridRef': [],
-        'NPCGridRef': []
+        'NPCGridRef': [],
+        'attackedCells': []
     },
     {
         'stringName': 'Starship',
@@ -40,7 +43,8 @@ const shipDataArray = [
         'spaces': 5,
         'orientation': 'vertical',
         'playerGridRef': [],
-        'NPCGridRef': []
+        'NPCGridRef': [],
+        'attackedCells': []
     },
 ];
 

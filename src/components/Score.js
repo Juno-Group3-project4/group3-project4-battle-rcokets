@@ -1,5 +1,5 @@
 // SCORE Component
-import { newNPCGridRef } from "./GenerateComputerGrid";
+// import { newNPCGridRef } from "./generateComputerGrid";
 import { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import PlayerGrid from "./PlayerGrid";
@@ -11,12 +11,12 @@ const Score = ({playerOneFleetLength}) => {
     const [NPCFleetLength, setNPCFleetLength] = useState(0);
 
     useEffect(() => {
-        setNPCFleetLength(newNPCGridRef.length);
+        // setNPCFleetLength(newNPCGridRef.length);
         setPlayerFleetLength(playerOneFleetLength);
 
     }, [])
 
-    console.log('playerOneFleetLength', playerOneFleetLength );
+    // console.log('playerOneFleetLength', playerOneFleetLength );
 
     return (
         <>

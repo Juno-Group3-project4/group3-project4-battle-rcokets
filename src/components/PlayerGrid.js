@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
-import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
-import npcTurn from "./npcTurn";
-import playerTurn from "./playerTurn";
+// import npcTurn from "./npcTurn";
+// import playerTurn from "./playerTurn";
 import Modal from "./Modal";
-
+import gridData from "./gridData";
+import GenerateComputerGrid, { npcRocketData } from "./GenerateComputerGrid";
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -14,14 +14,14 @@ const PlayerGrid = ({ selectedRockets }) => {
     // STATEFUL VARIABLES:
     // set rocket ship grid data
     const [shipData, setShipData] = useState([]);
+    // set NPC rocket ship grid data
+    const [npcShipData, setNpcShipData] = useState([]);
     // set current rocket that user is dragging
     const [currentShip, setCurrentShip] = useState('');
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
-    // useState to store rocket sizes to pass to GenerateComputerGrid
-    const [rocketSizes, setRocketSizes] = useState();
     // usState to manage open/close Modal based on Game status
     const [openModal, setOpenModal] = useState(false);
     // useState to track game progress. State will update to "win" or "lose"
@@ -41,54 +41,41 @@ const PlayerGrid = ({ selectedRockets }) => {
     const rocketImage = useRef([]);
     // store player grid cell references for placed rockets
     const playerGridDivRef = useRef([]);
-    // console.log('playerGridDivRef-->', playerGridDivRef.current.length);
 
     // DEFINED GLOBAL VARIABLES:
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
 
-    // return array that only includes data for rockets selected by user
-    const rocketsToDisplay = shipDataArray.filter((ship) => {
-        return selectedRockets.some((removeItem) => removeItem === ship.stringName);
-    }).map((filteredShip) => { 
-        return (
-            {
-                stringName: filteredShip.stringName,
-                imageSource: filteredShip.image,
-                shipName: filteredShip.shipName,
-                spaces: filteredShip.spaces,
-                orientation: filteredShip.orientation,
-                playerGridRef: filteredShip.playerGridRef
-            }
-        )
-    });
-
-    // terminal says: React Hook useEffect has a missing dependency: 'rocketsToDisplay'. Either include it or remove the dependency array
-    useEffect(() => {
-        // update shipData with rocket data of user selected rockets only
-        setShipData(rocketsToDisplay);
-
-        // filter sizes of each user selected rocket into an array
-        if (rocketsToDisplay) {
-            const userRocketSizes = [];
-            rocketsToDisplay.filter((rocket) => {
-                userRocketSizes.push(rocket.spaces);
-            });
-
-            // update state; pass as props to NPC component to equalize target numbers
-            setRocketSizes(userRocketSizes);
-        }
-    }, []);
-
-    
     // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
     useEffect(() => {
         const cells = document.querySelectorAll('.gridCell.div');
         allCellDivs.current = Array.from(cells);
+        displayPlayerRockets();
     }, []);
 
     // console.log("allCellDivsCurrent", allCellDivs.current);
-
+    
+    // filter & map over shipDataArray to return only data for rockets selected by user
+    const displayPlayerRockets = () => {
+        // return array that only includes data for rockets selected by user
+        const rocketsToDisplay = shipDataArray.filter((ship) => {
+            return selectedRockets.some((removeItem) => removeItem === ship.stringName);
+        }).map((filteredShip) => {
+            return (
+                {
+                    stringName: filteredShip.stringName,
+                    imageSource: filteredShip.image,
+                    shipName: filteredShip.shipName,
+                    spaces: filteredShip.spaces,
+                    orientation: filteredShip.orientation,
+                    playerGridRef: filteredShip.playerGridRef,
+                    attackedCells: filteredShip.attackedCells
+                }
+            )
+        });
+        setShipData(rocketsToDisplay);
+    }
+    
     // METHOD TO REMOVE ROCKET FROM DISPLAY ONCE PLACED ON GRID
     const removeRocket = () => {
 
@@ -327,9 +314,27 @@ const PlayerGrid = ({ selectedRockets }) => {
     };
 
     const handleLaunch = () => {
+        // set ready to launch state to true
         setReadyToLaunch(true);
+
+        // to equalize game, filter & map over npcGridRockets to return same rocket data for computer grid
+        const npcGridRockets = npcRocketData.filter((npcRocket) => {
+            return selectedRockets.some((removeItem) => removeItem === npcRocket.stringName);
+        }).map((filteredRocket) => {
+            return (
+                {
+                    stringName: filteredRocket.stringName,
+                    spaces: filteredRocket.spaces,
+                    NPCGridRef: filteredRocket.NPCGridRef,
+                    attackedCells: []
+                }
+            )
+        });
+        // set npcShipData state
+        setNpcShipData(npcGridRockets);
     }
 
+        
     const handleHit = (hit) => {
         if (hit) {
             setHit('HIT! \uD83D\uDCA5')
@@ -342,28 +347,28 @@ const PlayerGrid = ({ selectedRockets }) => {
     // handle click for each div in grid
     const handleClick = (e) => {
         let selectedGrid = e.target;
-        console.log(selectedGrid);
+        // console.log("selectedGrid", selectedGrid);
         if (selectedGrid) {
             selectedGrid.className = 'gridCell div targeted';
         }
-        playerTurn(selectedGrid, playerGridDivRef, handleHit);
-        npcTurn(playerGridDivRef, allCellDivs.current);
+        // playerTurn(selectedGrid, playerGridDivRef, handleHit);
+        // npcTurn(playerGridDivRef, allCellDivs.current);
     }
     
 
     // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
-    const handleGameEnd = (status) => {
-        if (newNPCGridRef === 0) {
-        setGameStatus(true);
-        setOpenModal(true);
-        } else 
-        setGameStatus(false);
-        setOpenModal(true);
-    };
+    // const handleGameEnd = (status) => {
+    //     if (newNPCGridRef === 0) {
+    //     setGameStatus(true);
+    //     setOpenModal(true);
+    //     } else 
+    //     setGameStatus(false);
+    //     setOpenModal(true);
+    // };
 
     // function to close the modal
     const closeModal = (e) => {
-        console.log('clicked');
+        // console.log('clicked');
         setOpenModal(false);
     };
 
@@ -383,21 +388,58 @@ const PlayerGrid = ({ selectedRockets }) => {
             <div className="gridContainers">
                 <div className="playerGridContainer">
                     <h2>Player Grid</h2>
-                    <BattleGrid
-                        handleOnDrag={handleOnDrag}
-                        handleDrop={handleDrop}
-                    />
+                    <BattleGrid>
+                        {gridData.map((gridRow, index) => {
+                            return (
+                                <div key={index} id={index} className="gridRow">
+                                    {gridRow.map((gridColumn) => {
+                                        return (
+                                            <div
+                                                className={gridColumn.className}
+                                                key={gridColumn.id}
+                                                id={gridColumn.id}
+                                                onDragOver={handleOnDrag}
+                                                onDrop={handleDrop}
+                                                valuex={gridColumn.x_value}
+                                                valuey={gridColumn.y_value}
+                                            >
+                                                <span className="sr-only">{gridColumn.id}</span>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )
+                        })}
+                    </BattleGrid>
                 </div>
                 
                 <div className="nonPlayerGridContainer" style={{display: readyToLaunch ? 'block' : 'none'}} >
                     {readyToLaunch ?
                         <>
-                            <h2>Computer Grid</h2>
-                            <GenerateComputerGrid 
-                                handleClick={handleClick}
-                                userRocketSizes={rocketSizes}
-                                readyToLaunch={readyToLaunch}
-                            />
+                            <GenerateComputerGrid>
+                                <BattleGrid>
+                                    {gridData.map((gridRow, index) => {
+                                        return (
+                                            <div key={index} id={index} className="gridRow">
+                                                {gridRow.map((gridColumn) => {
+                                                    return (
+                                                        <div
+                                                            className={`${gridColumn.className} npcDiv`}
+                                                            key={gridColumn.id}
+                                                            id={gridColumn.id}
+                                                            onClick={handleClick}
+                                                            valuex={gridColumn.x_value}
+                                                            valuey={gridColumn.y_value}
+                                                        >
+                                                            <span className="sr-only">{gridColumn.id}</span>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        )
+                                    })}
+                                </BattleGrid>
+                            </GenerateComputerGrid>
                         </>
                         : null}
                 </div> 
@@ -408,7 +450,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 </>: null}
             {/* Ships */}
             <div className="shipContainer">
-                {rocketsToDisplay.map((rocket, index) => {
+                {shipData.map((rocket, index) => {
                     return (
                         <div
                             key={index}
@@ -428,4 +470,5 @@ const PlayerGrid = ({ selectedRockets }) => {
     )
 }
 
+export let userRocketSizes = [];
 export default PlayerGrid;
