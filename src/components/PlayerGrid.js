@@ -306,8 +306,8 @@ const PlayerGrid = ({ selectedRockets }) => {
         const clickShip = e.target;
         const shipId = clickShip.getAttribute('name');
 
-        if (clickShip.style.transform !== 'rotate(90deg)') {
-            clickShip.style.transform = 'rotate(90deg)';
+        if (clickShip.style.transform !== 'rotate(-90deg)') {
+            clickShip.style.transform = 'rotate(-90deg)';
 
             setShipData(prevShipData => {
                 // Create a copy of the shipData array
@@ -356,13 +356,9 @@ const PlayerGrid = ({ selectedRockets }) => {
         console.log(selectedGrid);
         if (selectedGrid) {
             selectedGrid.className = 'gridCell div targeted';
-        }     
-        let correctGridHit = playerTurn(selectedGrid, playerGridDivRef, handleHit)
-        console.log("correctGridHit", correctGridHit);
-        setGridColorChange(correctGridHit);
-        console.log("gridColorChange", gridColorChange);
-        // console.log("gridColorCHange", gridColorChangeRed );
-        // console.log("gridColorChange", playerTurn(selectedGrid, playerGridDivRef, handleHit))
+        }
+
+        playerTurn(selectedGrid, playerGridDivRef);
         npcTurn(playerGridDivRef, allCellDivs.current);
     }
     
