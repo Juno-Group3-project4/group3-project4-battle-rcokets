@@ -4,10 +4,8 @@ import shipDataArray from "./shipDataArray";
 import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
 import playerTurn from "./playerTurn";
-// import npcTurn from "./npcTurn";
 import Modal from "./Modal";
 import npcTurn from "./npcTurn";
-
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -17,12 +15,12 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [shipData, setShipData] = useState([]);
     // set current rocket that user is dragging
     const [currentShip, setCurrentShip] = useState('');
-    // array of player's grid refs to be passed as props to GenerateComputerGrid
-    const [rocketRefs, setRocketRefs] = useState([]);
     // new player grid div ref
     // const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
     const playerGridDivRef = useRef([]);
     console.log('playerGridDivRef-->', playerGridDivRef.current.length );
+
+    const [gridColorChange, setGridColorChange] = useState(false);
 
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
@@ -34,12 +32,8 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [openModal, setOpenModal] = useState(false);
     // useState to track game progress. State will update to "win" or "lose"
     const [gameStatus, setGameStatus] = useState(false);
-    // useState to show modal if player's rocket has been fully attacked (OPTIONAL)
-    const [attackedModal, setAttackedModal] = useState(false);
-    // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
-    const [destroyedModal, setDestroyedModal] = useState(false);
-    // useState to handle Hit/Miss message upon use turn
-    const [hit, setHit] = useState(false);
+    // two useState to show if user hits or misses target
+    const [hit, setHit] = useState('');
     const [hitVisible, setHitVisible] = useState(false);
 
     // MUTABLE (useRef) VARIABLES:
@@ -134,14 +128,11 @@ const PlayerGrid = ({ selectedRockets }) => {
         // Reset all State
         setShipData(updatedShipData);
         setCurrentShip('');
-        setRocketRefs([]);
         playerGridDivRef.current = [];
         setRocketsPlaced(false);
         setReadyToLaunch(false);
         setOpenModal(false);
         setGameStatus(false);
-        setAttackedModal(false);
-        setDestroyedModal(false);
         setHitVisible(false);
         setHitVisible(false);
         console.log(newPlayerGridRef, "RESET SUCCESS")
@@ -296,7 +287,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             ) {
             setRocketsPlaced(!false);
         };
-        setRocketRefs(newPlayerGridRef);
+    
         console.log("newPlayerGridRef", newPlayerGridRef);
 
     };
@@ -365,10 +356,13 @@ const PlayerGrid = ({ selectedRockets }) => {
         console.log(selectedGrid);
         if (selectedGrid) {
             selectedGrid.className = 'gridCell div targeted';
-        }        if (selectedGrid) {
-            selectedGrid.className = "gridCell div targeted";
-        }
-        playerTurn(selectedGrid, playerGridDivRef, handleHit);
+        }     
+        let correctGridHit = playerTurn(selectedGrid, playerGridDivRef, handleHit)
+        console.log("correctGridHit", correctGridHit);
+        setGridColorChange(correctGridHit);
+        console.log("gridColorChange", gridColorChange);
+        // console.log("gridColorCHange", gridColorChangeRed );
+        // console.log("gridColorChange", playerTurn(selectedGrid, playerGridDivRef, handleHit))
         npcTurn(playerGridDivRef, allCellDivs.current);
     }
     
@@ -418,7 +412,6 @@ const PlayerGrid = ({ selectedRockets }) => {
                             <GenerateComputerGrid 
                                 handleClick={handleClick}
                                 userRocketSizes={rocketSizes}
-                                rocketRefs={rocketRefs}
                             />
                         </>
                         : null}

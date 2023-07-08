@@ -3,6 +3,8 @@ import npcTurn from "./npcTurn";
 import boomSound from "../sounds/boom.wav";
 import arcadeExplosion from "../sounds/arcade-Explo-A.wav"
 
+
+
 let clickCount = 100;
 
 // Function to determine which player's turn it is
@@ -36,7 +38,7 @@ const playerTurn = (selectedGrid, playerGridDivRef, handleHit) => {
         
         // trigger message => "hit" (simple <p> tag on screen => "status: hit emoji/sound effect?")
         handleHit(true);
-
+        return true;
         // computer turn => return key word to end turn? => style to indicate computer's turn; grey out other grid?
 
         } else {
@@ -44,7 +46,7 @@ const playerTurn = (selectedGrid, playerGridDivRef, handleHit) => {
         selectedGrid.style.backgroundColor = "yellow";
         // create an audio object to play sounds
         const audio1 = new Audio(boomSound);
-        audio1.play();
+        audio1.play(); 
        
         // message => "miss" (simple <p> tag on screen => "status: miss emoji/sound effect?")
         handleHit(false);

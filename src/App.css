@@ -578,6 +578,9 @@ form .flexContainer .rocketContainer {
   margin-top: 10px;
   font-family: "Maitree", serif;
 }
+.landing-page ol ul {
+  color: #320363;
+}
 
 .instructions-list {
   list-style: inside decimal;

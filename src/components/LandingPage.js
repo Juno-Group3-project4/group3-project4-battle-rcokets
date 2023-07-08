@@ -12,13 +12,12 @@ const LandingPage = () => {
             <ol>
                 <li className="instructions-list">After clicking Play Game, select 3 rockets on the 'Rocket Selection' page. </li>
                 <li className="instructions-list">Drag and drop all your rockets on the Battle Rocket Grid then click Launch Game!</li>
-                <li className="instructions-list">Click on a cell on the AI's non-playerGrid to launch a SpaceX attack!
+                <li className="instructions-list">Click on a cell on the AI's non-playerGrid to launch a SpaceX attack!</li>
                 <li className="instructions-list">It's the AI's (non-player) turn now - they will make their move and attempt to destroy your rockets!! </li>
                     <ul>
                         <li className="indent">If you hit one of the AI's rockets during your turn, the cell will turn red.</li>
                         <li className="indent">If you miss one of the AI's rockets during your turn, the cell will turn yellow.</li>
                     </ul>
-                </li>
                 <li className="instructions-list">The game will continue until you destroy all of the AI's rockets, or they destroy all of yours!</li>
                 <li className="instructions-list">If you win, congratulations! You have successfully protected the future of humanity!!</li>
                 <li className="instructions-list">If you lose, you can press "Play again" to attempt to defeat the AI.</li>
