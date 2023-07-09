@@ -294,8 +294,8 @@ const PlayerGrid = ({ selectedRockets }) => {
         const clickShip = e.target;
         const shipId = clickShip.getAttribute('name');
 
-        if (clickShip.style.transform !== 'rotate(90deg)') {
-            clickShip.style.transform = 'rotate(90deg)';
+        if (clickShip.style.transform !== 'rotate(-90deg)') {
+            clickShip.style.transform = 'rotate(-90deg)';
 
             setShipData(prevShipData => {
                 // Create a copy of the shipData array
