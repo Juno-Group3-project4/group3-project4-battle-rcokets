@@ -133,6 +133,8 @@ const PlayerGrid = ({ selectedRockets }) => {
         setHitVisible(false);
         setClickedCells([]);
         setNpcComparisonArray([]);
+        setGuessedCells([]);
+        setPlayerComparisonArray([]);
         // console.log(newPlayerGridRef, "RESET SUCCESS")
     }
 
@@ -395,7 +397,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     console.log(npcComparisonArray);
     console.log(playerComparisonArray);
     console.log(clickedCells);
-    let computerGuess;
 
     // handle click for each div in grid
     const handleClick = (e) => {
@@ -405,15 +406,13 @@ const PlayerGrid = ({ selectedRockets }) => {
         setClickedCells(prevClickedCells => [...prevClickedCells, targetedId]);
         playerTurn(targetedId, npcComparisonArray, handleHit);
         setTimeout(() => {
-            computerGuess = npcTurn();
+            let computerGuess = npcTurn();
             setGuessedCells(prevGuessedCells => [...prevGuessedCells, computerGuess]);
             console.log(computerGuess);
         }, 2500);
-        
     }
 
     console.log(guessedCells);
-    console.log(playerGridDivRef.current);
 
     const isCellClicked = (id) => {
         return clickedCells.includes(id);

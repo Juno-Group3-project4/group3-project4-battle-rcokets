@@ -7,7 +7,6 @@ export const npcTurn = () => {
         return generateRandomNumber;
     };
     let NPCRandomCellGuess = `${generateRandomLetter[randomNumber()]}${randomRowNumber[randomNumber()]}`;
-    // console.log('NPCRandomCellGuess', NPCRandomCellGuess);
     return NPCRandomCellGuess;
 };
 
