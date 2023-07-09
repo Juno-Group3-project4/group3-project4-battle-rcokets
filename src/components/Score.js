@@ -4,19 +4,14 @@ import { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import PlayerGrid from "./PlayerGrid";
 
-const Score = ({playerOneFleetLength}) => {
-
-    const [playerTurnScore, setPlayerTurnScore] = useState(0);
-    const [playerFleetLength, setPlayerFleetLength] = useState(0);
-    const [NPCFleetLength, setNPCFleetLength] = useState(0);
-
-    useEffect(() => {
-        // setNPCFleetLength(newNPCGridRef.length);
-        setPlayerFleetLength(playerOneFleetLength);
-
-    }, [])
+const Score = ({ playerScore, nonPlayerScore, playerFleetHealth } ) => {
 
     // console.log('playerOneFleetLength', playerOneFleetLength );
+
+    // Create a style object to dynamically update the width
+    const playerHealthBarStyle = {
+        width: `${playerFleetHealth}%`,
+    };
 
     return (
         <>
@@ -31,7 +26,7 @@ const Score = ({playerOneFleetLength}) => {
                 <div className="player">
                     <div className="score">
                         <h3>PLAYER:</h3> 
-                        <p className="score-total">0</p> 
+                        <p className="score-total">{playerScore}</p> 
                     </div>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">
@@ -41,11 +36,11 @@ const Score = ({playerOneFleetLength}) => {
                 <div className="nonplayer">
                     <div className="score">
                         <h3>NON-PLAYER:</h3>
-                        <p className="score-total">0</p>
+                        <p className="score-total">{nonPlayerScore}</p>
                     </div>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">
-                        <div className="nonPlayerFleetBar"></div>
+                        <div className="nonPlayerFleetBar" style={playerHealthBarStyle}></div>
                     </div>
                 </div>
             </div>

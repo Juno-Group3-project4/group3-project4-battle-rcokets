@@ -2,7 +2,7 @@ import boomSound from "../sounds/boom.wav";
 import arcadeExplosion from "../sounds/arcade-Explo-A.wav"
 
 let turnScore;
-let clickCount = 100;
+// let clickCount = 100;
 let count = 0;
 
 // Function to determine which player's turn it is
@@ -21,7 +21,8 @@ const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
                 handleHit(true);
 
                 // update clickCounter
-                count = count + 1;                
+                count = count + 1;    
+                return true;      
         } else {
                 // create an audio object to play sounds
                 const audio1 = new Audio(boomSound);
@@ -29,24 +30,21 @@ const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
         
                 // message 
                 handleHit(false);
+                return false;
         }
 
-        // update click count on each guess/click on grid
-        clickCount = clickCount - 1;
-        turnScore =  arrayLength * clickCount;
-        console.log("turn score", turnScore);
-        console.log(clickCount);
-        console.log("count", count);
-        console.log(arrayLength);
+        // // update click count on each guess/click on grid
+        // clickCount = clickCount - 1;
+        // turnScore =  arrayLength * clickCount;
+        // console.log("turn score", turnScore);
+        // console.log(clickCount);
+        // console.log("count", count);
+        // console.log(arrayLength);
 
         if(count === arrayLength) {
                 console.log("YOU WIN!");
                 console.log(`YOUR FINAL SCORE IS ${turnScore}!`);
         }
 }
-
-const scoreCalc = () => {
-
-};
 
 export default playerTurn;

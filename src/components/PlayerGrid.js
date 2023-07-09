@@ -7,7 +7,7 @@ import playerTurn from "./playerTurn";
 import Modal from "./Modal";
 import { Typewriter } from "react-simple-typewriter";
 import gridData from "./gridData";
-import { generateRandomLocation, npcRocketData } from "./GenerateComputerGrid";
+import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -34,6 +34,19 @@ const PlayerGrid = ({ selectedRockets }) => {
     // useState to handle Hit/Miss message upon use turn
     const [hit, setHit] = useState('');
     const [hitVisible, setHitVisible] = useState(false);
+    // useState to track users remaining clicks
+    const [playerClicks, setPlayerClicks] = useState(100);
+    // useState to track users score
+    const [playerScore, setPlayerScore] = useState(0);
+    // useState to track users score
+    const [nonPlayerScore, setNonPlayerScore] = useState(0);
+    // useState to store the players fleet length (the amount of cells remaining)
+    const [nonPlayerFleetLength, setNonPlayerFleetLength] = useState(0)
+    // useState to store the players fleet length (the amount of cells remaining)
+    const [playerFleetLength, setPlayerFleetLength] = useState(0)
+    // Fleet health bare state variable
+    const [fleetHealth, setFleetHealth] = useState(75);
+
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -54,6 +67,44 @@ const PlayerGrid = ({ selectedRockets }) => {
         displayPlayerRockets();
     }, []);
 
+
+    useEffect(() => {
+        const copyNpcShipData = [...npcShipData];
+        const newNPCGridRef = [];
+
+        const mappedCopyNpcShipData = copyNpcShipData.map((npcShip) => {
+            return npcShip.NPCGridRef;
+        })
+
+        for (let i = 0; i < mappedCopyNpcShipData.length; i++) {
+            for (let j = 0; j < mappedCopyNpcShipData[i].length; j++) {
+                newNPCGridRef.push(mappedCopyNpcShipData[i][j]);
+            }
+        }
+
+        const copyShipData = [...shipData];
+        const newPlayerGridRef = [];
+
+        const mappedCopyShipData = copyShipData.map((playerShip) => {
+            return playerShip.playerGridRef;
+        })
+
+        for (let i = 0; i < mappedCopyShipData.length; i++) {
+            for (let j = 0; j < mappedCopyShipData[i].length; j++) {
+                newPlayerGridRef.push(mappedCopyShipData[i][j]);
+            }
+        }
+
+        setNpcComparisonArray(newNPCGridRef);
+        setPlayerComparisonArray(newPlayerGridRef);
+        console.log('newNPCGridRef=>>', newNPCGridRef.length );
+        console.log('newPlayerGridRef=>>', newPlayerGridRef.length );
+        setNonPlayerFleetLength(newNPCGridRef.length);
+        setPlayerFleetLength(newPlayerGridRef.length)
+
+    }, [npcShipData, shipData]);
+    
+   
     // console.log("allCellDivsCurrent", allCellDivs.current);
     
     // filter & map over shipDataArray to return only data for rockets selected by user
@@ -116,12 +167,10 @@ const PlayerGrid = ({ selectedRockets }) => {
         // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset vertically
         ships.forEach((ship) => {
             ship.style.display = 'flex';
-            if (ship.children[1].style.transform === 'rotate(90deg)') {
-                return ship.children[1].style.transform = 'rotate(0)'
-            }
             if (ship.children[1].style.transform === 'rotate(-90deg)') {
                 return ship.children[1].style.transform = 'rotate(0)'
             }
+            
         })
 
         // Reset all State
@@ -375,6 +424,8 @@ const PlayerGrid = ({ selectedRockets }) => {
         });
         // set npcShipData state
         setNpcShipData(npcGridRockets);
+        
+        
     }
 
     // Function to ensure 'Hit' or 'Miss' message is displayed on each Player click
@@ -408,52 +459,73 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [npcComparisonArray, setNpcComparisonArray] = useState([]);
     const [playerComparisonArray, setPlayerComparisonArray] = useState([]);
 
-    useEffect(() => {
-        const copyNpcShipData = [...npcShipData];
-        const newNPCGridRef = [];
+    
 
-        const mappedCopyNpcShipData = copyNpcShipData.map((npcShip) => {
-            return npcShip.NPCGridRef;
-        })
-        
-        for (let i = 0; i < mappedCopyNpcShipData.length; i++) {
-            for (let j = 0; j < mappedCopyNpcShipData[i].length; j++) {
-                newNPCGridRef.push(mappedCopyNpcShipData[i][j]);
-            }
-        }
-
-        const copyShipData = [...shipData];
-        const newPlayerGridRef = [];
-
-        const mappedCopyShipData = copyShipData.map((playerShip) => {
-            return playerShip.playerGridRef;
-        })
-
-        for (let i = 0; i < mappedCopyShipData.length; i++) {
-            for (let j = 0; j < mappedCopyShipData[i].length; j++) {
-                newPlayerGridRef.push(mappedCopyShipData[i][j]);
-            }
-        }
-
-        setNpcComparisonArray(newNPCGridRef);
-        setPlayerComparisonArray(newPlayerGridRef);
-    }, [npcShipData, shipData]);
-
-    console.log(npcComparisonArray);
-    console.log(playerComparisonArray);
+    console.log('npcComparisonArrayLength=>',npcComparisonArray.length);
+    console.log('playerComparisonArrayLength=>',playerComparisonArray.length);
     console.log(clickedCells);
-
+    
+    
     // handle click for each div in grid
     const handleClick = (e) => {
+
         let selectedGrid = e.target;
         let targetedId = selectedGrid.id;
-
+        
         setClickedCells(prevClickedCells => [...prevClickedCells, targetedId]);
-        playerTurn(targetedId, npcComparisonArray, handleHit);
+        let hitOrMiss = playerTurn(targetedId, npcComparisonArray, handleHit);
+       
+        // updating and tracking the players click counts
+        let remainingClicks = playerClicks - 1;
+
+        // updating state with the remaining clicks left
+        setPlayerClicks(remainingClicks);
+
+        // conditional to check if players Turn returns a hit(true) or a miss (false). If false nothing happens.
+        if(hitOrMiss) {
+            // Player score calculation
+            
+            // when a hit is registered subtract 1 from length
+            let updatedNonPlayerFleetLength = nonPlayerFleetLength - 1;
+
+            // variable to calculate the score on that turn
+            let turnScore = playerClicks * nonPlayerFleetLength;
+            
+            // variable to combine the total score with the turn score
+            let newTotalScore = playerScore + turnScore;
+
+            // storing the newly updated total score in the state
+            setPlayerScore(newTotalScore);
+
+            // update the nonPlayerFleetLength state variable
+            setNonPlayerFleetLength(updatedNonPlayerFleetLength);
+            
+        }
+
         setTimeout(() => {
             let computerGuess = npcTurn();
             setGuessedCells(prevGuessedCells => [...prevGuessedCells, computerGuess]);
-            console.log(computerGuess);
+
+            // conditional to check if the computers guess is present in the playerComparisonArray.
+            if(playerComparisonArray.includes(computerGuess)) {
+                // Non Player score calculation //
+
+                // when a hit is registered subtract 1 from length
+                let updatedPlayerFleetLength = playerFleetLength - 1;
+
+                // variable to calculate the score on that turn
+                let nonPlayerTurnScore = playerClicks * playerFleetLength;
+
+                 // variable to combine the total score with the turn score
+                let newNonPlayerTotalScore = nonPlayerScore + nonPlayerTurnScore;
+
+                // storing the newly updated total score in the state
+                setNonPlayerScore(newNonPlayerTotalScore);
+
+                // update the playerFleetLength state variable
+                setPlayerFleetLength(updatedPlayerFleetLength);
+            } 
+
         }, 2500);
     }
 
@@ -567,7 +639,10 @@ const PlayerGrid = ({ selectedRockets }) => {
                 </div> 
             </div> 
             {readyToLaunch ? <> 
-                <Score playerOneFleetLength={playerGridDivRef.current.length} />  
+                <Score 
+                    playerScore={playerScore} 
+                    nonPlayerScore={nonPlayerScore} 
+                    fleetHealth={fleetHealth} />  
                 <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
                 </>: null}
             {/* Ships */}
@@ -588,7 +663,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             </div>
             <Modal 
                 open={openModal} gameStatus={gameStatus === true} onClick={closeModal} handleReset={handleReset} />
-            <Modal open={openModal} gameStatus={gameStatus === true} onClick={closeModal} />
+
         </>
     )
 }
