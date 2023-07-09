@@ -6,7 +6,7 @@ import { npcTurn } from "./npcTurn";
 import playerTurn from "./playerTurn";
 import Modal from "./Modal";
 import gridData from "./gridData";
-import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
+import { generateRandomLocation, npcRocketData } from "./GenerateComputerGrid";
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
