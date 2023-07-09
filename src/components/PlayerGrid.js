@@ -5,6 +5,7 @@ import Score from "./Score";
 import { npcTurn } from "./npcTurn";
 import playerTurn from "./playerTurn";
 import Modal from "./Modal";
+import { Typewriter } from "react-simple-typewriter";
 import gridData from "./gridData";
 import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 
@@ -92,14 +93,19 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     // METHOD TO RESET GRID PLACEMENTS ONCE BUTTON IS CLICKED
     const handleReset = () => {
-        // Target Ship Divs using useRef Hook
-        const ships = rocketImage.current;
         // When user clicks reset grid button, we map through shipData and reset all the data in the shipData array
-        const updatedShipData = shipData.map((ship) => ({
+        const initialShipData = shipData.map((ship) => ({
             ...ship,
-            playerGridRef:[],
+            playerGridRef: [],
             orientation: "vertical",
         }));
+
+        // Clear the newPlayerGridRef array and playerGRidDivRef array
+        playerGridDivRef.current = [];
+        newPlayerGridRef.length = 0;
+       
+        // Target Ship Divs using useRef Hook
+        const ships = rocketImage.current;
 
         // reset computer's grid reference array
         const updatedNPCShipData = npcShipData.map((npcRocket) => ({
@@ -113,16 +119,14 @@ const PlayerGrid = ({ selectedRockets }) => {
             if (ship.children[1].style.transform === 'rotate(90deg)') {
                 return ship.children[1].style.transform = 'rotate(0)'
             }
+            if (ship.children[1].style.transform === 'rotate(-90deg)') {
+                return ship.children[1].style.transform = 'rotate(0)'
+            }
         })
-        allCellDivs.current.forEach((cell) => {
-            cell.style.backgroundColor = '#002C2E';
-        })
-    
+
         // Reset all State
-        setShipData(updatedShipData);
         setNpcShipData(updatedNPCShipData);
         setCurrentShip('');
-        playerGridDivRef.current = [];
         setRocketsPlaced(false);
         setReadyToLaunch(false);
         setOpenModal(false);
@@ -131,6 +135,14 @@ const PlayerGrid = ({ selectedRockets }) => {
         setDestroyedModal(false);
         setHit('');
         setHitVisible(false);
+
+        // Reset ship data
+        setShipData(initialShipData);
+
+        // Ensure all cells are yellow 
+        allCellDivs.current.forEach((cell) => {
+            cell.style.backgroundColor = '#002C2E';
+        })
         setClickedCells([]);
         setNpcComparisonArray([]);
         setGuessedCells([]);
@@ -140,6 +152,8 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     // event listener for placing ship on grid
     const handleDrop = (e) => {
+        // prevent page refresh 
+        e.preventDefault();
         // Spread of shipData useState 
         const shipDataArr = [...shipData];
 
@@ -236,11 +250,22 @@ const PlayerGrid = ({ selectedRockets }) => {
             newArray.map((array) => {
                 newPlayerGridRef.push(array);
             })
+            console.log("newPlayerGridRef", newPlayerGridRef);
             // console.log("newPlayerGridRef", newPlayerGridRef);
         }
 
         // ERROR HANDLING to check for duplicates in Array (i.e. user places rocket on a grid where another rocket exists)
         let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !==index);
+        console.log("Duplicates", duplicates);
+
+        let gridDuplicates = playerGridDivRef.current.filter((item, index) => playerGridDivRef.current.indexOf(item) !== index)
+
+        if (gridDuplicates.length > 0) {
+            playerGridDivRef.current = [...new Set(playerGridDivRef.current)];
+        }
+
+        console.log(playerGridDivRef.current)
+
         // console.log("Duplicates", duplicates);
         
         // Array for storing cells which aren't located in the newPlayerGridref, but are also part of the the placement with one or more duplicate values
@@ -277,6 +302,10 @@ const PlayerGrid = ({ selectedRockets }) => {
             ) {
             setRocketsPlaced(!false);
         };
+        console.log("newPlayerGridRef", newPlayerGridRef);
+        // Reset duplicates array
+        duplicates = [];
+        discardedData = []; 
         // console.log("newPlayerGridRef", newPlayerGridRef);
     };
 
@@ -348,12 +377,28 @@ const PlayerGrid = ({ selectedRockets }) => {
         setNpcShipData(npcGridRockets);
     }
 
+    // Function to ensure 'Hit' or 'Miss' message is displayed on each Player click
+    const [keyCounter, setKeyCounter] = useState(0)
+
         
     const handleHit = (hit) => {
-        if (hit) {
-            setHit('HIT! \uD83D\uDCA5')
-        }   else {
-            setHit('MISS! Try Again.')
+        // increment keyCounter
+        setKeyCounter((prevCounter) => prevCounter + 1);
+        if (hit) { setHit(
+            <Typewriter 
+                key={`hit-${keyCounter}`}
+                words={['HIT! \uD83D\uDCA5']}
+                loop={1}
+                typeSpeed={50}
+            />)
+        } else {
+            setHit(
+                <Typewriter
+                    key={`miss-${keyCounter}`}
+                    words={['MISS! Try Again.']}
+                    loop={1} n 
+                    typeSpeed={50}
+                />)
         }
         setHitVisible(true)
     };
@@ -411,8 +456,6 @@ const PlayerGrid = ({ selectedRockets }) => {
             console.log(computerGuess);
         }, 2500);
     }
-
-    console.log(guessedCells);
 
     const isCellClicked = (id) => {
         return clickedCells.includes(id);
@@ -487,7 +530,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                         })}
                     </BattleGrid>
                 </div>
-                
+       
                 <div className="nonPlayerGridContainer" style={{display: readyToLaunch ? 'block' : 'none'}} >
                     {readyToLaunch ?
                         <>  
@@ -543,6 +586,8 @@ const PlayerGrid = ({ selectedRockets }) => {
                     )
                 })}
             </div>
+            <Modal 
+                open={openModal} gameStatus={gameStatus === true} onClick={closeModal} handleReset={handleReset} />
             <Modal open={openModal} gameStatus={gameStatus === true} onClick={closeModal} />
         </>
     )
