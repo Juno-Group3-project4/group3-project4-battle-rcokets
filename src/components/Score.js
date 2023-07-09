@@ -1,5 +1,5 @@
-// SCORE Component
-// import { newNPCGridRef } from "./generateComputerGrid";
+// Score.js
+
 import { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import PlayerGrid from "./PlayerGrid";
