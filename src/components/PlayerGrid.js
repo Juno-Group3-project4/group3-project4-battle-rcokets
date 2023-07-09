@@ -358,7 +358,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             selectedGrid.className = 'gridCell div targeted';
         }
 
-        playerTurn(selectedGrid, playerGridDivRef);
+        playerTurn(selectedGrid, playerGridDivRef, handleHit);
         npcTurn(playerGridDivRef, allCellDivs.current);
     }
     
@@ -375,6 +375,7 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     // function to close the modal
     const closeModal = (e) => {
+        e.preventDefault();
         console.log('clicked');
         setOpenModal(false);
     };
@@ -434,7 +435,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 })}
             </div>
             <Modal 
-                open={openModal} gameStatus={gameStatus === true} onClick={closeModal} />
+                open={openModal} gameStatus={gameStatus} closeModal={closeModal}/>
         </>
     )
 }
