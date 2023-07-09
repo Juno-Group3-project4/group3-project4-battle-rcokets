@@ -553,8 +553,12 @@ const PlayerGrid = ({ selectedRockets }) => {
             }
 
         }, 2500);
+<<<<<<< HEAD
         
         console.log("actPlay AFTER computerTURN", activePlayer)
+=======
+        handleGameEnd();
+>>>>>>> 8fa678db81b6d7259df5825dd1076d74bbf3e0f9
     }
     const isCellClicked = (id) => {
         return clickedCells.includes(id);
@@ -687,6 +691,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 {shipData.map((rocket, index) => {
                     return (
                         <div
+                            tabIndex={0}
                             key={index}
                             className={rocket.shipName}
                             ref={(e) => rocketImage.current[index] = e}
