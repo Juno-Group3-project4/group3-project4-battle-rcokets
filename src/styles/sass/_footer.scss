@@ -1,0 +1,18 @@
+// ***** MOBILE RESPONSIVE LAYOUT - FOOTER **** //
+
+@media (max-width: 651px) {
+footer p {
+    font-size: 0.8rem;
+    margin: 15px 12px;
+    line-height: 1.2;
+    }
+}
+
+@media (min-width: 652px) {
+    footer {
+        padding: 15px, 0;
+         p {
+        font-size: 0.9rem;
+    }
+    }
+}

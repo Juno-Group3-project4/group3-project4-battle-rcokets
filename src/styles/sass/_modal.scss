@@ -28,3 +28,30 @@
         }
     }
 }
+
+// **** MOBILE RESPONSIVE LAYOUT - MEDIA QUERIES !!! **** //
+@media (max-width: 500px) {
+    .backGroundContainer {
+        margin-bottom: 40px;
+        height: 80vh;
+        h2 {
+            font-size: 0.9rem;
+            padding: 0 25px;
+        }
+    }
+
+    .btnContainer {
+        padding: 0 35px;
+        .playAgainBtn,
+        .closeGameBtn {
+            font-size: 0.8rem;
+        }
+    }
+}
+
+@media (min-width: 501px) {
+    .backGroundContainer {
+        margin-bottom: 50px;
+        height: 80vh;
+    }
+}

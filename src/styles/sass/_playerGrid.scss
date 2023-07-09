@@ -56,3 +56,36 @@
     font-size: 1.5rem;
     font-family: "Orbitron", sans-serif;
 }
+
+
+// ***** MOBILE RESPONSIVE DESIGN - MEDIA QUERIES!!! ***** //
+
+
+@media (max-width: 651px) {
+    .gridContainers {
+        flex-direction: column;
+    }
+
+    .placement-instructions {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    img {
+        max-width: 55%;
+    }
+    .rocket-image {
+        height: 100px;
+    }
+    
+    .Falcon1,
+    .Falcon9,
+    .FalconHeavy {
+        width: 40px;
+    }
+
+    .spaces-title {
+        font-size: 0.8rem;
+    }
+
+}

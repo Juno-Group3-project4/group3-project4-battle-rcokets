@@ -549,6 +549,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             }
 
         }, 2500);
+        handleGameEnd();
     }
     const isCellClicked = (id) => {
         return clickedCells.includes(id);
@@ -675,6 +676,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 {shipData.map((rocket, index) => {
                     return (
                         <div
+                            tabIndex={0}
                             key={index}
                             className={rocket.shipName}
                             ref={(e) => rocketImage.current[index] = e}

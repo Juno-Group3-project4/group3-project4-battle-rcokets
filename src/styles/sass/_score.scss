@@ -47,3 +47,17 @@
         }
     }
 }
+
+// **** MOBILE RESPONSIVE LAYOUT - MEDIA QUERIES **** //
+
+@media (max-width: 429px) {
+    .score h3 {
+        font-size: 0.7rem;
+    }
+}
+
+@media (min-width: 430px) and (max-width: 505px) {
+    .score h3 {
+        font-size: 1.0rem;
+    }
+}
