@@ -6,20 +6,19 @@ import battleSounds from "../sounds/battle-sounds.wav";
 
 const Modal = ( { open, gameStatus, closeModal} ) => {
     if (open === false) return null; 
-    const audio3 = new Audio(battleSounds);
-    audio3.play();
-
+    // const audio3 = new Audio(battleSounds);
+    // audio3.play();
     return (
         <div className="backGroundContainer">
             <div className="modalContainer">
                 <h2> {gameStatus ?
                     <Typewriter
-                        words={[' CONGRATULATIONS YOU WIN!!!']}
+                        words={['CONGRATULATIONS, YOU WIN!!!']}
                         loop={1}
                         typeSpeed={70}
                     /> :
                     <Typewriter
-                        words={['GAME OVER! YOU LOST!']}
+                        words={['GAME OVER, YOU LOST']}
                         loop={1}
                         typeSpeed={70}
                     /> 
