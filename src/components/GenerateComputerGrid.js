@@ -1,5 +1,4 @@
 
-const GenerateComputerGrid = (props) => {
     // variables
     const gridSize = 10;
     const gridCols = [
@@ -32,7 +31,7 @@ const GenerateComputerGrid = (props) => {
     let generateRandomNumber = Math.floor(Math.random() * gridSize);
 
     // function to generate random locations (x, y values & orientation)
-    const generateRandomLocation = () => {
+    export const generateRandomLocation = () => {
         // Reset the array before populating with new values
         // newNPCGridRef.length = 0;
         // variable to store orientations
@@ -116,16 +115,6 @@ const GenerateComputerGrid = (props) => {
         return grid;
     }
 
-    generateRandomLocation();
-
-    return (
-        <>
-            <h2>Computer Grid</h2>
-            {props.children}
-        </>
-    )
-}
-
 // computer rocket data
 export const npcRocketData = [
     {
@@ -149,4 +138,3 @@ export const npcRocketData = [
         NPCGridRef: [],
     }
 ];
-export default GenerateComputerGrid;
