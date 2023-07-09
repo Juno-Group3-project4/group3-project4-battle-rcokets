@@ -48,7 +48,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [playerFleetHealth, setPlayerFleetHealth] = useState(100);
     // player Fleet health bare state variable
     const [nonPlayerFleetHealth, setNonPlayerFleetHealth] = useState(100);
-
+    const [activePlayer, setActivePlayer] = useState(true);
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -547,7 +547,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 // Game End modal conditional
                 handleGameEnd(hitOrMiss[1]);
             }
-
+            setActivePlayer(true);
         }, 2500);
         handleGameEnd();
     }
@@ -647,9 +647,13 @@ const PlayerGrid = ({ selectedRockets }) => {
                                                         className={`${gridColumn.className} npcDiv ${addClassName}`}
                                                         key={gridColumn.id}
                                                         id={gridColumn.id}
-                                                        onClick={(e) => { handleClick(e);}}
-                                                        valuex={gridColumn.x_value}
-                                                        valuey={gridColumn.y_value}
+                                                        onClick={
+                                                            activePlayer ?
+                                                                (e) => {
+                                                                    handleClick(e)
+                                                                    setActivePlayer(false);
+                                                                } : null
+                                                        }
                                                     >
                                                         <span className="sr-only">{gridColumn.id}</span>
                                                     </div>
