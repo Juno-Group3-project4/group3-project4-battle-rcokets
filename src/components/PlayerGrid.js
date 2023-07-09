@@ -102,7 +102,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         console.log('newNPCGridRef=>>', newNPCGridRef.length );
         console.log('newPlayerGridRef=>>', newPlayerGridRef.length );
         setNonPlayerFleetLength(newNPCGridRef.length);
-        setPlayerFleetLength(newPlayerGridRef.length)
+        setPlayerFleetLength(newPlayerGridRef.length);
 
     }, [npcShipData, shipData]);
     
@@ -484,7 +484,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         setPlayerClicks(remainingClicks);
 
         // conditional to check if players Turn returns a hit(true) or a miss (false). If false nothing happens.
-        if(hitOrMiss) {
+        if(hitOrMiss[0]) {
             // Player score calculation
             
             // when a hit is registered subtract 1 from length
@@ -507,6 +507,9 @@ const PlayerGrid = ({ selectedRockets }) => {
             
             // updating state with the updated value 
             setNonPlayerFleetHealth(nonPlayerHealth);
+
+            // Game End modal conditional
+            handleGameEnd(hitOrMiss[1]);
         }
 
         setTimeout(() => {
@@ -537,6 +540,9 @@ const PlayerGrid = ({ selectedRockets }) => {
                 
                 // updating state with the updated value 
                 setPlayerFleetHealth(playerHealth);
+
+                // Game End modal conditional
+                handleGameEnd(hitOrMiss[1]);
             } 
 
         }, 2500);
@@ -551,14 +557,17 @@ const PlayerGrid = ({ selectedRockets }) => {
     }
 
     // this function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
-    // const handleGameEnd = (status) => {
-    //     if (newNPCGridRef === 0) {
-    //     setGameStatus(true);
-    //     setOpenModal(true);
-    //     } else 
-    //     setGameStatus(false);
-    //     setOpenModal(true);
-    // };
+    const handleGameEnd = (hitOrMiss) => {
+
+        if (hitOrMiss === playerComparisonArray.length) {
+            setGameStatus(!false); // if player wins
+            setOpenModal(!false);
+        } else if
+            (hitOrMiss === npcComparisonArray.length) {
+                setGameStatus(false); // if player losses
+                setOpenModal(!false);
+            }
+    };
 
     // function to close the modal
     const closeModal = (e) => {
@@ -676,7 +685,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 })}
             </div>
             <Modal 
-                open={openModal} gameStatus={gameStatus === true} onClick={closeModal} handleReset={handleReset} />
+                open={openModal} gameStatus={gameStatus} onClick={closeModal} handleReset={handleReset} />
 
         </>
     )

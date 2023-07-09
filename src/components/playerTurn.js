@@ -5,11 +5,14 @@ let turnScore;
 // let clickCount = 100;
 let count = 0;
 
+let playerTurnArr = [];
+
 // Function to determine which player's turn it is
 const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
         
         // stores number of targets to hit (Health Bar)
         const arrayLength = npcComparisonArray.length;
+
 
         // if selected cell is occupied by a rocket
         if (npcComparisonArray.includes(selectedGridID)) {
@@ -22,9 +25,12 @@ const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
 
                 // update clickCounter
                 count = count + 1;
-                
-                // returns true if there is a hit
-                return true;      
+
+                playerTurnArr = [true, count];
+
+                console.log('playerTurnArr', playerTurnArr );
+                // returns true if there is a hit plus returns the count
+                return playerTurnArr    
         } else {
                 // create an audio object to play sounds
                 const audio1 = new Audio(boomSound);
@@ -33,8 +39,10 @@ const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
                 // message 
                 handleHit(false);
 
-                // returns false if there is a miss
-                return false;
+                playerTurnArr = [false, count];
+                console.log('playerTurnArr', playerTurnArr);
+                // returns true if there is a hit plus returns the count
+                return playerTurnArr; 
         }
 
         // // update click count on each guess/click on grid
