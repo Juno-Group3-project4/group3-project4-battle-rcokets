@@ -1,51 +1,47 @@
-// SCORE Component
-// import { newNPCGridRef } from "./generateComputerGrid";
-import { useEffect, useState } from "react";
+// Score.js
+
 import { Typewriter } from "react-simple-typewriter";
-import PlayerGrid from "./PlayerGrid";
 
-const Score = ({playerOneFleetLength}) => {
+const Score = ({ playerScore, nonPlayerScore, playerFleetHealth, nonPlayerFleetHealth }) => {
 
-    const [playerTurnScore, setPlayerTurnScore] = useState(0);
-    const [playerFleetLength, setPlayerFleetLength] = useState(0);
-    const [NPCFleetLength, setNPCFleetLength] = useState(0);
+    // A style object for the players health bar to dynamically update the width with the fleet health value 
+    const playerHealthBarStyle = {
+        width: `${playerFleetHealth}%`,
+    };
 
-    useEffect(() => {
-        // setNPCFleetLength(newNPCGridRef.length);
-        setPlayerFleetLength(playerOneFleetLength);
-
-    }, [])
-
-    // console.log('playerOneFleetLength', playerOneFleetLength );
+    // A style object for the non-players health bar to dynamically update the width with the fleet health value 
+    const nonPlayerHealthBarStyle = {
+        width: `${nonPlayerFleetHealth}%`,
+    };
 
     return (
         <>
-        <h2>
-            <Typewriter
-                words={['Score Board']}
-                loop={1}
-                typeSpeed={70}
-            /> 
-        </h2>
+            <h2>
+                <Typewriter
+                    words={['Score Board']}
+                    loop={1}
+                    typeSpeed={70}
+                />
+            </h2>
             <div className="scoreBoard">
                 <div className="player">
                     <div className="score">
-                        <h3>PLAYER:</h3> 
-                        <p className="score-total">0</p> 
+                        <h3>PLAYER:</h3>
+                        <p className="score-total">{playerScore}</p>
                     </div>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">
-                        <div className="playerFleetBar"></div>
+                        <div className="playerFleetBar" style={playerHealthBarStyle}></div>
                     </div>
                 </div>
                 <div className="nonplayer">
                     <div className="score">
-                        <h3>COMPUTER:</h3>
-                        <p className="score-total">0</p>
+                        <h3>NON-PLAYER:</h3>
+                        <p className="score-total">{nonPlayerScore}</p>
                     </div>
                     <p>Fleet Destruction:</p>
                     <div className="fleetBarCont">
-                        <div className="nonPlayerFleetBar"></div>
+                        <div className="nonPlayerFleetBar" style={nonPlayerHealthBarStyle}></div>
                     </div>
                 </div>
             </div>
