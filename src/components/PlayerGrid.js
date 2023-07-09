@@ -116,9 +116,6 @@ const PlayerGrid = ({ selectedRockets }) => {
         // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset vertically
         ships.forEach((ship) => {
             ship.style.display = 'flex';
-            if (ship.children[1].style.transform === 'rotate(90deg)') {
-                return ship.children[1].style.transform = 'rotate(0)'
-            }
             if (ship.children[1].style.transform === 'rotate(-90deg)') {
                 return ship.children[1].style.transform = 'rotate(0)'
             }
@@ -455,6 +452,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             setGuessedCells(prevGuessedCells => [...prevGuessedCells, computerGuess]);
             console.log(computerGuess);
         }, 2500);
+        handleGameEnd();
     }
 
     const isCellClicked = (id) => {
@@ -466,14 +464,16 @@ const PlayerGrid = ({ selectedRockets }) => {
     }
 
     // this function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
-    // const handleGameEnd = (status) => {
-    //     if (newNPCGridRef === 0) {
-    //     setGameStatus(true);
-    //     setOpenModal(true);
-    //     } else 
-    //     setGameStatus(false);
-    //     setOpenModal(true);
-    // };
+    const handleGameEnd = (status) => {
+        if (nonPlayerFleetLength === 0) {
+        setGameStatus(true);
+        setOpenModal(true);
+        } else if 
+        (playerOneFleetLength === 0) {
+        setGameStatus(false);
+        setOpenModal(true);
+        }
+    };
 
     // function to close the modal
     const closeModal = (e) => {
@@ -575,6 +575,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 {shipData.map((rocket, index) => {
                     return (
                         <div
+                            tabIndex={0}
                             key={index}
                             className={rocket.shipName}
                             ref={(e) => rocketImage.current[index] = e}
@@ -587,8 +588,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 })}
             </div>
             <Modal 
-                open={openModal} gameStatus={gameStatus === true} onClick={closeModal} handleReset={handleReset} />
-            <Modal open={openModal} gameStatus={gameStatus === true} onClick={closeModal} />
+                open={openModal} gameStatus={gameStatus} onClick={closeModal} handleReset={handleReset} />
         </>
     )
 }

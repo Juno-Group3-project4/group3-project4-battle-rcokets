@@ -43,15 +43,18 @@
 .mars-AI-landing-pic {
     height: 250px;
     width: 250px;
+    border-radius: 20px;
 }
 
 // *********** MEDIA QUERIES BELOW !!!!!!! ************** //
 // **** MOBILE RESPONSIVE DESIGN **** //
 @media (max-width: 697px) {
     .landing-page {
-       padding: 10px 15px 40px 15px; 
+        margin: 60px 0;
+        padding: 10px 15px 40px 15px; 
             h2 {
                 margin-top: 40px;
+                font-size: 1.3rem;
             }
             img {
                 margin-bottom: 45px;
@@ -72,8 +75,9 @@
                 font-size: 0.8rem;
                 line-height: 1.1;
             }
+        }
     }
-}
+
 // **** TABLET RESPONSIVE DESIGN **** //
 @media (min-width: 698px) and (max-width: 900px) {
     .landing-page {

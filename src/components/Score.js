@@ -40,7 +40,7 @@ const Score = ({playerOneFleetLength}) => {
                 </div>
                 <div className="nonplayer">
                     <div className="score">
-                        <h3>NON-PLAYER:</h3>
+                        <h3>COMPUTER:</h3>
                         <p className="score-total">0</p>
                     </div>
                     <p>Fleet Destruction:</p>

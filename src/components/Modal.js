@@ -13,12 +13,12 @@ const Modal = ( { open, gameStatus, closeModal} ) => {
             <div className="modalContainer">
                 <h2> {gameStatus ?
                     <Typewriter
-                        words={[' CONGRATULATIONS YOU WIN!!!']}
+                        words={['CONGRATULATIONS, YOU WIN!!!']}
                         loop={1}
                         typeSpeed={70}
                     /> :
                     <Typewriter
-                        words={['GAME OVER! YOU LOST!']}
+                        words={['GAME OVER, YOU LOST']}
                         loop={1}
                         typeSpeed={70}
                     /> 
