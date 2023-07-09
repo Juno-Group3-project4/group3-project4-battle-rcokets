@@ -27,6 +27,10 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [openModal, setOpenModal] = useState(false);
     // useState to track game progress. State will update to "win" or "lose"
     const [gameStatus, setGameStatus] = useState(false);
+    // useState to show modal if player's rocket has been fully attacked (OPTIONAL)
+    const [attackedModal, setAttackedModal] = useState(false);
+    // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
+    const [destroyedModal, setDestroyedModal] = useState(false);
     // useState to handle Hit/Miss message upon use turn
     const [hit, setHit] = useState('');
     const [hitVisible, setHitVisible] = useState(false);
