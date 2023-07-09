@@ -21,7 +21,9 @@ const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
                 handleHit(true);
 
                 // update clickCounter
-                count = count + 1;    
+                count = count + 1;
+                
+                // returns true if there is a hit
                 return true;      
         } else {
                 // create an audio object to play sounds
@@ -30,6 +32,8 @@ const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
         
                 // message 
                 handleHit(false);
+
+                // returns false if there is a miss
                 return false;
         }
 

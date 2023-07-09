@@ -44,8 +44,10 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [nonPlayerFleetLength, setNonPlayerFleetLength] = useState(0)
     // useState to store the players fleet length (the amount of cells remaining)
     const [playerFleetLength, setPlayerFleetLength] = useState(0)
-    // Fleet health bare state variable
+    // player Fleet health bare state variable
     const [playerFleetHealth, setPlayerFleetHealth] = useState(100);
+    // player Fleet health bare state variable
+    const [nonPlayerFleetHealth, setNonPlayerFleetHealth] = useState(100);
 
 
     // MUTABLE (useRef) VARIABLES:
@@ -461,8 +463,8 @@ const PlayerGrid = ({ selectedRockets }) => {
 
     
 
-    console.log('npcComparisonArrayLength=>',npcComparisonArray.length);
-    console.log('playerComparisonArrayLength=>',playerComparisonArray.length);
+    console.log('npcComparisonArrayLength=>',npcComparisonArray);
+    console.log('playerComparisonArrayLength=>',playerComparisonArray);
     console.log(clickedCells);
     
     
@@ -499,7 +501,12 @@ const PlayerGrid = ({ selectedRockets }) => {
 
             // update the nonPlayerFleetLength state variable
             setNonPlayerFleetLength(updatedNonPlayerFleetLength);
+         
+            // Non Player HealthBar calculation
+            let nonPlayerHealth = 100 / npcComparisonArray.length * updatedNonPlayerFleetLength;
             
+            // updating state with the updated value 
+            setNonPlayerFleetHealth(nonPlayerHealth);
         }
 
         setTimeout(() => {
@@ -524,6 +531,12 @@ const PlayerGrid = ({ selectedRockets }) => {
 
                 // update the playerFleetLength state variable
                 setPlayerFleetLength(updatedPlayerFleetLength);
+
+                // Non Player HealthBar calculation
+                let playerHealth = 100 / playerComparisonArray.length * updatedPlayerFleetLength;
+                
+                // updating state with the updated value 
+                setPlayerFleetHealth(playerHealth);
             } 
 
         }, 2500);
@@ -642,7 +655,8 @@ const PlayerGrid = ({ selectedRockets }) => {
                 <Score 
                     playerScore={playerScore} 
                     nonPlayerScore={nonPlayerScore} 
-                    playerFleetHealth={playerFleetHealth} />  
+                    playerFleetHealth={playerFleetHealth} 
+                    nonPlayerFleetHealth={nonPlayerFleetHealth} />  
                 <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
                 </>: null}
             {/* Ships */}
