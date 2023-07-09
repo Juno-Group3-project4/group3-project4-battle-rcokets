@@ -1,76 +1,48 @@
-import { newNPCGridRef } from "./GenerateComputerGrid"; 
-import npcTurn from "./npcTurn";
 import boomSound from "../sounds/boom.wav";
 import arcadeExplosion from "../sounds/arcade-Explo-A.wav"
 
+let turnScore;
 let clickCount = 100;
+let count = 0;
 
 // Function to determine which player's turn it is
-const playerTurn = (selectedGrid, playerGridDivRef, handleHit) => {
-        console.log('PLAYER TURN BEGINS');
-
-        // human player logic 
-        console.log(selectedGrid);
-        console.log("gridRef", newNPCGridRef);
+const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
         
-        if(newNPCGridRef.includes(selectedGrid.id)) {
-                console.log("yes");
-        
-        // if 'hit', change grid cell to red
-        selectedGrid.style.backgroundColor = "red";
-        const audio2 = new Audio(arcadeExplosion);
-        audio2.play();
-
         // stores number of targets to hit (Health Bar)
-        const arrayLength = newNPCGridRef.length; // return length of the computers ship array
+        const arrayLength = npcComparisonArray.length;
 
-        // remove selected grid from newNPCGridRef array
-        newNPCGridRef.splice(newNPCGridRef.indexOf(selectedGrid.id), 1); 
-        
-        // newNPCGridRef.splice(selectedGrid.id, 1);
-        console.log('newNPCGridRef updated', newNPCGridRef);
+        // if selected cell is occupied by a rocket
+        if (npcComparisonArray.includes(selectedGridID)) {
+                // play audio sound
+                const audio2 = new Audio(arcadeExplosion);
+                audio2.play();
 
-        // update clickCounter
-        let turnScore = newNPCGridRef.length * clickCount;
-        console.log("turn score", turnScore); // use for score board
-        
-        // trigger message => "hit" (simple <p> tag on screen => "status: hit emoji/sound effect?")
-        handleHit(true);
+                // message 
+                handleHit(true);
 
-        // computer turn => return key word to end turn? => style to indicate computer's turn; grey out other grid?
-
+                // update clickCounter
+                count = count + 1;                
         } else {
-        // if 'miss' change grid cell to yellow
-        selectedGrid.style.backgroundColor = "yellow";
-        // create an audio object to play sounds
-        const audio1 = new Audio(boomSound);
-        audio1.play();
-       
-        // message => "miss" (simple <p> tag on screen => "status: miss emoji/sound effect?")
-        handleHit(false);
+                // create an audio object to play sounds
+                const audio1 = new Audio(boomSound);
+                audio1.play();
+        
+                // message 
+                handleHit(false);
         }
 
         // update click count on each guess/click on grid
         clickCount = clickCount - 1;
+        turnScore =  arrayLength * clickCount;
+        console.log("turn score", turnScore);
         console.log(clickCount);
+        console.log("count", count);
+        console.log(arrayLength);
 
-        // call new function called NPC turn
-        console.log( '...END PLAYERS TURN...' );
-        // npcTurn(playerGridDivRef);
-
-
-        // confirm if grid cell has rocket placed there
-                // if true (hit) = 1) cell colour changes to red
-                        // 2) updates score => state (health bar)
-                        // 3) keep track of clicks
-                        // 4) update/relay message when player's or NPC's turn => true/false state (setTimeOut function) => use styling on grid to visually inform turn
-                        // 5) message saying 'hit' (stretch goal - sound effect?)
-
-                // if false (miss) = 1) cell colour changes to yellow
-                                // 2) display message saying 'miss' (stretch goal - sound effect?)
-                                // 3) keep track of clicks
-                                // 4) update turn state
-
+        if(count === arrayLength) {
+                console.log("YOU WIN!");
+                console.log(`YOUR FINAL SCORE IS ${turnScore}!`);
+        }
 }
 
 const scoreCalc = () => {
