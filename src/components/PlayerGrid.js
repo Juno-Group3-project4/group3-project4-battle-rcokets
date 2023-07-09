@@ -321,14 +321,17 @@ const PlayerGrid = ({ selectedRockets }) => {
 
         let gridDuplicates = playerGridDivRef.current.filter((item, index) => playerGridDivRef.current.indexOf(item) !== index)
 
-        if (gridDuplicates.length > 0) {
-            playerGridDivRef.current = [...new Set(playerGridDivRef.current)];
+        let discardedGrid = [];
+        for (let item of playerGridDivRef.current) {
+            if (!gridDuplicates.includes(item) && clickedShipObjTmp.playerGridRef.includes(item.id)) {
+                discardedGrid.push(item);
+            }
         }
 
-        console.log(playerGridDivRef.current)
+        if (gridDuplicates.length > 0 && discardedGrid.length > 0 || gridDuplicates.length > 0) {
+            playerGridDivRef.current = [...new Set(playerGridDivRef.current.filter(item => !discardedGrid.includes(item)))];
+        }
 
-        // console.log("Duplicates", duplicates);
-        
         // Array for storing cells which aren't located in the newPlayerGridref, but are also part of the the placement with one or more duplicate values
         let discardedData = [];
         for (let item in clickedShipObjTmp.playerGridRef) {
@@ -367,7 +370,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         // Reset duplicates array
         duplicates = [];
         discardedData = []; 
-        // console.log("newPlayerGridRef", newPlayerGridRef);
+        console.log(playerGridDivRef.current)
     };
 
     // event listener to drag ship to grid
@@ -477,10 +480,10 @@ const PlayerGrid = ({ selectedRockets }) => {
 
         let selectedGrid = e.target;
         let targetedId = selectedGrid.id;
-        
+
         setClickedCells(prevClickedCells => [...prevClickedCells, targetedId]);
         let hitOrMiss = playerTurn(targetedId, npcComparisonArray, handleHit);
-       
+
         // updating and tracking the players click counts
         let remainingClicks = playerClicks - 1;
 
@@ -488,15 +491,15 @@ const PlayerGrid = ({ selectedRockets }) => {
         setPlayerClicks(remainingClicks);
 
         // conditional to check if players Turn returns a hit(true) or a miss (false). If false nothing happens.
-        if(hitOrMiss[0]) {
+        if (hitOrMiss[0]) {
             // Player score calculation
-            
+
             // when a hit is registered subtract 1 from length
             let updatedNonPlayerFleetLength = nonPlayerFleetLength - 1;
 
             // variable to calculate the score on that turn
             let turnScore = playerClicks * nonPlayerFleetLength;
-            
+
             // variable to combine the total score with the turn score
             let newTotalScore = playerScore + turnScore;
 
@@ -505,10 +508,10 @@ const PlayerGrid = ({ selectedRockets }) => {
 
             // update the nonPlayerFleetLength state variable
             setNonPlayerFleetLength(updatedNonPlayerFleetLength);
-         
+
             // Non Player HealthBar calculation
             let nonPlayerHealth = 100 / npcComparisonArray.length * updatedNonPlayerFleetLength;
-            
+
             // updating state with the updated value 
             setNonPlayerFleetHealth(nonPlayerHealth);
 
@@ -521,7 +524,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             setGuessedCells(prevGuessedCells => [...prevGuessedCells, computerGuess]);
 
             // conditional to check if the computers guess is present in the playerComparisonArray.
-            if(playerComparisonArray.includes(computerGuess)) {
+            if (playerComparisonArray.includes(computerGuess)) {
                 // Non Player score calculation //
 
                 // when a hit is registered subtract 1 from length
@@ -530,7 +533,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 // variable to calculate the score on that turn
                 let nonPlayerTurnScore = playerClicks * playerFleetLength;
 
-                 // variable to combine the total score with the turn score
+                // variable to combine the total score with the turn score
                 let newNonPlayerTotalScore = nonPlayerScore + nonPlayerTurnScore;
 
                 // storing the newly updated total score in the state
@@ -541,19 +544,18 @@ const PlayerGrid = ({ selectedRockets }) => {
 
                 // Non Player HealthBar calculation
                 let playerHealth = 100 / playerComparisonArray.length * updatedPlayerFleetLength;
-                
+
                 // updating state with the updated value 
                 setPlayerFleetHealth(playerHealth);
 
                 // Game End modal conditional
                 handleGameEnd(hitOrMiss[1]);
-            } 
+            }
 
         }, 2500);
         
         console.log("actPlay AFTER computerTURN", activePlayer)
     }
-
     const isCellClicked = (id) => {
         return clickedCells.includes(id);
     }
