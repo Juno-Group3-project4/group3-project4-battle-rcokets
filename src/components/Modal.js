@@ -5,7 +5,7 @@ import battleSounds from "../sounds/battle-sounds.wav";
 
 
 const Modal = ( { open, gameStatus, closeModal} ) => {
-    if (open == !false) return null; 
+    if (open === false) return null; 
     // const audio3 = new Audio(battleSounds);
     // audio3.play();
     return (

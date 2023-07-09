@@ -535,16 +535,26 @@ form .flexContainer .rocketContainer {
   grid-template-columns: repeat(10, 1fr);
 }
 
-.gridCell.div {
+.gridCell.div.player.targeted {
+  pointer-events: none;
+}
+
+.gridCell.div.npcDiv {
   cursor: pointer;
 }
-.gridCell.div:hover, .gridCell.div:focus {
+.gridCell.div.npcDiv:hover, .gridCell.div.npcDiv:focus {
   background-color: #00DBE0;
   border: 2px solid #002C2E;
 }
 
-.gridCell.div.targeted {
+.gridCell.div.npcDiv.hit {
   pointer-events: none;
+  background-color: red;
+}
+
+.gridCell.div.npcDiv.miss {
+  pointer-events: none;
+  background-color: yellow;
 }
 
 .landing-page {
@@ -612,6 +622,10 @@ form .flexContainer .rocketContainer {
     margin-bottom: 30px;
   }
   .landing-page ol .instructions-list {
+    font-size: 0.8rem;
+    line-height: 1.1;
+  }
+  .landing-page ul li {
     font-size: 0.8rem;
     line-height: 1.1;
   }
@@ -685,6 +699,15 @@ form .flexContainer .rocketContainer {
   font-family: "Orbitron", sans-serif;
 }
 
+@media (max-width: 651px) {
+  .gridContainers {
+    flex-direction: column;
+  }
+  .gridContainers .playerGridContainer,
+  .gridContainers .nonPlayerGridContainer {
+    flex-grow: 2;
+  }
+}
 .scoreBoard {
   display: flex;
   background-color: #00DBE0;
