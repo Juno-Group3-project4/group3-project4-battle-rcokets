@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import landing from '../assets/moon-landing-art.png'
 
 // LANDING PAGE Component
@@ -13,7 +13,11 @@ const LandingPage = () => {
                 <li className="instructions-list">After clicking Play Game, select 3 rockets on the 'Rocket Selection' page. </li>
                 <li className="instructions-list">Drag and drop all your rockets on the Battle Rocket Grid then click Launch Game!</li>
                 <li className="instructions-list">Click on a cell on the AI's non-playerGrid to launch a SpaceX attack!</li>
+<<<<<<< HEAD
                 <li className="instructions-list">It's the AI's (non-player) turn now - they will make their move and attempt to destroy your rockets!! </li>
+=======
+                <li className="instructions-list">It's the AI's (non-player) turn now - they will make their move and attempt to destroy your rockets!! 
+>>>>>>> 238cb7a19964a46ab7bf61568586c261eb52ea40
                     <ul>
                         <li className="indent">If you hit one of the AI's rockets during your turn, the cell will turn red.</li>
                         <li className="indent">If you miss one of the AI's rockets during your turn, the cell will turn yellow.</li>
@@ -22,7 +26,7 @@ const LandingPage = () => {
                 <li className="instructions-list">If you win, congratulations! You have successfully protected the future of humanity!!</li>
                 <li className="instructions-list">If you lose, you can press "Play again" to attempt to defeat the AI.</li>
             </ol>
-            <Link to="/play">
+            <Link to="/form">
                 <button>PLAY GAME</button>
             </Link>
         </section>

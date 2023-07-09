@@ -130,13 +130,13 @@ form {
                 width: 20px;
                 height: 20px;
             }
-         }
+        }
     }
 }
 
 // **** MOBILE/TABLET RESPONSIVE DESIGN **** //
 @media (min-width: 600px) and (max-width: 900px) {
-   Form .flexContainer {
+    Form .flexContainer {
             padding-left: 0;
             flex-direction: column;
         .rocketContainer {
@@ -145,7 +145,6 @@ form {
         h2 {
             font-size: 80%;
         }
-       
     }
 }
 
@@ -163,6 +162,6 @@ form {
                 line-height: 1.6;
                 }
             }
-           }
         }
+    }
 }

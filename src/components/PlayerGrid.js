@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import BattleGrid from "./BattleGrid";
 import shipDataArray from "./shipDataArray";
-import GenerateComputerGrid, { newNPCGridRef } from "./GenerateComputerGrid";
 import Score from "./Score";
+import { npcTurn } from "./npcTurn";
 import playerTurn from "./playerTurn";
 import Modal from "./Modal";
-import npcTurn from "./npcTurn";
+import gridData from "./gridData";
+import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
@@ -13,26 +14,23 @@ const PlayerGrid = ({ selectedRockets }) => {
     // STATEFUL VARIABLES:
     // set rocket ship grid data
     const [shipData, setShipData] = useState([]);
+    // set NPC rocket ship grid data
+    const [npcShipData, setNpcShipData] = useState([]);
     // set current rocket that user is dragging
     const [currentShip, setCurrentShip] = useState('');
-    // new player grid div ref
-    // const [playerGridDivRef, setPlayerGridDivRef] = useState([]);
-    const playerGridDivRef = useRef([]);
-    console.log('playerGridDivRef-->', playerGridDivRef.current.length );
-
-    const [gridColorChange, setGridColorChange] = useState(false);
-
     // useState to determine if all rockets have been placed on grid
     const [rocketsPlaced, setRocketsPlaced] = useState(false);
     // useState to launch game (Non player grid will be displayed)
     const [readyToLaunch, setReadyToLaunch] = useState(false);
-    // useState to store rocket sizes to pass to GenerateComputerGrid
-    const [rocketSizes, setRocketSizes] = useState();
     // usState to manage open/close Modal based on Game status
     const [openModal, setOpenModal] = useState(false);
     // useState to track game progress. State will update to "win" or "lose"
     const [gameStatus, setGameStatus] = useState(false);
-    // two useState to show if user hits or misses target
+    // useState to show modal if player's rocket has been fully attacked (OPTIONAL)
+    const [attackedModal, setAttackedModal] = useState(false);
+    // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
+    const [destroyedModal, setDestroyedModal] = useState(false);
+    // useState to handle Hit/Miss message upon use turn
     const [hit, setHit] = useState('');
     const [hitVisible, setHitVisible] = useState(false);
 
@@ -41,55 +39,43 @@ const PlayerGrid = ({ selectedRockets }) => {
     const allCellDivs = useRef([]);
     // store individual rocket divs
     const rocketImage = useRef([]);
+    // store player grid cell references for placed rockets
+    const playerGridDivRef = useRef([]);
 
     // DEFINED GLOBAL VARIABLES:
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
 
-    // return array that only includes data for rockets selected by user
-    const rocketsToDisplay = shipDataArray.filter((ship) => {
-        return selectedRockets.some((removeItem) => removeItem === ship.stringName);
-    }).map((filteredShip) => { 
-        return (
-            {
-                stringName: filteredShip.stringName,
-                imageSource: filteredShip.image,
-                shipName: filteredShip.shipName,
-                spaces: filteredShip.spaces,
-                orientation: filteredShip.orientation,
-                playerGridRef: filteredShip.playerGridRef
-            }
-        )
-    });
-
-   
-
-    // terminal says: React Hook useEffect has a missing dependency: 'rocketsToDisplay'. Either include it or remove the dependency array
-    useEffect(() => {
-        // update shipData with rocket data of user selected rockets only
-        setShipData(rocketsToDisplay);
-
-        // filter sizes of each user selected rocket into an array
-        if (rocketsToDisplay) {
-            const userRocketSizes = [];
-            rocketsToDisplay.filter((rocket) => {
-                userRocketSizes.push(rocket.spaces);
-            });
-
-            // update state; pass as props to NPC component to equalize target numbers
-            setRocketSizes(userRocketSizes);
-        }
-    }, []);
-
-    
     // useEffect for finding all the grid cells and converting the nodeList into an array which then we can access the cell elements and perform operations on later using allCellsDivs.current
     useEffect(() => {
         const cells = document.querySelectorAll('.gridCell.div');
         allCellDivs.current = Array.from(cells);
+        displayPlayerRockets();
     }, []);
 
     // console.log("allCellDivsCurrent", allCellDivs.current);
-
+    
+    // filter & map over shipDataArray to return only data for rockets selected by user
+    const displayPlayerRockets = () => {
+        // return array that only includes data for rockets selected by user
+        const rocketsToDisplay = shipDataArray.filter((ship) => {
+            return selectedRockets.some((removeItem) => removeItem === ship.stringName);
+        }).map((filteredShip) => {
+            return (
+                {
+                    stringName: filteredShip.stringName,
+                    imageSource: filteredShip.image,
+                    shipName: filteredShip.shipName,
+                    spaces: filteredShip.spaces,
+                    orientation: filteredShip.orientation,
+                    playerGridRef: filteredShip.playerGridRef,
+                    attackedCells: filteredShip.attackedCells
+                }
+            )
+        });
+        setShipData(rocketsToDisplay);
+    }
+    
     // METHOD TO REMOVE ROCKET FROM DISPLAY ONCE PLACED ON GRID
     const removeRocket = () => {
 
@@ -114,6 +100,13 @@ const PlayerGrid = ({ selectedRockets }) => {
             playerGridRef:[],
             orientation: "vertical",
         }));
+
+        // reset computer's grid reference array
+        const updatedNPCShipData = npcShipData.map((npcRocket) => ({
+            ...npcRocket, 
+            NPCGridRef: [],
+            attackedCells: []
+        }));
         // For each selection that has been placed on the grid, wipe the Array reset colours and put image back on webpage - if image was placed horizontally, includes a conditional statement to ensure image was reset vertically
         ships.forEach((ship) => {
             ship.style.display = 'flex';
@@ -124,18 +117,25 @@ const PlayerGrid = ({ selectedRockets }) => {
         allCellDivs.current.forEach((cell) => {
             cell.style.backgroundColor = '#002C2E';
         })
-     
+    
         // Reset all State
         setShipData(updatedShipData);
+        setNpcShipData(updatedNPCShipData);
         setCurrentShip('');
         playerGridDivRef.current = [];
         setRocketsPlaced(false);
         setReadyToLaunch(false);
         setOpenModal(false);
         setGameStatus(false);
+        setAttackedModal(false);
+        setDestroyedModal(false);
+        setHit('');
         setHitVisible(false);
-        setHitVisible(false);
-        console.log(newPlayerGridRef, "RESET SUCCESS")
+        setClickedCells([]);
+        setNpcComparisonArray([]);
+        setGuessedCells([]);
+        setPlayerComparisonArray([]);
+        // console.log(newPlayerGridRef, "RESET SUCCESS")
     }
 
     // event listener for placing ship on grid
@@ -206,21 +206,13 @@ const PlayerGrid = ({ selectedRockets }) => {
 
                             // Add the grid reference to the shipData array
                             shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
-                            console.log("playerGridRef", shipData[i].playerGridRef);
+                            // console.log("playerGridRef", shipData[i].playerGridRef);
 
 
                             // change the colour of the currentCell
                             currentCell.style.backgroundColor = "blue";
 
                             playerGridDivRef.current.push(currentCell);
-                            // setPlayerGridDivRef((prevArray) => [...prevArray, currentCell]);
-
-                            // const tempArray = [];
-                            // tempArray.push(currentCell);
-
-                            // for (let i = 0; i < tempArray.length; i++) {
-                            //     (tempArray[i]);
-                            // }
 
                             // iterate through the temporary array and if it finds valuey that matches the currentCells valueX then store that div as the new currentCell
                             for (let i = 0; i < tempNextCol.length; i++) {
@@ -236,7 +228,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 }
             }
         }
-        console.log(playerGridDivRef);
+        // console.log(playerGridDivRef);
         
         // Push all PlayerGridRefs to one large array (newPlayerGridRef)
         for (let key in shipData) {
@@ -244,14 +236,12 @@ const PlayerGrid = ({ selectedRockets }) => {
             newArray.map((array) => {
                 newPlayerGridRef.push(array);
             })
-            console.log("newPlayerGridRef", newPlayerGridRef);
-            
-        
+            // console.log("newPlayerGridRef", newPlayerGridRef);
         }
 
         // ERROR HANDLING to check for duplicates in Array (i.e. user places rocket on a grid where another rocket exists)
         let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !==index);
-        console.log("Duplicates", duplicates);
+        // console.log("Duplicates", duplicates);
         
         // Array for storing cells which aren't located in the newPlayerGridref, but are also part of the the placement with one or more duplicate values
         let discardedData = [];
@@ -287,9 +277,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             ) {
             setRocketsPlaced(!false);
         };
-    
-        console.log("newPlayerGridRef", newPlayerGridRef);
-
+        // console.log("newPlayerGridRef", newPlayerGridRef);
     };
 
     // event listener to drag ship to grid
@@ -338,9 +326,29 @@ const PlayerGrid = ({ selectedRockets }) => {
     };
 
     const handleLaunch = () => {
+        // set ready to launch state to true
         setReadyToLaunch(true);
+        // call function to 
+        generateRandomLocation();
+
+        // to equalize game, filter & map over npcGridRockets to return same rocket data for computer grid
+        const npcGridRockets = npcRocketData.filter((npcRocket) => {
+            return selectedRockets.some((removeItem) => removeItem === npcRocket.stringName);
+        }).map((filteredRocket) => {
+            return (
+                {
+                    stringName: filteredRocket.stringName,
+                    spaces: filteredRocket.spaces,
+                    NPCGridRef: filteredRocket.NPCGridRef,
+                    attackedCells: []
+                }
+            )
+        });
+        // set npcShipData state
+        setNpcShipData(npcGridRockets);
     }
 
+        
     const handleHit = (hit) => {
         if (hit) {
             setHit('HIT! \uD83D\uDCA5')
@@ -350,33 +358,83 @@ const PlayerGrid = ({ selectedRockets }) => {
         setHitVisible(true)
     };
 
+    const [clickedCells, setClickedCells] = useState([]);
+    const [guessedCells, setGuessedCells] = useState([]);
+    const [npcComparisonArray, setNpcComparisonArray] = useState([]);
+    const [playerComparisonArray, setPlayerComparisonArray] = useState([]);
+
+    useEffect(() => {
+        const copyNpcShipData = [...npcShipData];
+        const newNPCGridRef = [];
+
+        const mappedCopyNpcShipData = copyNpcShipData.map((npcShip) => {
+            return npcShip.NPCGridRef;
+        })
+        
+        for (let i = 0; i < mappedCopyNpcShipData.length; i++) {
+            for (let j = 0; j < mappedCopyNpcShipData[i].length; j++) {
+                newNPCGridRef.push(mappedCopyNpcShipData[i][j]);
+            }
+        }
+
+        const copyShipData = [...shipData];
+        const newPlayerGridRef = [];
+
+        const mappedCopyShipData = copyShipData.map((playerShip) => {
+            return playerShip.playerGridRef;
+        })
+
+        for (let i = 0; i < mappedCopyShipData.length; i++) {
+            for (let j = 0; j < mappedCopyShipData[i].length; j++) {
+                newPlayerGridRef.push(mappedCopyShipData[i][j]);
+            }
+        }
+
+        setNpcComparisonArray(newNPCGridRef);
+        setPlayerComparisonArray(newPlayerGridRef);
+    }, [npcShipData, shipData]);
+
+    console.log(npcComparisonArray);
+    console.log(playerComparisonArray);
+    console.log(clickedCells);
+
     // handle click for each div in grid
     const handleClick = (e) => {
         let selectedGrid = e.target;
-        console.log(selectedGrid);
-        if (selectedGrid) {
-            selectedGrid.className = 'gridCell div targeted';
-        }
+        let targetedId = selectedGrid.id;
 
-        playerTurn(selectedGrid, playerGridDivRef, handleHit);
-        npcTurn(playerGridDivRef, allCellDivs.current);
+        setClickedCells(prevClickedCells => [...prevClickedCells, targetedId]);
+        playerTurn(targetedId, npcComparisonArray, handleHit);
+        setTimeout(() => {
+            let computerGuess = npcTurn();
+            setGuessedCells(prevGuessedCells => [...prevGuessedCells, computerGuess]);
+            console.log(computerGuess);
+        }, 2500);
+    }
+
+    console.log(guessedCells);
+
+    const isCellClicked = (id) => {
+        return clickedCells.includes(id);
     }
     
+    const isCellGuessed = (id) => {
+        return guessedCells.includes(id);
+    }
 
-    // this will function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
-    const handleGameEnd = (status) => {
-        if (newNPCGridRef === 0) {
-        setGameStatus(true);
-        setOpenModal(true);
-        } else 
-        setGameStatus(false);
-        setOpenModal(true);
-    };
+    // this function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
+    // const handleGameEnd = (status) => {
+    //     if (newNPCGridRef === 0) {
+    //     setGameStatus(true);
+    //     setOpenModal(true);
+    //     } else 
+    //     setGameStatus(false);
+    //     setOpenModal(true);
+    // };
 
     // function to close the modal
     const closeModal = (e) => {
-        e.preventDefault();
-        console.log('clicked');
+        // console.log('clicked');
         setOpenModal(false);
     };
 
@@ -396,20 +454,71 @@ const PlayerGrid = ({ selectedRockets }) => {
             <div className="gridContainers">
                 <div className="playerGridContainer">
                     <h2>Player Grid</h2>
-                    <BattleGrid
-                        handleOnDrag={handleOnDrag}
-                        handleDrop={handleDrop}
-                    />
+                    <BattleGrid>
+                        {Array.from(gridData).map((gridRow, index) => {
+                            return (
+                                <div key={index} id={index} className="gridRow">
+                                    {Array.from(gridRow).map((gridColumn) => {
+                                        const npcCellId = gridColumn.id
+                                        const backgroundColor = playerComparisonArray.includes(npcCellId) ? 'red' : 'yellow'
+                                        const cellGuessed = isCellGuessed(npcCellId);
+                                        const cellGridColour = {
+                                            background: cellGuessed ? backgroundColor: '',
+                                        };
+                                        const addClassName = cellGuessed ? 'targeted' : '';
+
+                                        return (
+                                            <div
+                                                className={`${gridColumn.className} player ${addClassName}`}
+                                                style={cellGridColour}
+                                                key={gridColumn.id}
+                                                id={gridColumn.id}
+                                                onDragOver={handleOnDrag}
+                                                onDrop={handleDrop}
+                                                valuex={gridColumn.x_value}
+                                                valuey={gridColumn.y_value}
+                                            >
+                                                <span className="sr-only">{gridColumn.id}</span>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )
+                        })}
+                    </BattleGrid>
                 </div>
                 
                 <div className="nonPlayerGridContainer" style={{display: readyToLaunch ? 'block' : 'none'}} >
                     {readyToLaunch ?
-                        <>
+                        <>  
                             <h2>Computer Grid</h2>
-                            <GenerateComputerGrid 
-                                handleClick={handleClick}
-                                userRocketSizes={rocketSizes}
-                            />
+                            <BattleGrid>
+                                {Array.from(gridData).map((gridRow, index) => {
+                                    return (
+                                        <div key={index} id={index} className="gridRow">
+                                            {Array.from(gridRow).map((gridColumn) => {
+                                                const cellId = gridColumn.id;
+                                                const hitOccupiedCell = npcComparisonArray.includes(cellId) ? 'hit' : 'miss'
+                                                const cellClicked = isCellClicked(cellId);
+                                                const addClassName = cellClicked ? hitOccupiedCell : '';
+                                                
+                                                return (
+                                                    <div
+                                                        className={`${gridColumn.className} npcDiv ${addClassName}`}
+                                                        key={gridColumn.id}
+                                                        id={gridColumn.id}
+                                                        onClick={(e) => { handleClick(e);}}
+                                                        valuex={gridColumn.x_value}
+                                                        valuey={gridColumn.y_value}
+                                                    >
+                                                        <span className="sr-only">{gridColumn.id}</span>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    )
+                                })}
+                            </BattleGrid>
                         </>
                         : null}
                 </div> 
@@ -420,7 +529,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 </>: null}
             {/* Ships */}
             <div className="shipContainer">
-                {rocketsToDisplay.map((rocket, index) => {
+                {shipData.map((rocket, index) => {
                     return (
                         <div
                             key={index}
@@ -434,8 +543,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                     )
                 })}
             </div>
-            <Modal 
-                open={openModal} gameStatus={gameStatus} closeModal={closeModal}/>
+            <Modal open={openModal} gameStatus={gameStatus === true} onClick={closeModal} />
         </>
     )
 }

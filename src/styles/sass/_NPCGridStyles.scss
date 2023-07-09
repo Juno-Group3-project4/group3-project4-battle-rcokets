@@ -55,7 +55,11 @@
     grid-template-columns: repeat(10, 1fr);
 }
 
-.gridCell.div {
+.gridCell.div.player.targeted {
+    pointer-events: none;
+}
+
+.gridCell.div.npcDiv {
     cursor: pointer;
     &:hover,
     &:focus {
@@ -64,7 +68,12 @@
     }
 }
 
-.gridCell.div.targeted {
+.gridCell.div.npcDiv.hit {
     pointer-events: none;
+    background-color: red;
 }
 
+.gridCell.div.npcDiv.miss {
+    pointer-events: none;
+    background-color: yellow;
+}
