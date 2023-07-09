@@ -45,7 +45,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     // useState to store the players fleet length (the amount of cells remaining)
     const [playerFleetLength, setPlayerFleetLength] = useState(0)
     // Fleet health bare state variable
-    const [fleetHealth, setFleetHealth] = useState(75);
+    const [playerFleetHealth, setPlayerFleetHealth] = useState(100);
 
 
     // MUTABLE (useRef) VARIABLES:
@@ -642,7 +642,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 <Score 
                     playerScore={playerScore} 
                     nonPlayerScore={nonPlayerScore} 
-                    fleetHealth={fleetHealth} />  
+                    playerFleetHealth={playerFleetHealth} />  
                 <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
                 </>: null}
             {/* Ships */}
