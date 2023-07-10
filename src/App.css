@@ -311,6 +311,24 @@ button:focus {
   border: 2px solid #00DBE0;
 }
 
+.npcGridContainer,
+.topHeaderContainer,
+.leftHeaderContainer,
+.bottomGrid,
+.gridPlayArea,
+.gridRow {
+  display: grid;
+}
+
+footer {
+  background-color: #00DBE0;
+  padding: 2px;
+  margin-top: 5px;
+}
+footer .footer-text, footer .juno-link {
+  text-align: center;
+}
+
 .wrapper {
   max-width: 1260px;
   width: 90%;
@@ -329,7 +347,6 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 60px;
   margin-bottom: 80px;
 }
 form .flexContainer {
@@ -364,7 +381,7 @@ form .flexContainer li .engineSpecsOverlay {
   position: absolute;
   top: 0;
   left: 0px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   height: 100%;
   width: 100%;
   border-radius: 20px;
@@ -413,6 +430,7 @@ form .flexContainer .rocketContainer {
   Form .flexContainer {
     flex-direction: column;
     padding-left: 0;
+    margin-bottom: 30px;
   }
   Form .flexContainer .rocketContainer {
     width: 100%;
@@ -420,18 +438,29 @@ form .flexContainer .rocketContainer {
   Form .flexContainer li label {
     flex-direction: column;
   }
+  Form .flexContainer li label .rocket {
+    width: 150px;
+    height: 150px;
+  }
   Form .flexContainer li label .descriptionContainer {
     padding-left: 0;
     font-size: 0.7rem;
     line-height: 1.3;
   }
-  [type=checkbox] {
+  Form .flexContainer li label .engineSpecsOverlay {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  Form .flexContainer li label .engineSpecsOverlay p {
+    line-height: 1.6;
+  }
+  Form .flexContainer li label [type=checkbox] {
     width: 20px;
     height: 20px;
   }
 }
 @media (min-width: 600px) and (max-width: 900px) {
   Form .flexContainer {
+    padding-left: 0;
     flex-direction: column;
   }
   Form .flexContainer .rocketContainer {
@@ -448,13 +477,23 @@ form .flexContainer .rocketContainer {
   form .flexContainer li label .descriptionContainer {
     font-size: 0.7rem;
   }
+  form .flexContainer li label .engineSpecsOverlay {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  form .flexContainer li label .engineSpecsOverlay p {
+    line-height: 1.6;
+  }
+}
+@media (max-width: 399px) {
+  h1 {
+    font-size: 2.3rem;
+  }
 }
 /* NPCGrid CSS */
 /* Entire Grid Container */
 .npcGridContainer {
   max-width: 600px;
   margin: 0 auto;
-  display: grid;
   grid-template-columns: 1;
   grid-template-rows: 2;
   padding: 2%;
@@ -468,18 +507,15 @@ form .flexContainer .rocketContainer {
 
 /* Top Header (A-J) */
 .topHeaderContainer {
-  display: grid;
   grid-template-columns: repeat(11, 1fr);
 }
 
 .bottomGrid {
-  display: grid;
   grid-template-columns: 1fr 10fr;
 }
 
 /* Left Header (1-10) */
 .leftHeaderContainer {
-  display: grid;
   grid-template-rows: repeat(10, 1fr);
 }
 
@@ -495,13 +531,33 @@ form .flexContainer .rocketContainer {
 
 /* Grid Play Area */
 .gridPlayArea {
-  display: grid;
   grid-template-rows: repeat(10, 1fr);
 }
 
 .gridRow {
-  display: grid;
   grid-template-columns: repeat(10, 1fr);
+}
+
+.gridCell.div.player.targeted,
+.gridCell.div.npcDiv.hit,
+.gridCell.div.npcDiv.miss {
+  pointer-events: none;
+}
+
+.gridCell.div.npcDiv {
+  cursor: pointer;
+}
+.gridCell.div.npcDiv:hover, .gridCell.div.npcDiv:focus {
+  background-color: #00DBE0;
+  border: 2px solid #002C2E;
+}
+
+.gridCell.div.npcDiv.hit {
+  background-color: red;
+}
+
+.gridCell.div.npcDiv.miss {
+  background-color: yellow;
 }
 
 .landing-page {
@@ -535,6 +591,9 @@ form .flexContainer .rocketContainer {
   margin-top: 10px;
   font-family: "Maitree", serif;
 }
+.landing-page ol ul {
+  color: #320363;
+}
 
 .instructions-list {
   list-style: inside decimal;
@@ -545,14 +604,54 @@ form .flexContainer .rocketContainer {
 .mars-AI-landing-pic {
   height: 250px;
   width: 250px;
+  border-radius: 20px;
 }
 
+@media (max-width: 697px) {
+  .landing-page {
+    margin: 60px 0;
+    padding: 10px 15px 40px 15px;
+  }
+  .landing-page h2 {
+    margin-top: 40px;
+    font-size: 1.3rem;
+  }
+  .landing-page img {
+    margin-bottom: 45px;
+    height: 220px;
+    width: 220px;
+  }
+  .landing-page p {
+    font-size: 0.9rem;
+  }
+  .landing-page ol {
+    margin-bottom: 30px;
+  }
+  .landing-page ol .instructions-list {
+    font-size: 0.8rem;
+    line-height: 1.1;
+  }
+  .landing-page ul li {
+    font-size: 0.8rem;
+    line-height: 1.1;
+  }
+}
+@media (min-width: 698px) and (max-width: 900px) {
+  .landing-page {
+    padding: 0px 15px 40px 15px;
+  }
+  .landing-page h2 .landing-headings {
+    margin-top: 50px;
+  }
+  .landing-page img {
+    margin-bottom: 45px;
+  }
+}
 .Falcon1, .Falcon9, .FalconHeavy, .Starship {
   margin: 0 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: yellow; */
 }
 
 .Falcon9, .FalconHeavy {
@@ -572,6 +671,9 @@ form .flexContainer .rocketContainer {
 }
 .shipContainer .rocket-spaces {
   color: white;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
 }
 
 .rocket-image {
@@ -589,6 +691,7 @@ form .flexContainer .rocketContainer {
 .gridContainers {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: auto;
 }
@@ -597,6 +700,43 @@ form .flexContainer .rocketContainer {
   flex-grow: 1;
 }
 
+.hit-message {
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: "Orbitron", sans-serif;
+}
+
+.nextTurn {
+  color: white;
+  font-size: 1.3rem;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 651px) {
+  .gridContainers {
+    flex-direction: column;
+  }
+  .placement-instructions {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  img {
+    max-width: 55%;
+  }
+  .rocket-image {
+    height: 100px;
+  }
+  .Falcon1,
+.Falcon9,
+.FalconHeavy {
+    width: 40px;
+  }
+  .spaces-title {
+    font-size: 0.8rem;
+  }
+}
 .scoreBoard {
   display: flex;
   background-color: #00DBE0;
@@ -646,6 +786,16 @@ form .flexContainer .rocketContainer {
   height: 100%;
 }
 
+@media (max-width: 429px) {
+  .score h3 {
+    font-size: 0.7rem;
+  }
+}
+@media (min-width: 430px) and (max-width: 505px) {
+  .score h3 {
+    font-size: 1rem;
+  }
+}
 .backGroundContainer {
   height: 100vh;
   width: 90%;
@@ -675,4 +825,43 @@ form .flexContainer .rocketContainer {
 .backGroundContainer .modalContainer .btnContainer .playAgainBtn,
 .backGroundContainer .modalContainer .btnContainer .closeGameBtn {
   margin: 10px 15px;
+}
+
+@media (max-width: 500px) {
+  .backGroundContainer {
+    margin-bottom: 40px;
+    height: 80vh;
+  }
+  .backGroundContainer h2 {
+    font-size: 0.9rem;
+    padding: 0 25px;
+  }
+  .btnContainer {
+    padding: 0 35px;
+  }
+  .btnContainer .playAgainBtn,
+.btnContainer .closeGameBtn {
+    font-size: 0.8rem;
+  }
+}
+@media (min-width: 501px) {
+  .backGroundContainer {
+    margin-bottom: 50px;
+    height: 80vh;
+  }
+}
+@media (max-width: 651px) {
+  footer p {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    margin: 15px 12px;
+  }
+}
+@media (min-width: 652px) {
+  footer {
+    padding: 15px 0;
+  }
+  footer p {
+    font-size: 0.9rem;
+  }
 }/*# sourceMappingURL=App.css.map */

@@ -1,79 +1,42 @@
-import { newNPCGridRef } from "./GenerateComputerGrid"; 
-import npcTurn from "./npcTurn";
-import boomSound from "../sounds/boom.wav"
+import boomSound from "../sounds/boom.wav";
+import arcadeExplosion from "../sounds/arcade-Explo-A.wav"
 
-let clickCount = 100;
+let count = 0;
+let playerTurnArr = [];
 
 // Function to determine which player's turn it is
-const playerTurn = (selectedGrid, playerGridDivRef) => {
-    console.log('PLAYER TURN BEGINS');
-    
-    // human player logic 
-    console.log(selectedGrid);
-    console.log("gridRef", newNPCGridRef);
-    
-    if(newNPCGridRef.includes(selectedGrid.id)) {
-        console.log("yes");
+const playerTurn = (selectedGridID, npcComparisonArray, handleHit) => {
+        // if selected cell is occupied by a rocket
+        if (npcComparisonArray.includes(selectedGridID)) {
+                // play audio sound
+                const audio2 = new Audio(arcadeExplosion);
+                audio2.play();
+
+                // message 
+                handleHit(true);
+
+                // update clickCounter
+                count = count + 1;
+
+                // update array with data
+                playerTurnArr = [true, count];
+
+                // returns true if there is a hit plus returns the count
+                return playerTurnArr    
+        } else {
+                // create an audio object to play sounds
+                const audio1 = new Audio(boomSound);
+                audio1.play();
         
-        // if 'hit', change grid cell to red
-        selectedGrid.style.backgroundColor = "red";
+                // message 
+                handleHit(false);
 
-        // stores number of targets to hit (Health Bar)
-        const arrayLength = newNPCGridRef.length; // return length of the computers ship array
+                // update array with data
+                playerTurnArr = [false, count];
 
-        // remove selected grid from newNPCGridRef array
-        const refPosition = newNPCGridRef.indexOf(selectedGrid.id); // returns index position of selectedGrid.id in newNPCGridRef array 
-        
-        // then, remove it from newNPCGridRef array
-        newNPCGridRef.splice(refPosition, 1); // starting at position ‘refPosition’ (determined from line above), remove 1 item from array
-        
-        // newNPCGridRef.splice(selectedGrid.id, 1);
-        console.log('newNPCGridRef updated', newNPCGridRef);
-
-
-        // update clickCounter
-        let turnScore = newNPCGridRef.length * clickCount;
-        console.log("turn score", turnScore); // use for score board
-        
-        // trigger message => "hit" (simple <p> tag on screen => "status: hit emoji/sound effect?")
-
-        // computer turn => return key word to end turn? => style to indicate computer's turn; grey out other grid?
-
-    } else {
-        // if 'miss' change grid cell to yellow
-        selectedGrid.style.backgroundColor = "yellow";
-        // create an audio object to play sounds
-        const audio = new Audio(boomSound);
-        audio.play();
-        // message => "miss" (simple <p> tag on screen => "status: miss emoji/sound effect?")
-
-    }
-
-    // update click count on each guess/click on grid
-    clickCount = clickCount - 1;
-    console.log(clickCount);
-
-    // call new function called NPC turn
-    console.log( '...END PLAYERS TURN...' );
-    npcTurn(playerGridDivRef);
-
-
-    // confirm if grid cell has rocket placed there
-            // if true (hit) = 1) cell colour changes to red
-                    // 2) updates score => state (health bar)
-                    // 3) keep track of clicks
-                    // 4) update/relay message when player's or NPC's turn => true/false state (setTimeOut function) => use styling on grid to visually inform turn
-                    // 5) message saying 'hit' (stretch goal - sound effect?)
-
-            // if false (miss) = 1) cell colour changes to yellow
-                            // 2) display message saying 'miss' (stretch goal - sound effect?)
-                            // 3) keep track of clicks
-                            // 4) update turn state
-
+                // returns true if there is a hit plus returns the count
+                return playerTurnArr; 
+        }
 }
-
-const scoreCalc = () => {
-
-};
 
 export default playerTurn;

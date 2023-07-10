@@ -1,8 +1,7 @@
 // BATTLEGRID Component
 import axisLabels from "./axisLabels.js";
-import gridData from "./gridData.js";
 
-const BattleGrid = ({ handleOnDrag, handleDrop, handleClick }) => {
+const BattleGrid = (props) => {
     return (
         <>
             {/* Grid Container */}
@@ -22,30 +21,10 @@ const BattleGrid = ({ handleOnDrag, handleDrop, handleClick }) => {
                             return <div className="leftHeader gridCell" key={index} value={label.value}>{label.textContent}</div>
                         })}
                     </div>
-                    
+
                     {/* Grid Play Area */}
                     <div className="gridPlayArea">
-                        {gridData.map((gridRow, index) => {
-                            return (
-                                <div key={index} id={index} className="gridRow">
-                                    {gridRow.map((gridColumn) => {
-                                        return (
-                                            <div
-                                                className={gridColumn.className}
-                                                key={gridColumn.id}
-                                                id={gridColumn.id}
-                                                onDragOver={handleOnDrag}
-                                                onDrop={handleDrop}
-                                                onClick={handleClick}
-                                                valuex={gridColumn.x_value}
-                                                valuey={gridColumn.y_value}
-                                            >
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            )
-                        })}
+                        {props.children}
                     </div>
                 </div>
             </div>

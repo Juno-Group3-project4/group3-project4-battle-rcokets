@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* background-color: yellow; */
 }
 
 .Falcon9, .FalconHeavy {
@@ -22,6 +21,9 @@
     padding-bottom: 50px;
     & .rocket-spaces {
         color: white;
+        text-align: center;
+        font-size: 0.80rem;
+        letter-spacing: 1px;
     }
 }
 
@@ -40,11 +42,59 @@
 .gridContainers {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height:auto;
-   .playerGridContainer,
-   .nonPlayerGridContainer {
-    flex-grow: 1;
-   }
+
+    .playerGridContainer,
+    .nonPlayerGridContainer {
+        flex-grow: 1;
+    }
 }
 
+.hit-message {
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: "Orbitron", sans-serif;
+}
+
+.nextTurn {
+    color: white;
+    font-size: 1.3rem;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+
+// ***** MOBILE RESPONSIVE DESIGN - MEDIA QUERIES!!! ***** //
+
+
+@media (max-width: 651px) {
+    .gridContainers {
+        flex-direction: column;
+    }
+
+    .placement-instructions {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    img {
+        max-width: 55%;
+    }
+    .rocket-image {
+        height: 100px;
+    }
+    
+    .Falcon1,
+    .Falcon9,
+    .FalconHeavy {
+        width: 40px;
+    }
+
+    .spaces-title {
+        font-size: 0.8rem;
+    }
+
+}
