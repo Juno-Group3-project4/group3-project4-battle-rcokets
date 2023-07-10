@@ -10,6 +10,7 @@ import { Typewriter } from "react-simple-typewriter";
 import gridData from "./gridData";
 import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 
+
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
 
@@ -697,7 +698,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 })}
             </div>
             <Modal 
-                open={openModal} gameStatus={gameStatus} onClick={closeModal} handleReset={handleReset} />
+                open={openModal} gameStatus={gameStatus} onClick={closeModal} handleReset={handleReset} playerTotalScore={playerScore} />
         </>
     )
 }

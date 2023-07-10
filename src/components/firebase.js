@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAd8dgsjhLn2rtC2ifQAEiDbXY3j3jC6SI",
   authDomain: "battlerocket-39ba6.firebaseapp.com",
@@ -12,4 +11,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebase = initializeApp(firebaseConfig);
+
+export default firebase;
+
+
