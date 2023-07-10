@@ -1,6 +1,5 @@
 
-// Grid Data for Cells in Each Column
-
+// Grid Data for Cells in Each Column/Row
 const gridCols = [
     { column: "A" }, { column: "B" },
     { column: "C" }, { column: "D" },
@@ -8,6 +7,7 @@ const gridCols = [
     { column: "G" }, { column: "H" },
     { column: "I" }, { column: "J" }
 ];
+
 const gridRows = [
     1, 2,
     3, 4,

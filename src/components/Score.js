@@ -1,9 +1,7 @@
-// Score.js
-
+// Score Component
 import { Typewriter } from "react-simple-typewriter";
 
 const Score = ({ playerScore, nonPlayerScore, playerFleetHealth, nonPlayerFleetHealth }) => {
-
     // A style object for the players health bar to dynamically update the width with the fleet health value 
     const playerHealthBarStyle = {
         width: `${playerFleetHealth}%`,
