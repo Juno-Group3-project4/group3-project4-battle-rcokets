@@ -1,12 +1,9 @@
 // SETUP
-
-
 .wrapper {
     max-width: 1260px;
     width: 90%;
     margin: 0 auto;
 }
-
 
 html {
     line-height: 1.15;
@@ -317,12 +314,22 @@ button {
     }
 }
 
+// display grid
+.npcGridContainer,
+.topHeaderContainer,
+.leftHeaderContainer,
+.bottomGrid,
+.gridPlayArea,
+.gridRow {
+    display: grid;
+}
+
 footer {
     background-color: #00DBE0;
     padding: 2px;
     margin-top: 5px;
     .footer-text, .juno-link {
-    text-align: center;
+        text-align: center;
     }
 }
 

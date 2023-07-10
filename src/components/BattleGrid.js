@@ -2,7 +2,6 @@
 import axisLabels from "./axisLabels.js";
 
 const BattleGrid = (props) => {
-
     return (
         <>
             {/* Grid Container */}
@@ -22,7 +21,7 @@ const BattleGrid = (props) => {
                             return <div className="leftHeader gridCell" key={index} value={label.value}>{label.textContent}</div>
                         })}
                     </div>
-                    
+
                     {/* Grid Play Area */}
                     <div className="gridPlayArea">
                         {props.children}

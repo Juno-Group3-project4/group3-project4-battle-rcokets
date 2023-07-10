@@ -311,6 +311,15 @@ button:focus {
   border: 2px solid #00DBE0;
 }
 
+.npcGridContainer,
+.topHeaderContainer,
+.leftHeaderContainer,
+.bottomGrid,
+.gridPlayArea,
+.gridRow {
+  display: grid;
+}
+
 footer {
   background-color: #00DBE0;
   padding: 2px;
@@ -485,7 +494,6 @@ form .flexContainer .rocketContainer {
 .npcGridContainer {
   max-width: 600px;
   margin: 0 auto;
-  display: grid;
   grid-template-columns: 1;
   grid-template-rows: 2;
   padding: 2%;
@@ -499,18 +507,15 @@ form .flexContainer .rocketContainer {
 
 /* Top Header (A-J) */
 .topHeaderContainer {
-  display: grid;
   grid-template-columns: repeat(11, 1fr);
 }
 
 .bottomGrid {
-  display: grid;
   grid-template-columns: 1fr 10fr;
 }
 
 /* Left Header (1-10) */
 .leftHeaderContainer {
-  display: grid;
   grid-template-rows: repeat(10, 1fr);
 }
 
@@ -526,16 +531,16 @@ form .flexContainer .rocketContainer {
 
 /* Grid Play Area */
 .gridPlayArea {
-  display: grid;
   grid-template-rows: repeat(10, 1fr);
 }
 
 .gridRow {
-  display: grid;
   grid-template-columns: repeat(10, 1fr);
 }
 
-.gridCell.div.player.targeted {
+.gridCell.div.player.targeted,
+.gridCell.div.npcDiv.hit,
+.gridCell.div.npcDiv.miss {
   pointer-events: none;
 }
 
@@ -548,12 +553,10 @@ form .flexContainer .rocketContainer {
 }
 
 .gridCell.div.npcDiv.hit {
-  pointer-events: none;
   background-color: red;
 }
 
 .gridCell.div.npcDiv.miss {
-  pointer-events: none;
   background-color: yellow;
 }
 
@@ -649,7 +652,6 @@ form .flexContainer .rocketContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: yellow; */
 }
 
 .Falcon9, .FalconHeavy {
@@ -669,6 +671,9 @@ form .flexContainer .rocketContainer {
 }
 .shipContainer .rocket-spaces {
   color: white;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
 }
 
 .rocket-image {
@@ -702,6 +707,13 @@ form .flexContainer .rocketContainer {
   font-family: "Orbitron", sans-serif;
 }
 
+.nextTurn {
+  color: white;
+  font-size: 1.3rem;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
 @media (max-width: 651px) {
   .gridContainers {
     flex-direction: column;
@@ -717,8 +729,8 @@ form .flexContainer .rocketContainer {
     height: 100px;
   }
   .Falcon1,
-  .Falcon9,
-  .FalconHeavy {
+.Falcon9,
+.FalconHeavy {
     width: 40px;
   }
   .spaces-title {
@@ -828,7 +840,7 @@ form .flexContainer .rocketContainer {
     padding: 0 35px;
   }
   .btnContainer .playAgainBtn,
-  .btnContainer .closeGameBtn {
+.btnContainer .closeGameBtn {
     font-size: 0.8rem;
   }
 }
@@ -841,13 +853,13 @@ form .flexContainer .rocketContainer {
 @media (max-width: 651px) {
   footer p {
     font-size: 0.8rem;
-    margin: 15px 12px;
     line-height: 1.2;
+    margin: 15px 12px;
   }
 }
 @media (min-width: 652px) {
   footer {
-    padding: 15px, 0;
+    padding: 15px 0;
   }
   footer p {
     font-size: 0.9rem;
