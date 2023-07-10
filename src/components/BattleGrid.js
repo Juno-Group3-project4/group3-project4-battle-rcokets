@@ -2,7 +2,6 @@
 import axisLabels from "./axisLabels.js";
 
 const BattleGrid = (props) => {
-
     return (
         <>
             {/* Grid Container */}

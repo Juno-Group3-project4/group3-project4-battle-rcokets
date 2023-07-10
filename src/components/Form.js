@@ -1,6 +1,6 @@
 // Form Component
 const Form = ({ rockets, submitForm, handleChange }) => {
-
+    
     return (
         <form onSubmit={submitForm} >
             <h2>Select 3 rockets!</h2>

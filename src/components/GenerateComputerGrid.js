@@ -1,3 +1,4 @@
+    // LOGIC TO PLACE COMPUTER ROCKETS ON GRID
 
     // variables
     const gridSize = 10;
@@ -28,12 +29,12 @@
         })
     })
 
+    // number randomizer
     let generateRandomNumber = Math.floor(Math.random() * gridSize);
 
     // function to generate random locations (x, y values & orientation)
+    // export function to PlayerGrid component
     export const generateRandomLocation = () => {
-        // Reset the array before populating with new values
-        // newNPCGridRef.length = 0;
         // variable to store orientations
         const orientations = ['vertical', 'horizontal'];
 
@@ -47,8 +48,6 @@
 
             // check if location is valid
             let validRocket = verifyLocation(orientation, x, y, rocketObj, grid);
-
-            // console.log(orientation, x, y, validRocket);
 
             // if location not valid, find new coordinates:
             while (!validRocket) {
@@ -66,6 +65,7 @@
         return grid;
     }
 
+    // function to verify location
     const verifyLocation = (orientation, x, y, rocketObj, grid) => {
         // if orientation is vertical
         if (orientation === 'vertical') {
@@ -97,6 +97,7 @@
         return true;
     };
 
+    // function to "place" rockets on grid
     const placeShip = (orientation, x, y, grid, rocketObj) => {
         if (orientation === 'vertical') {
             rocketObj.NPCGridRef.length = 0;
@@ -115,7 +116,7 @@
         return grid;
     }
 
-// computer rocket data
+// computer rocket data - exported to PlayerGrid component
 export const npcRocketData = [
     {
         stringName: 'Falcon 1',
