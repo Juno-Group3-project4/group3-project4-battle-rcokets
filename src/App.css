@@ -702,6 +702,7 @@ form .flexContainer .rocketContainer {
 }
 
 .hit-message {
+  height: 5vh;
   color: white;
   text-align: center;
   font-size: 1.5rem;
@@ -730,8 +731,8 @@ form .flexContainer .rocketContainer {
     height: 100px;
   }
   .Falcon1,
-  .Falcon9,
-  .FalconHeavy {
+.Falcon9,
+.FalconHeavy {
     width: 40px;
   }
   .spaces-title {
@@ -841,7 +842,7 @@ form .flexContainer .rocketContainer {
     padding: 0 35px;
   }
   .btnContainer .playAgainBtn,
-  .btnContainer .closeGameBtn {
+.btnContainer .closeGameBtn {
     font-size: 0.8rem;
   }
 }

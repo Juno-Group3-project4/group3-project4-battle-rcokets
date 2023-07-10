@@ -607,6 +607,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                     </div>
                 )}
             {hitVisible && <p className="hit-message">{hit}</p>}
+            {readyToLaunch ? <p className="nextTurn">{activePlayer ? 'Player' : 'Computer'}'s Turn</p> : null}
             <div className="gridContainers">
                 <div className="playerGridContainer">
                     <h2>Player Grid</h2>
