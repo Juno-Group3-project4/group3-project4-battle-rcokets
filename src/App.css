@@ -805,7 +805,7 @@ form .flexContainer .rocketContainer {
   margin: 0 auto;
   background-color: #320363;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   border: 2px solid #EDA65E;
   box-shadow: 0px 0px 48px 6px rgb(237, 166, 94);
