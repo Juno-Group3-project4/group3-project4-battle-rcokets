@@ -24,16 +24,13 @@ function App() {
       method: 'GET',
       dataResponse: 'json'
     }).then((response) => {
-      // console.log(response.data);
       setRockets(response.data)
     })
   }, []);
 
   // onchange event to listen for users selected choices and update selectedRockets state
   const handleChange = (event) => {
-    // console.log(event.target.checked);
     if (event.target.checked) {
-      // console.log(event.target.value);
       // use spread operater to create a new array and add users selection
       setSelectedRockets([...selectedRockets, event.target.value]);
     } else {
@@ -42,12 +39,14 @@ function App() {
     }
   }
 
+  // function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log('form is submitted');
+    // alerted if player does not choose 3 rockets
     if (selectedRockets.length !== 3) {
       alert("Please only select 3 rockets!!");
     } else {
+      // update form submission state
       setFormSubmitted(!false);
     }
   }
