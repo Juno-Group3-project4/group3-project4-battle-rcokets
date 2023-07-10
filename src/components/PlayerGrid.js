@@ -9,6 +9,8 @@ import { Typewriter } from "react-simple-typewriter";
 import gridData from "./gridData";
 import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 
+
+
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
 
@@ -580,16 +582,26 @@ const PlayerGrid = ({ selectedRockets }) => {
 
 
     return (
-        <>
-            {readyToLaunch  ? null :
-                <div>
-                    <p className="placement-instructions"> Drag your ships onto the grid</p>
-                    <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
-                    <p className="placement-instructions"> Left click on a rocket to deploy it in a horizontal attack position</p>
-                    {rocketsPlaced ? <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button> : null}
-                    <button className="reset-button" onClick={handleReset} >RESET GRID</button>
-                </div>
-            }
+        <>   {openModal ? (
+            <Modal
+                open={openModal}
+                gameStatus={gameStatus}
+                onClick={closeModal}
+                handleReset={handleReset}
+        />
+        ) : (
+            <>
+                {readyToLaunch  ? null : (
+                    <div>
+                        <p className="placement-instructions"> Drag your ships onto the grid</p>
+                        <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
+                        <p className="placement-instructions"> Left click on a rocket to deploy it in a horizontal attack position</p>
+                        {rocketsPlaced ? (
+                        <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button> 
+                        ) : null}
+                        <button className="reset-button" onClick={handleReset} >RESET GRID</button>
+                    </div>
+                )}
             {hitVisible && <p className="hit-message">{hit}</p>}
             <div className="gridContainers">
                 <div className="playerGridContainer">
@@ -600,7 +612,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                                 <div key={index} id={index} className="gridRow">
                                     {Array.from(gridRow).map((gridColumn) => {
                                         const npcCellId = gridColumn.id
-                                        const backgroundColor = playerComparisonArray.includes(npcCellId) ? 'red' : 'yellow'
+                                        const backgroundColor = playerComparisonArray.includes(npcCellId) ? 'red' : 'yellow';
                                         const cellGuessed = isCellGuessed(npcCellId);
                                         const cellGridColour = {
                                             background: cellGuessed ? backgroundColor: '',
@@ -620,16 +632,16 @@ const PlayerGrid = ({ selectedRockets }) => {
                                             >
                                                 <span className="sr-only">{gridColumn.id}</span>
                                             </div>
-                                        )
+                                        );
                                     })}
                                 </div>
-                            )
+                            );
                         })}
                     </BattleGrid>
                 </div>
        
                 <div className="nonPlayerGridContainer" style={{display: readyToLaunch ? 'block' : 'none'}} >
-                    {readyToLaunch ?
+                    {readyToLaunch ? (
                         <>  
                             <h2>Computer Grid</h2>
                             <BattleGrid>
@@ -657,45 +669,48 @@ const PlayerGrid = ({ selectedRockets }) => {
                                                     >
                                                         <span className="sr-only">{gridColumn.id}</span>
                                                     </div>
-                                                )
+                                                );
                                             })}
                                         </div>
-                                    )
+                                    );
                                 })}
                             </BattleGrid>
                         </>
-                        : null}
+                       ) : null}
                 </div> 
             </div> 
-            {readyToLaunch ? <> 
+            {readyToLaunch ? (
+            <>
                 <Score 
                     playerScore={playerScore} 
                     nonPlayerScore={nonPlayerScore} 
                     playerFleetHealth={playerFleetHealth} 
                     nonPlayerFleetHealth={nonPlayerFleetHealth} />  
-                <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
-                </>: null}
+                <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button> 
+            </>
+        ) : null}
             {/* Ships */}
-            <div className="shipContainer">
-                {shipData.map((rocket, index) => {
-                    return (
-                        <div
-                            tabIndex={0}
-                            key={index}
-                            className={rocket.shipName}
-                            ref={(e) => rocketImage.current[index] = e}
-                        >
-                            <h3 className="spaces-title">{rocket.stringName}</h3>
-                            <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                            <p className="rocket-spaces">{rocket.spaces}</p>
-                        </div>
-                    )
-                })}
-            </div>
-            <Modal 
-                open={openModal} gameStatus={gameStatus} onClick={closeModal} handleReset={handleReset} />
-        </>
-    )
+                <div className="shipContainer">
+                    {shipData.map((rocket, index) => {
+                        return (
+                            <div
+                                tabIndex={0}
+                                key={index}
+                                className={rocket.shipName}
+                                ref={(e) => rocketImage.current[index] = e}
+                            >
+                                <h3 className="spaces-title">{rocket.stringName}</h3>
+                                <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
+                                <p className="rocket-spaces">{rocket.spaces}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            </>
+        )}
+    </>
+);
+
 }
 
 export default PlayerGrid;
