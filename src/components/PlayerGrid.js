@@ -1,3 +1,4 @@
+// PlayerGrid.js
 import { useState, useRef, useEffect } from "react";
 import BattleGrid from "./BattleGrid";
 import Score from "./Score";
@@ -8,7 +9,6 @@ import playerTurn from "./playerTurn";
 import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
 import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
-
 
 
 // PLAYER GRID Component 
@@ -144,7 +144,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         setPlayerFleetLength(newPlayerGridRef.length);
 
     }, [npcShipData, shipData]);
-    
+
     // METHOD TO REMOVE ROCKET FROM DISPLAY ONCE PLACED ON GRID
     const removeRocket = () => {
 
@@ -177,7 +177,7 @@ const PlayerGrid = ({ selectedRockets }) => {
 
         // reset computer's grid reference array
         const updatedNPCShipData = npcShipData.map((npcRocket) => ({
-            ...npcRocket, 
+            ...npcRocket,
             NPCGridRef: [],
             attackedCells: []
         }));
@@ -187,7 +187,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             if (ship.children[1].style.transform === 'rotate(-90deg)') {
                 return ship.children[1].style.transform = 'rotate(0)'
             }
-            
+
         })
 
         // Ensure all cells are back to original grid colour 
@@ -235,7 +235,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 clickedShipObjTmp = shipDataArr[key];
             }
         }
-    
+
         // HORIZONTAL LOGIC
         if (clickedShipObjTmp.orientation === 'horizontal') {
             for (let i = 0; i < shipData.length; i++) {
@@ -249,17 +249,17 @@ const PlayerGrid = ({ selectedRockets }) => {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
                             return;
                         } else {
-                                // Add the grid reference to the shipData array
-                                shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
-                                // change the colour of the cells
-                                currentCell.style.backgroundColor = "blue";
+                            // Add the grid reference to the shipData array
+                            shipData[i].playerGridRef.push(currentCell.attributes.id.textContent);
+                            // change the colour of the cells
+                            currentCell.style.backgroundColor = "blue";
 
-                                playerGridDivRef.current.push(currentCell);
-                                // Move to the next sibling cell
-                                currentCell = currentCell.nextElementSibling;
-                                // Remove Rocket from display
-                                removeRocket();
-                        }    
+                            playerGridDivRef.current.push(currentCell);
+                            // Move to the next sibling cell
+                            currentCell = currentCell.nextElementSibling;
+                            // Remove Rocket from display
+                            removeRocket();
+                        }
                     }
                 }
             }
@@ -309,7 +309,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 }
             }
         }
-        
+
         // Push all PlayerGridRefs to one large array (newPlayerGridRef) for error handling logic
         for (let key in shipData) {
             const newArray = shipData[key].playerGridRef;
@@ -319,7 +319,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         }
 
         // ERROR HANDLING to check for duplicates in Array (i.e. user places rocket on a grid where another rocket exists)
-        let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !==index);
+        let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !== index);
 
         let gridDuplicates = playerGridDivRef.current.filter((item, index) => playerGridDivRef.current.indexOf(item) !== index)
 
@@ -362,15 +362,15 @@ const PlayerGrid = ({ selectedRockets }) => {
 
         // if all rockets placed on grid, then update rocketsPlaced state to display launch button
         if (
-                shipData[0].playerGridRef.length === shipData[0].spaces && 
-                shipData[1].playerGridRef.length === shipData[1].spaces && 
-                shipData[2].playerGridRef.length === shipData[2].spaces
-            ) {
+            shipData[0].playerGridRef.length === shipData[0].spaces &&
+            shipData[1].playerGridRef.length === shipData[1].spaces &&
+            shipData[2].playerGridRef.length === shipData[2].spaces
+        ) {
             setRocketsPlaced(!false);
         };
         // Reset duplicates array
         duplicates = [];
-        discardedData = []; 
+        discardedData = [];
     };
 
     // event listener to drag ship to grid
@@ -394,7 +394,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             setShipData(prevShipData => {
                 // Create a copy of the shipData array
                 const updatedShipData = [...prevShipData];
-            
+
                 // Find the clicked ship and update its orientation
                 const clickedShipObjTmp = updatedShipData.find(ship => ship.shipName === shipId);
                 if (clickedShipObjTmp) {
@@ -450,24 +450,26 @@ const PlayerGrid = ({ selectedRockets }) => {
     const handleHit = (hit) => {
         // increment keyCounter
         setKeyCounter((prevCounter) => prevCounter + 1);
-        if (hit) { setHit(
-            <Typewriter 
-                key={`hit-${keyCounter}`}
-                words={['HIT! \uD83D\uDCA5']}
-                loop={1}
-                typeSpeed={50}
-            />)
+        if (hit) {
+            setHit(
+                <Typewriter
+                    key={`hit-${keyCounter}`}
+                    words={['HIT! \uD83D\uDCA5']}
+                    loop={1}
+                    typeSpeed={50}
+                />)
         } else {
             setHit(
                 <Typewriter
                     key={`miss-${keyCounter}`}
                     words={['MISS! Try Again.']}
-                    loop={1} n 
+                    loop={1} n
                     typeSpeed={50}
                 />)
         }
         setHitVisible(true);
     };
+
 
     // handle click for each div in grid
     const handleClick = (e) => {
@@ -523,7 +525,7 @@ const PlayerGrid = ({ selectedRockets }) => {
 
             // store each guessed value as generated by computer's guessing logic into state
             setGuessedCells(prevGuessedCells => [...prevGuessedCells, computerGuess]);
-            
+
             // conditional to check if the computers guess is present in the playerComparisonArray
             if (playerComparisonArray.includes(computerGuess)) {
                 // Non Player score calculation //
@@ -567,9 +569,9 @@ const PlayerGrid = ({ selectedRockets }) => {
             setOpenModal(!false);
         } else if
             (hitOrMiss === npcComparisonArray.length) {
-                setGameStatus(false); // if player losses
-                setOpenModal(!false);
-            }
+            setGameStatus(false); // if player losses
+            setOpenModal(!false);
+        }
     };
 
     // function to track which grid cells have been clicked
@@ -594,21 +596,22 @@ const PlayerGrid = ({ selectedRockets }) => {
                 gameStatus={gameStatus}
                 onClick={closeModal}
                 handleReset={handleReset}
-        />
+            />
         ) : (
             <>
-                {readyToLaunch  ? null : (
+                {readyToLaunch ? null : (
                     <div>
                         <p className="placement-instructions"> Drag your ships onto the grid</p>
                         <p className="placement-instructions"> Hover over the cell you want the top of your ship to be</p>
                         <p className="placement-instructions"> Left click on a rocket to deploy it in a horizontal attack position</p>
                         {rocketsPlaced ? (
-                        <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button> 
+                            <button className="launch" onClick={handleLaunch} >LAUNCH GAME</button>
                         ) : null}
                         <button className="reset-button" onClick={handleReset} >RESET GRID</button>
                     </div>
                 )}
-            {hitVisible && <p className="hit-message">{hit}</p>}
+                {hitVisible && <p className="hit-message">{hit}</p>}
+                {readyToLaunch ? <p className='nextTurn'>{activePlayer ? 'Player' : 'computer'}'s Turn</p> : null}
             <div className="gridContainers">
                 <div className="playerGridContainer">
                     <h2>Player Grid</h2>
@@ -621,7 +624,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                                         const backgroundColor = playerComparisonArray.includes(npcCellId) ? 'red' : 'yellow';
                                         const cellGuessed = isCellGuessed(npcCellId);
                                         const cellGridColour = {
-                                            background: cellGuessed ? backgroundColor: '',
+                                            background: cellGuessed ? backgroundColor : '',
                                         };
                                         const addClassName = cellGuessed ? 'targeted' : '';
 
@@ -645,9 +648,9 @@ const PlayerGrid = ({ selectedRockets }) => {
                         })}
                     </BattleGrid>
                 </div>
-                <div className="nonPlayerGridContainer" style={{display: readyToLaunch ? 'block' : 'none'}} >
+                <div className="nonPlayerGridContainer" style={{ display: readyToLaunch ? 'block' : 'none' }} >
                     {readyToLaunch ? (
-                        <>  
+                        <>
                             <h2>Computer Grid</h2>
                             <BattleGrid>
                                 {Array.from(gridData).map((gridRow, index) => {
@@ -658,7 +661,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                                                 const hitOccupiedCell = npcComparisonArray.includes(cellId) ? 'hit' : 'miss'
                                                 const cellClicked = isCellClicked(cellId);
                                                 const addClassName = cellClicked ? hitOccupiedCell : '';
-                                                
+
                                                 return (
                                                     <div
                                                         className={`${gridColumn.className} npcDiv ${addClassName}`}
@@ -681,38 +684,39 @@ const PlayerGrid = ({ selectedRockets }) => {
                                 })}
                             </BattleGrid>
                         </>
-                       ) : null}
-                </div> 
-            </div> 
-            {readyToLaunch ? (
-            <>
-                <Score 
-                    playerScore={playerScore} 
-                    nonPlayerScore={nonPlayerScore} 
-                    playerFleetHealth={playerFleetHealth} 
-                    nonPlayerFleetHealth={nonPlayerFleetHealth} />  
-                <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button> 
-            </>
-        ) : null}
-            {/* Ships */}
-                <div className="shipContainer">
-                    {shipData.map((rocket, index) => {
-                        return (
-                            <div
-                                tabIndex={0}
-                                key={index}
-                                className={rocket.shipName}
-                                ref={(e) => rocketImage.current[index] = e}
-                            >
-                                <h3 className="spaces-title">{rocket.stringName}</h3>
-                                <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                                <p className="rocket-spaces">{rocket.spaces}</p>
-                            </div>
-                        );
-                    })}
+                    ) : null}
                 </div>
-            </>
-        )}
+            </div>
+            {readyToLaunch ? (
+                <>
+                    <Score
+                        playerScore={playerScore}
+                        nonPlayerScore={nonPlayerScore}
+                        playerFleetHealth={playerFleetHealth}
+                        nonPlayerFleetHealth={nonPlayerFleetHealth} />
+                    <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
+                </>
+            ) : null}
+            {/* Ships */}
+            <div className="shipContainer">
+                {shipData.map((rocket, index) => {
+                    return (
+                        <div
+                            tabIndex={0}
+                            key={index}
+                            className={rocket.shipName}
+                            ref={(e) => rocketImage.current[index] = e}
+                        >
+                            <h3 className="spaces-title">{rocket.stringName}</h3>
+                            <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
+                            <p className="rocket-spaces">{rocket.spaces}</p>
+                        </div>
+                    );
+                })}
+            </div>
+        </>
+    )
+}
     </>
 );
 
