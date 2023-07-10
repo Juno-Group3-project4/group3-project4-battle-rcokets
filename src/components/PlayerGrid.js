@@ -32,6 +32,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [attackedModal, setAttackedModal] = useState(false);
     // useState to show modal if player has fully destroyed the nonplayer's rocket (OPTIONAL)
     const [destroyedModal, setDestroyedModal] = useState(false);
+    const [activePlayer, setActivePlayer] = useState(true);
     // useState to handle Hit/Miss message upon use turn
     const [hit, setHit] = useState('');
     const [hitVisible, setHitVisible] = useState(false);
@@ -548,7 +549,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 // Game End modal conditional
                 handleGameEnd(hitOrMiss[1]);
             }
-
+            setActivePlayer(true);
         }, 2500);
         handleGameEnd();
     }
@@ -648,7 +649,13 @@ const PlayerGrid = ({ selectedRockets }) => {
                                                         className={`${gridColumn.className} npcDiv ${addClassName}`}
                                                         key={gridColumn.id}
                                                         id={gridColumn.id}
-                                                        onClick={(e) => { handleClick(e);}}
+                                                        onClick={
+                                                            activePlayer ?
+                                                                (e) => {
+                                                                    handleClick(e)
+                                                                    setActivePlayer(false);
+                                                                } : null
+                                                        }
                                                         valuex={gridColumn.x_value}
                                                         valuey={gridColumn.y_value}
                                                     >
