@@ -702,6 +702,7 @@ form .flexContainer .rocketContainer {
 }
 
 .hit-message {
+  height: 5vh;
   color: white;
   text-align: center;
   font-size: 1.5rem;
