@@ -260,6 +260,7 @@ img {
 /* FONTS / COLOURS / BUTTONS*/
 body {
   background-color: #320363;
+  min-height: 100vh;
 }
 
 h1,
@@ -729,8 +730,8 @@ form .flexContainer .rocketContainer {
     height: 100px;
   }
   .Falcon1,
-.Falcon9,
-.FalconHeavy {
+  .Falcon9,
+  .FalconHeavy {
     width: 40px;
   }
   .spaces-title {
@@ -840,7 +841,7 @@ form .flexContainer .rocketContainer {
     padding: 0 35px;
   }
   .btnContainer .playAgainBtn,
-.btnContainer .closeGameBtn {
+  .btnContainer .closeGameBtn {
     font-size: 0.8rem;
   }
 }
