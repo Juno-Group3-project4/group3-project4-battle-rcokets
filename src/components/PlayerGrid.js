@@ -10,6 +10,7 @@ import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
 import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 
+
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
     // STATEFUL VARIABLES:
@@ -468,6 +469,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         setHitVisible(true);
     };
 
+
     // handle click for each div in grid
     const handleClick = (e) => {
         // store selected grid in variable
@@ -702,7 +704,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 })}
             </div>
             <Modal 
-                open={openModal} gameStatus={gameStatus} onClick={closeModal} handleReset={handleReset} />
+                open={openModal} gameStatus={gameStatus} onClick={closeModal} handleReset={handleReset} playerTotalScore={playerScore} />
         </>
     )
 }
