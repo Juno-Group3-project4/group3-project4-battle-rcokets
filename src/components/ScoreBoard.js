@@ -7,7 +7,7 @@ const ScoreBoard = ({ playerTotalScore }) => {
 
   const [scores, setScores] = useState([]);
   const [playerScore, setPlayerScore] = useState(2000);
-  const [leaderBoardUpdated, setLeaderBoardUpdated] = useState(true);
+  const [leaderBoardUpdated, setLeaderBoardUpdated] = useState(false);
   const [userInput, setUserInput] = useState({
     name: "",
     score: ""
@@ -15,6 +15,7 @@ const ScoreBoard = ({ playerTotalScore }) => {
 
 
   useEffect(() => {
+
     setPlayerScore(playerTotalScore);
     const database = getDatabase(firebase);
     const dbRef = ref(database, '/leaderboard');
@@ -31,8 +32,6 @@ const ScoreBoard = ({ playerTotalScore }) => {
     });
 
   }, [])
-
-
 
   // this event will fire every time there is a change in the input it is attached to
   const handleChange = (event) => {
