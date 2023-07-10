@@ -9,8 +9,6 @@ import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
 import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 
-
-
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets }) => {
     // STATEFUL VARIABLES:
@@ -588,7 +586,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     };
 
     return (
-        <>   {openModal ? (
+        <> {openModal ? (
             <Modal
                 open={openModal}
                 gameStatus={gameStatus}
