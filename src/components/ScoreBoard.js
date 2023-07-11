@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, push } from 'firebase/database';
-import firebase from './firebase.js';
+import firebase from './firebase.js'
 
 const ScoreBoard = ({ playerTotalScore }) => {
 
