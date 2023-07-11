@@ -595,6 +595,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 gameStatus={gameStatus}
                 onClick={closeModal}
                 handleReset={handleReset}
+                playerTotalScore={playerScore}
             />
         ) : (
             <>
@@ -610,7 +611,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                     </div>
                 )}
                 {hitVisible && <p className="hit-message">{hit}</p>}
-                {readyToLaunch ? <p className='nextTurn'>{activePlayer ? 'Player' : 'computer'}'s Turn</p> : null}
+                {readyToLaunch ? <p className='nextTurn'>{activePlayer ? 'Player' : 'Computer'}'s Turn</p> : null}
             <div className="gridContainers">
                 <div className="playerGridContainer">
                     <h2>Player Grid</h2>

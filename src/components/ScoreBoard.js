@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, push, remove } from 'firebase/database';
-import firebase from './firebase.js'
-import ScoreBoardSCSS from '../styles/sass/_ScoreBoard.scss';
+import { getDatabase, ref, onValue, push } from 'firebase/database';
+import firebase from './firebase.js';
 
 const ScoreBoard = ({ playerTotalScore }) => {
 
   const [scores, setScores] = useState([]);
   const [playerScore, setPlayerScore] = useState(2000);
-  const [leaderBoardUpdated, setLeaderBoardUpdated] = useState(false);
+  const [leaderBoardUpdated, setLeaderBoardUpdated] = useState(true);
   const [userInput, setUserInput] = useState({
     name: "",
     score: ""
@@ -31,7 +30,7 @@ const ScoreBoard = ({ playerTotalScore }) => {
       }
     });
 
-  }, [])
+  }, [playerTotalScore])
 
   // this event will fire every time there is a change in the input it is attached to
   const handleChange = (event) => {
@@ -58,9 +57,9 @@ const ScoreBoard = ({ playerTotalScore }) => {
   return (
     <>
       <div className="leaderBoardCont">
-        <h2>LeaderBoard</h2>
         {leaderBoardUpdated ?
           <form onSubmit={handleSubmit}>
+            <h2>LeaderBoard</h2>
             <p>Submit your score</p>
             <p>Enter your name</p>
             <label

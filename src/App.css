@@ -798,35 +798,33 @@ form .flexContainer .rocketContainer {
     font-size: 1rem;
   }
 }
-.backGroundContainer {
-  height: 100vh;
+.leaderBoardCont {
+  border: 2px solid red;
   width: 90%;
-  max-width: 1260px;
-  margin: 0 auto;
-  background-color: #320363;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+}
+.leaderBoardCont form {
+  padding: 60px 0;
   border: 2px solid #EDA65E;
   box-shadow: 0px 0px 48px 6px rgb(237, 166, 94);
   border-radius: 20px;
 }
-.backGroundContainer .modalContainer {
+.leaderBoardCont form label,
+.leaderBoardCont form p {
+  color: #fff;
+  font-family: "Maitree", serif;
+  margin: 5px;
+}
+.leaderBoardCont ul {
+  color: #fff;
+  list-style: none;
+}
+
+.backGroundContainer {
+  border: 2px solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-.backGroundContainer .modalContainer h2 {
-  margin: 20px 15px;
-}
-.backGroundContainer .modalContainer .btnContainer {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-}
-.backGroundContainer .modalContainer .btnContainer .playAgainBtn,
-.backGroundContainer .modalContainer .btnContainer .closeGameBtn {
-  margin: 10px 15px;
+  align-items: center;
 }
 
 @media (max-width: 500px) {
