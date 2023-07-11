@@ -9,6 +9,7 @@ import playerTurn from "./playerTurn";
 import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
 import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
+import { useNavigate } from 'react-router-dom';
 
 
 // PLAYER GRID Component 
@@ -67,6 +68,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     // DEFINED GLOBAL VARIABLES:
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
+    const navigate = useNavigate();
 
     // useEffect for finding all grid cells & storing into an array
     useEffect(() => {
@@ -187,7 +189,6 @@ const PlayerGrid = ({ selectedRockets }) => {
             if (ship.children[1].style.transform === 'rotate(-90deg)') {
                 return ship.children[1].style.transform = 'rotate(0)'
             }
-
         })
 
         // Ensure all cells are back to original grid colour 
@@ -470,7 +471,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         setHitVisible(true);
     };
 
-
+    console.log('npcComparisonArray', npcComparisonArray);
     // handle click for each div in grid
     const handleClick = (e) => {
         // store selected grid in variable
@@ -585,8 +586,10 @@ const PlayerGrid = ({ selectedRockets }) => {
     }
 
     // function to close the modal
-    const closeModal = (e) => {
+    const closeModal = () => {
         setOpenModal(false);
+        handleReset();
+        navigate('/form');
     };
 
     return (
@@ -594,8 +597,8 @@ const PlayerGrid = ({ selectedRockets }) => {
             <Modal
                 open={openModal}
                 gameStatus={gameStatus}
-                onClick={closeModal}
-                handleReset={handleReset}
+                handleClick={closeModal}
+                playerTotalScore={playerScore}
             />
         ) : (
             <>
@@ -611,114 +614,114 @@ const PlayerGrid = ({ selectedRockets }) => {
                     </div>
                 )}
                 {hitVisible && <p className="hit-message">{hit}</p>}
-                {readyToLaunch ? <p className='nextTurn'>{activePlayer ? 'Player' : 'computer'}'s Turn</p> : null}
-            <div className="gridContainers">
-                <div className="playerGridContainer">
-                    <h2>Player Grid</h2>
-                    <BattleGrid>
-                        {Array.from(gridData).map((gridRow, index) => {
-                            return (
-                                <div key={index} id={index} className="gridRow">
-                                    {Array.from(gridRow).map((gridColumn) => {
-                                        const npcCellId = gridColumn.id
-                                        const backgroundColor = playerComparisonArray.includes(npcCellId) ? 'red' : 'yellow';
-                                        const cellGuessed = isCellGuessed(npcCellId);
-                                        const cellGridColour = {
-                                            background: cellGuessed ? backgroundColor : '',
-                                        };
-                                        const addClassName = cellGuessed ? 'targeted' : '';
+                {readyToLaunch ? <p className='nextTurn'>{activePlayer ? 'Player' : 'Computer'}'s Turn</p> : null}
+                <div className="gridContainers">
+                    <div className="playerGridContainer">
+                        <h2>Player Grid</h2>
+                        <BattleGrid>
+                            {Array.from(gridData).map((gridRow, index) => {
+                                return (
+                                    <div key={index} id={index} className="gridRow">
+                                        {Array.from(gridRow).map((gridColumn) => {
+                                            const npcCellId = gridColumn.id
+                                            const backgroundColor = playerComparisonArray.includes(npcCellId) ? 'red' : 'yellow';
+                                            const cellGuessed = isCellGuessed(npcCellId);
+                                            const cellGridColour = {
+                                                background: cellGuessed ? backgroundColor : '',
+                                            };
+                                            const addClassName = cellGuessed ? 'targeted' : '';
 
+                                            return (
+                                                <div
+                                                    className={`${gridColumn.className} player ${addClassName}`}
+                                                    style={cellGridColour}
+                                                    key={gridColumn.id}
+                                                    id={gridColumn.id}
+                                                    onDragOver={handleOnDrag}
+                                                    onDrop={handleDrop}
+                                                    valuex={gridColumn.x_value}
+                                                    valuey={gridColumn.y_value}
+                                                >
+                                                    <span className="sr-only">{gridColumn.id}</span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                );
+                            })}
+                        </BattleGrid>
+                    </div>
+                    <div className="nonPlayerGridContainer" style={{ display: readyToLaunch ? 'block' : 'none' }} >
+                        {readyToLaunch ? (
+                            <>
+                                <h2>Computer Grid</h2>
+                                <BattleGrid>
+                                    {Array.from(gridData).map((gridRow, index) => {
                                         return (
-                                            <div
-                                                className={`${gridColumn.className} player ${addClassName}`}
-                                                style={cellGridColour}
-                                                key={gridColumn.id}
-                                                id={gridColumn.id}
-                                                onDragOver={handleOnDrag}
-                                                onDrop={handleDrop}
-                                                valuex={gridColumn.x_value}
-                                                valuey={gridColumn.y_value}
-                                            >
-                                                <span className="sr-only">{gridColumn.id}</span>
+                                            <div key={index} id={index} className="gridRow">
+                                                {Array.from(gridRow).map((gridColumn) => {
+                                                    const cellId = gridColumn.id;
+                                                    const hitOccupiedCell = npcComparisonArray.includes(cellId) ? 'hit' : 'miss'
+                                                    const cellClicked = isCellClicked(cellId);
+                                                    const addClassName = cellClicked ? hitOccupiedCell : '';
+
+                                                    return (
+                                                        <div
+                                                            className={`${gridColumn.className} npcDiv ${addClassName}`}
+                                                            key={gridColumn.id}
+                                                            id={gridColumn.id}
+                                                            onClick={
+                                                                activePlayer ?
+                                                                    (e) => {
+                                                                        handleClick(e)
+                                                                        setActivePlayer(false);
+                                                                    } : null
+                                                            }
+                                                        >
+                                                            <span className="sr-only">{gridColumn.id}</span>
+                                                        </div>
+                                                    );
+                                                })}
                                             </div>
                                         );
                                     })}
-                                </div>
-                            );
-                        })}
-                    </BattleGrid>
+                                </BattleGrid>
+                            </>
+                        ) : null}
+                    </div>
                 </div>
-                <div className="nonPlayerGridContainer" style={{ display: readyToLaunch ? 'block' : 'none' }} >
-                    {readyToLaunch ? (
-                        <>
-                            <h2>Computer Grid</h2>
-                            <BattleGrid>
-                                {Array.from(gridData).map((gridRow, index) => {
-                                    return (
-                                        <div key={index} id={index} className="gridRow">
-                                            {Array.from(gridRow).map((gridColumn) => {
-                                                const cellId = gridColumn.id;
-                                                const hitOccupiedCell = npcComparisonArray.includes(cellId) ? 'hit' : 'miss'
-                                                const cellClicked = isCellClicked(cellId);
-                                                const addClassName = cellClicked ? hitOccupiedCell : '';
-
-                                                return (
-                                                    <div
-                                                        className={`${gridColumn.className} npcDiv ${addClassName}`}
-                                                        key={gridColumn.id}
-                                                        id={gridColumn.id}
-                                                        onClick={
-                                                            activePlayer ?
-                                                                (e) => {
-                                                                    handleClick(e)
-                                                                    setActivePlayer(false);
-                                                                } : null
-                                                        }
-                                                    >
-                                                        <span className="sr-only">{gridColumn.id}</span>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    );
-                                })}
-                            </BattleGrid>
-                        </>
-                    ) : null}
+                {readyToLaunch ? (
+                    <>
+                        <Score
+                            playerScore={playerScore}
+                            nonPlayerScore={nonPlayerScore}
+                            playerFleetHealth={playerFleetHealth}
+                            nonPlayerFleetHealth={nonPlayerFleetHealth} />
+                        <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
+                    </>
+                ) : null}
+                {/* Ships */}
+                <div className="shipContainer">
+                    {shipData.map((rocket, index) => {
+                        return (
+                            <div
+                                tabIndex={0}
+                                key={index}
+                                className={rocket.shipName}
+                                ref={(e) => rocketImage.current[index] = e}
+                            >
+                                <h3 className="spaces-title">{rocket.stringName}</h3>
+                                <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
+                                <p className="rocket-spaces">{rocket.spaces}</p>
+                            </div>
+                        );
+                    })}
                 </div>
-            </div>
-            {readyToLaunch ? (
-                <>
-                    <Score
-                        playerScore={playerScore}
-                        nonPlayerScore={nonPlayerScore}
-                        playerFleetHealth={playerFleetHealth}
-                        nonPlayerFleetHealth={nonPlayerFleetHealth} />
-                    <button className="back-button" onClick={handleReset}>BACK! <i className="fa-solid fa-rotate-left"></i></button>
-                </>
-            ) : null}
-            {/* Ships */}
-            <div className="shipContainer">
-                {shipData.map((rocket, index) => {
-                    return (
-                        <div
-                            tabIndex={0}
-                            key={index}
-                            className={rocket.shipName}
-                            ref={(e) => rocketImage.current[index] = e}
-                        >
-                            <h3 className="spaces-title">{rocket.stringName}</h3>
-                            <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                            <p className="rocket-spaces">{rocket.spaces}</p>
-                        </div>
-                    );
-                })}
-            </div>
+            </>
+        )
+        }
         </>
-    )
-}
-    </>
-);
+    );
 
 }
 
