@@ -4,18 +4,47 @@
   border-radius: 20px;
   width: 100%;
   height: 100%;
-
-  form {
-
-    label,
-    p {
-      color: #fff;
-      font-family: 'Maitree', serif;
-      margin: 0;
-    }
+  margin-bottom: 60px;
+  color: #320363;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px 20px 15px;
+  h2 {
+    color:#320363;
   }
   ul {
-    color: #fff;
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    li {
+      font-family: 'Maitree', serif;
+       margin: 0;
+       letter-spacing: 1px; 
+       .bold {
+        font-weight: 600;
+        font-size: 1.1rem;
+       }    
+    }
   }
+  form {
+    label,
+    p {
+      font-family: 'Maitree', serif;
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+}
+
+// **** MOBILE RESPONSIVE LAYOUT - MEDIA QUERIES !!!! **** //
+
+@media (max-width: 400px) {
+  .leaderBoardCont {
+  ul li .bold {
+    font-size: 0.8rem;
+  }
+}
 }

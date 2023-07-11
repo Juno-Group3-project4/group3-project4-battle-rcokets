@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, push, remove } from 'firebase/database';
+import { getDatabase, ref, onValue, push } from 'firebase/database';
 import firebase from './firebase.js'
-import ScoreBoardSCSS from '../styles/sass/_ScoreBoard.scss';
+
 
 const ScoreBoard = ({ playerTotalScore }) => {
 
   const [scores, setScores] = useState([]);
   const [playerScore, setPlayerScore] = useState(2000);
-  const [leaderBoardUpdated, setLeaderBoardUpdated] = useState(false);
+  const [leaderBoardUpdated, setLeaderBoardUpdated] = useState(true);
   const [userInput, setUserInput] = useState({
     name: "",
     score: ""
@@ -31,7 +31,7 @@ const ScoreBoard = ({ playerTotalScore }) => {
       }
     });
 
-  }, [])
+  }, [playerTotalScore])
 
   // this event will fire every time there is a change in the input it is attached to
   const handleChange = (event) => {
@@ -79,7 +79,7 @@ const ScoreBoard = ({ playerTotalScore }) => {
         <ul>
           {scores.map((score) => (
             <li key={score.key}>
-              Name: {score.name} | Score: {score.score}
+              <span className='bold'>Name:</span> {score.name} | <span className='bold'>Score:</span> {score.score}
             </li>
           ))}
         </ul>

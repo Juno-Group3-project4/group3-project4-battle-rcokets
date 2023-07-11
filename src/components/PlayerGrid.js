@@ -596,6 +596,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                 gameStatus={gameStatus}
                 onClick={closeModal}
                 handleReset={handleReset}
+                playerTotalScore={playerScore}
             />
         ) : (
             <>
@@ -709,7 +710,7 @@ const PlayerGrid = ({ selectedRockets }) => {
                         >
                             <h3 className="spaces-title">{rocket.stringName}</h3>
                             <img src={rocket.imageSource} alt={`${rocket.stringName} rocket`} onDragStart={handleDrag} value={`${index + 1}`} name={rocket.shipName} draggable="true" onClick={handleOrientation} className="rocket-image" />
-                            <p className="rocket-spaces">{rocket.spaces}</p>
+                            <p className="rocket-spaces">{rocket.spaces} spaces</p>
                         </div>
                     );
                 })}

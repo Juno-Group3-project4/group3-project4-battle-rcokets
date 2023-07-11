@@ -34,7 +34,7 @@ const Score = ({ playerScore, nonPlayerScore, playerFleetHealth, nonPlayerFleetH
                 </div>
                 <div className="nonplayer">
                     <div className="score">
-                        <h3>NON-PLAYER:</h3>
+                        <h3>COMPUTER:</h3>
                         <p className="score-total">{nonPlayerScore}</p>
                     </div>
                     <p>Fleet Destruction:</p>

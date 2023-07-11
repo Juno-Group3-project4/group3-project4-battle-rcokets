@@ -28,7 +28,7 @@ const Modal = ({ open, gameStatus, closeModal, playerTotalScore } ) => {
                 <p>Your score is:{playerTotalScore}</p>
                 <div className="btnContainer">
                     {/* add onClick to closeGameBtn, the "playAgainBtn" link will redirect to landingPage*/}
-                    <Link to="/">
+                    <Link to="/" >
                         <button className="playAgainBtn">Play Again?</button>
                     </Link>
                     <button onClick={closeModal} className="closeGameBtn">Close X</button>
