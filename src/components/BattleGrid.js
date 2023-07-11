@@ -1,4 +1,4 @@
-// BATTLEGRID Component
+// BATTLEGRID Component for both player and computer grid.
 import axisLabels from "./axisLabels.js";
 
 const BattleGrid = (props) => {

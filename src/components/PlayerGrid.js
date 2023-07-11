@@ -8,6 +8,7 @@ import gridData from "./gridData";
 import playerTurn from "./playerTurn";
 import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
+// generateComputerGrid is not a component but a function. Bug discovered in Github which was not updating the file to a function.
 import { generateRandomLocation, npcRocketData } from "./GenerateComputerGrid";
 
 
@@ -55,6 +56,8 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [playerFleetHealth, setPlayerFleetHealth] = useState(100);
     // player Fleet health bare state variable
     const [nonPlayerFleetHealth, setNonPlayerFleetHealth] = useState(100);
+    // Function to ensure 'Hit' or 'Miss' message is displayed on each Player click
+    const [keyCounter, setKeyCounter] = useState(0)
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -129,7 +132,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             return playerShip.playerGridRef;
         })
 
-        // for loop to push each grid location into one array
+        // for loop to push each player grid location into one array
         for (let i = 0; i < mappedCopyShipData.length; i++) {
             for (let j = 0; j < mappedCopyShipData[i].length; j++) {
                 // push each grid reference item into defined array
@@ -151,7 +154,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         // Target Ship Divs using useRef Hook
         const ships = rocketImage.current;
 
-        // Iterate through with conditionals so that if current placed ship's name equals the classname declared in the JSX
+        // Iterate through with conditionals so that if current placed ship's name equals the classname declared in the JSX below.
         ships.forEach((ship) => {
             if (ship.className === currentShip) {
                 ship.style.display = 'none';
@@ -219,7 +222,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         setNonPlayerFleetHealth(100);
     }
 
-    // event listener for placing (droppig) ship on grid
+    // event listener for placing (dropping) ship on player grid
     const handleDrop = (e) => {
         // prevent page refresh 
         e.preventDefault();
@@ -236,14 +239,14 @@ const PlayerGrid = ({ selectedRockets }) => {
             }
         }
 
-        // HORIZONTAL LOGIC
+        // HORIZONTAL LOGIC FOR PLAYER ROCKET PLACEMENT
         if (clickedShipObjTmp.orientation === 'horizontal') {
             for (let i = 0; i < shipData.length; i++) {
                 if (shipData[i].shipName === currentShip) {
                     let currentCell = e.target;
 
                     let x = Number(currentCell.getAttribute('valuex'));
-
+                    // Error handling for player rocket placement if user places rockets outside of the battlegrid.
                     for (let j = 0; j < shipData[i].spaces; j++) {
                         if (x - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
@@ -264,13 +267,13 @@ const PlayerGrid = ({ selectedRockets }) => {
                 }
             }
         } else {
-            // VERTICAL LOGIC
+            // VERTICAL LOGIC FOR PLAYER ROCKET PLACEMENT
             for (let i = 0; i < shipData.length; i++) {
                 if (shipData[i].shipName === currentShip) {
                     let currentCell = e.target;
 
                     let y = Number(currentCell.getAttribute('valuey'));
-
+                     // Error handling for player rocket placement if user places rockets outside of the battlegrid.
                     for (let j = 0; j < shipData[i].spaces; j++) {
                         if (y - 1 + shipData[i].spaces > 10) {
                             alert("Oops! Make sure to place the rocket inside of the space grid!");
@@ -296,13 +299,13 @@ const PlayerGrid = ({ selectedRockets }) => {
                             // push currentCell to player grid ref array
                             playerGridDivRef.current.push(currentCell);
 
-                            // iterate through the temporary array and if it finds valuey that matches the currentCells valueX then store that div as the new currentCell
+                            // iterate through the temporary array and if it finds valueY that matches the currentCells valueX then store that div as the new currentCell
                             for (let i = 0; i < tempNextCol.length; i++) {
                                 if (tempNextCol[i].attributes.valuey.textContent.includes(currentCellValueY)) {
                                     currentCell = tempNextCol[i];
                                 }
                             };
-                            // Remove Rocket from display
+                            // Remove Rocket from display below the battlegrid
                             removeRocket();
                         }
                     } // end of for loop
@@ -318,7 +321,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             })
         }
 
-        // ERROR HANDLING to check for duplicates in Array (i.e. user places rocket on a grid where another rocket exists)
+        // ERROR HANDLING to check for duplicates in Array (i.e. user places rocket on a player grid where another rocket exists)
         let duplicates = newPlayerGridRef.filter((item, index) => newPlayerGridRef.indexOf(item) !== index);
 
         let gridDuplicates = playerGridDivRef.current.filter((item, index) => playerGridDivRef.current.indexOf(item) !== index)
@@ -360,7 +363,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             clickedShipObjTmp.playerGridRef = [];
         }
 
-        // if all rockets placed on grid, then update rocketsPlaced state to display launch button
+        // if all rockets placed on player grid, then update rocketsPlaced state to display launch button
         if (
             shipData[0].playerGridRef.length === shipData[0].spaces &&
             shipData[1].playerGridRef.length === shipData[1].spaces &&
@@ -373,7 +376,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         discardedData = [];
     };
 
-    // event listener to drag ship to grid
+    // event listener to drag ship(rocket) to player grid
     const handleDrag = (e) => {
         setCurrentShip(e.target.attributes.name.textContent)
     };
@@ -423,7 +426,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     const handleLaunch = () => {
         // set ready to launch state to true
         setReadyToLaunch(true);
-        // call function to place rockets for computer grid
+        // call  generateRandomLocation function to place rockets for computer grid
         generateRandomLocation();
 
         // to equalize game, filter & map over npcGridRockets to return same rocket data for computer grid
@@ -443,10 +446,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         setNpcShipData(npcGridRockets);
     }
 
-    // Function to ensure 'Hit' or 'Miss' message is displayed on each Player click
-    const [keyCounter, setKeyCounter] = useState(0)
-
-    // function to handle messaging during game
+    // function to handle messaging during game play i.e. hit or miss target, and update hitVisible state.
     const handleHit = (hit) => {
         // increment keyCounter
         setKeyCounter((prevCounter) => prevCounter + 1);
@@ -471,7 +471,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     };
 
 
-    // handle click for each div in grid
+    // handle click for each div in computer grid
     const handleClick = (e) => {
         // store selected grid in variable
         let selectedGrid = e.target;
@@ -511,7 +511,7 @@ const PlayerGrid = ({ selectedRockets }) => {
             // Non Player HealthBar calculation
             let nonPlayerHealth = 100 / npcComparisonArray.length * updatedNonPlayerFleetLength;
 
-            // updating state with the updated value 
+            // updating state with the updated value for non-player
             setNonPlayerFleetHealth(nonPlayerHealth);
 
             // Game End modal conditional
@@ -528,8 +528,8 @@ const PlayerGrid = ({ selectedRockets }) => {
 
             // conditional to check if the computers guess is present in the playerComparisonArray
             if (playerComparisonArray.includes(computerGuess)) {
-                // Non Player score calculation //
 
+                // COMPUTER (NON-PLAYER)SCORE CALCULATION BELOW//
                 // when a hit is registered subtract 1 from length
                 let updatedPlayerFleetLength = playerFleetLength - 1;
 
@@ -539,16 +539,16 @@ const PlayerGrid = ({ selectedRockets }) => {
                 // variable to combine the total score with the turn score
                 let newNonPlayerTotalScore = nonPlayerScore + nonPlayerTurnScore;
 
-                // storing the newly updated total score in the state
+                // storing the newly updated total score in the state for computer(non-player)
                 setNonPlayerScore(newNonPlayerTotalScore);
 
-                // update the playerFleetLength state variable
+                // update the playerFleetLength state variable for the player
                 setPlayerFleetLength(updatedPlayerFleetLength);
 
                 // Non Player HealthBar calculation
                 let playerHealth = 100 / playerComparisonArray.length * updatedPlayerFleetLength;
 
-                // updating state with the updated value 
+                // updating state with the updated value for player 
                 setPlayerFleetHealth(playerHealth);
 
                 // Game End modal conditional
@@ -561,7 +561,7 @@ const PlayerGrid = ({ selectedRockets }) => {
         handleGameEnd();
     }
 
-    // this function will run when the game is concluded i.e. playergridref array or NPCgridref array is === 0. GameStatus stated will updated to true or false
+    // this function will run when the game is concluded. GameStatus state will be updated to true or false
     const handleGameEnd = (hitOrMiss) => {
 
         if (hitOrMiss === playerComparisonArray.length) {
@@ -584,17 +584,17 @@ const PlayerGrid = ({ selectedRockets }) => {
         return guessedCells.includes(id);
     }
 
-    // function to close the modal
-    const closeModal = (e) => {
-        setOpenModal(false);
-    };
+    // function to close the modal - work in progess!!!
+    // const closeModal = (e) => {
+    //     setOpenModal(false);
+    // };
 
+    // Returns both battlegrids and launch game & reset buttons below. Modal will appear when openModal state is updated based on outcome of game. JSX also renders the rocket imaged below.
     return (
         <>   {openModal ? (
             <Modal
                 open={openModal}
                 gameStatus={gameStatus}
-                onClick={closeModal}
                 handleReset={handleReset}
                 playerTotalScore={playerScore}
             />

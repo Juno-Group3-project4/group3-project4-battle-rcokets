@@ -1,9 +1,10 @@
+// SHIPDATAARRAY array of objects of the rockets
 import shipOneImg from '../assets/falcon1-shipOne.png';
 import shipTwoImg from '../assets/falcon9-shipTwo.png';
 import shipThreeImg from '../assets/falconHeavy-shipThree.png';
 import shipFourImg from '../assets/starShip-shipFour.png';
 
-// set rocket ship grid data
+// set rocket ship grid data, which is exported to playerGrid.js
 const shipDataArray = [
     {
         'stringName': 'Falcon 1',

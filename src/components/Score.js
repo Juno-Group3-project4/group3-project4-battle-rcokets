@@ -1,4 +1,4 @@
-// Score Component
+// SCORE COMPONENT
 import { Typewriter } from "react-simple-typewriter";
 
 const Score = ({ playerScore, nonPlayerScore, playerFleetHealth, nonPlayerFleetHealth }) => {
@@ -12,6 +12,7 @@ const Score = ({ playerScore, nonPlayerScore, playerFleetHealth, nonPlayerFleetH
         width: `${nonPlayerFleetHealth}%`,
     };
 
+    // JSX below displays player and computer scores data and fleet bar length
     return (
         <>
             <h2>

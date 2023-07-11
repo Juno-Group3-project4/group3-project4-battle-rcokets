@@ -1,5 +1,5 @@
 
-// Axis Labels for Grid Card
+// Axis Labels for Player and Computer Grid. This populates the axis for the battlegrids
 const axisLabels = [
     {
         xAxis: [

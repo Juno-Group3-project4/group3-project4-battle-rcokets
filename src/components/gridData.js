@@ -1,5 +1,5 @@
 
-// Grid Data for Cells in Each Column/Row
+// Grid Data for Cells in Each Column/Row for both player and computer grid.
 const gridCols = [
     { column: "A" }, { column: "B" },
     { column: "C" }, { column: "D" },
