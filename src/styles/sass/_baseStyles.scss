@@ -262,6 +262,7 @@ img {
 /* FONTS / COLOURS / BUTTONS*/
 body {
     background-color: #320363;
+    min-height: 100vh;
 }
 
 h1,
@@ -325,11 +326,12 @@ button {
 }
 
 footer {
-    background-color: #00DBE0;
+    background-color:#320363;
     padding: 2px;
     margin-top: 5px;
     .footer-text, .juno-link {
         text-align: center;
+        color:#FBEBFF;
     }
 }
 

@@ -16,7 +16,8 @@
         width: 50%;
 
         .score {
-            background-color: grey;
+            // background-color: grey;
+            background-color: #fbebfff4;
             padding-top: 10px;
             padding-bottom: 10px;
             border-radius: 10px;
@@ -54,6 +55,17 @@
     .score h3 {
         font-size: 0.7rem;
     }
+.scoreBoard {
+    .player,
+    .nonplayer {
+        border: 3px dotted #EDA65E;
+    }
+}
+.scoreBoard 
+.player p,
+.nonplayer p {
+    font-size: 0.9rem;
+}
 }
 
 @media (min-width: 430px) and (max-width: 505px) {
