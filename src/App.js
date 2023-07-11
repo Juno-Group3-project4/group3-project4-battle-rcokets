@@ -33,7 +33,7 @@ function App() {
       console.log( 'Yes it is form' );
       setSelectedRockets([]);
     }
-  }, [window.location.pathname])
+  })
 
 
   const navigate = useNavigate();

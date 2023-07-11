@@ -7,8 +7,8 @@ import ScoreBoard from "./ScoreBoard";
 
 const Modal = ({ open, gameStatus, handleClick, playerTotalScore }) => {
     if (open === false) return null;
-    // const audio3 = new Audio(battleSounds);
-    // audio3.play();
+    const audio3 = new Audio(battleSounds);
+    audio3.play();
     return (
         <div className="backGroundContainer">
             <div className="modalContainer">
