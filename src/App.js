@@ -15,7 +15,7 @@ function App() {
   // store users selected rockets in state.
   const [selectedRockets, setSelectedRockets] = useState([]);
   // stateful variable for form submission
-  // const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   // call api data on mount
   useEffect(() => {
@@ -52,7 +52,7 @@ function App() {
 
     } else {
       // update form submission state
-      // setFormSubmitted(!false);
+      setFormSubmitted(!false);
       navigate('/play');
     }
   }
@@ -62,10 +62,10 @@ function App() {
       <Header />
       <main>
         <div className="wrapper">
-          {/* {formSubmitted ? <PlayerGrid selectedRockets={selectedRockets} /> : null} */}
+          {formSubmitted ? <PlayerGrid selectedRockets={selectedRockets} /> : null}
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/play" element={<PlayerGrid selectedRockets={selectedRockets} />} />
+            {/* <Route path="/play" element={<PlayerGrid selectedRockets={selectedRockets} />} /> */}
             <Route
               path="/form"
               element={

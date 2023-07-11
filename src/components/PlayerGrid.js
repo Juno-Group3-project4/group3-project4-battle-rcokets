@@ -9,7 +9,7 @@ import playerTurn from "./playerTurn";
 import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
 import { generateRandomLocation, npcRocketData } from "./GenerateComputerGrid";
-import { useNavigate } from 'react-router-dom';
+
 
 
 // PLAYER GRID Component 
@@ -68,7 +68,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     // DEFINED GLOBAL VARIABLES:
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
-    const navigate = useNavigate();
 
     // useEffect for finding all grid cells & storing into an array
     useEffect(() => {
