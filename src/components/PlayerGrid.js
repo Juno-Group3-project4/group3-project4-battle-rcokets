@@ -12,7 +12,7 @@ import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
 import { useNavigate } from 'react-router-dom';
 
 // PLAYER GRID Component 
-const PlayerGrid = ({ selectedRockets }) => {
+const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
     // STATEFUL VARIABLES:
     // set rocket ship grid data
     const [shipData, setShipData] = useState([]);
@@ -55,6 +55,8 @@ const PlayerGrid = ({ selectedRockets }) => {
     const [playerFleetHealth, setPlayerFleetHealth] = useState(100);
     // player Fleet health bare state variable
     const [nonPlayerFleetHealth, setNonPlayerFleetHealth] = useState(100);
+    // Function to ensure 'Hit' or 'Miss' message is displayed on each Player click
+    const [keyCounter, setKeyCounter] = useState(0)
 
     // MUTABLE (useRef) VARIABLES:
     // store all the grids references
@@ -443,9 +445,6 @@ const PlayerGrid = ({ selectedRockets }) => {
         setNpcShipData(npcGridRockets);
     }
 
-    // Function to ensure 'Hit' or 'Miss' message is displayed on each Player click
-    const [keyCounter, setKeyCounter] = useState(0)
-
     // function to handle messaging during game
     const handleHit = (hit) => {
         // increment keyCounter
@@ -567,10 +566,12 @@ const PlayerGrid = ({ selectedRockets }) => {
         if (hitOrMiss === playerComparisonArray.length) {
             setGameStatus(!false); // if player wins
             setOpenModal(!false);
+            handleReset();
         } else if
             (hitOrMiss === npcComparisonArray.length) {
             setGameStatus(false); // if player losses
             setOpenModal(!false);
+            handleReset();
         }
     };
 

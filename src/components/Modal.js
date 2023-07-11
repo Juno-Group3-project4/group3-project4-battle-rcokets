@@ -26,24 +26,13 @@ const Modal = ({ open, gameStatus, handleClick, playerTotalScore }) => {
                 }
                 </h2>
                 <p>Your score is:{playerTotalScore}</p>
-
-                <div className="btnContainer">
-                    {/* add onClick to closeGameBtn, the "playAgainBtn" link will redirect to landingPage*/}
-
-                    <button onClick={handleClick} className="playAgainBtn">Play Again?</button>
-                    {/* <button onClick={handleClick} className="closeGameBtn">Close X</button> */}
-                </div>
-
-
             </div>
             <div className="leaderBoard">
                 <ScoreBoard playerTotalScore={playerTotalScore} />
             </div>
             <div className="btnContainer">
                 {/* add onClick to closeGameBtn, the "playAgainBtn" link will redirect to landingPage*/}
-                <Link to="/">
-                    <button className="playAgainBtn">Play Again?</button>
-                </Link>
+                <button className="playAgainBtn">Play Again?</button>
             </div>
         </div>
     )

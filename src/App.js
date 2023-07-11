@@ -46,13 +46,13 @@ function App() {
     event.preventDefault();
     // alerted if player does not choose 3 rockets
     if (selectedRockets.length !== 3) {
-
       alert("Please only select 3 rockets!!");
     } else {
       // update form submission state
       // setFormSubmitted(!false);
       navigate('/play');
     }
+    console.log("selectedRockets", selectedRockets);
   }
 
   return (
@@ -63,7 +63,7 @@ function App() {
           {/* {formSubmitted ? <PlayerGrid selectedRockets={selectedRockets} /> : null} */}
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/play" element={<PlayerGrid selectedRockets={selectedRockets} />} />
+            <Route path="/play" element={<PlayerGrid selectedRockets={selectedRockets} setSelectedRockets={setSelectedRockets} />} />
             <Route
               path="/form"
               element={
