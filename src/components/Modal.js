@@ -1,7 +1,7 @@
 // MODAL (Error handling) Component
 import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
-import battleSounds from "../sounds/battle-sounds.wav";
+// import battleSounds from "../sounds/battle-sounds.wav";
 import ScoreBoard from "./ScoreBoard";
 
 
@@ -10,8 +10,8 @@ const Modal = ({ open, gameStatus, closeModal, playerTotalScore } ) => {
     // const audio3 = new Audio(battleSounds);
     // audio3.play();
     return (
-        <div className="backGroundContainer">
-            <div className="modalContainer">
+        <div className="modalContainer">
+            
                 <h2> {gameStatus ?
                     <Typewriter
                         words={['CONGRATULATIONS, YOU WIN!!!']}
@@ -25,15 +25,12 @@ const Modal = ({ open, gameStatus, closeModal, playerTotalScore } ) => {
                     /> 
                 }
                 </h2>
-                <p>Your score is:{playerTotalScore}</p>
                 <div className="btnContainer">
                     {/* add onClick to closeGameBtn, the "playAgainBtn" link will redirect to landingPage*/}
                     <Link to="/" >
                         <button className="playAgainBtn">Play Again?</button>
                     </Link>
-                    <button onClick={closeModal} className="closeGameBtn">Close X</button>
                 </div>
-            </div>
             <div className="leaderBoard">
                 <ScoreBoard playerTotalScore={playerTotalScore} />
             </div>

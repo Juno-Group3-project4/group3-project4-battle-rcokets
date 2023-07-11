@@ -1,19 +1,17 @@
+// PLAYERGRID COMPONENT STYLES //
 .Falcon1, .Falcon9, .FalconHeavy, .Starship {
     margin: 0 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .Falcon9, .FalconHeavy {
     width: 30px;
 }
-
 .Falcon1, .Starship {
     width: 50px;
     height: 200px;
 }
-
 .shipContainer {
     display: flex;
     justify-content: space-around;
@@ -26,32 +24,27 @@
         letter-spacing: 1px;
     }
 }
-
 .rocket-image {
     height: 200px;
     width: 200px;
 }
-
 .reset-button, .launch, .back-button {
     margin: 0 auto;
     display: block;
     margin-bottom: 30px;
     margin-top: 50px;
 }
-
 .gridContainers {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height:auto;
-
     .playerGridContainer,
     .nonPlayerGridContainer {
         flex-grow: 1;
     }
 }
-
 .hit-message {
     height: 5vh;
     color: white;
@@ -60,7 +53,6 @@
     font-family: "Orbitron", sans-serif;
     height: 5vh;
 }
-
 .nextTurn {
     color: white;
     font-size: 1.3rem;
@@ -68,10 +60,7 @@
     letter-spacing: 2px;
 }
 
-
 // ***** MOBILE RESPONSIVE DESIGN - MEDIA QUERIES!!! ***** //
-
-
 @media (max-width: 651px) {
     .shipContainer {
         margin-bottom: 30px;
@@ -79,25 +68,21 @@
     .gridContainers {
         flex-direction: column;
     }
-
     .placement-instructions {
         font-size: 0.8rem;
         line-height: 1.4;
     }
-
     img {
         max-width: 55%;
     }
     .rocket-image {
         height: 100px;
     }
-    
     .Falcon1,
     .Falcon9,
     .FalconHeavy {
         width: 40px;
     }
-
     .spaces-title {
         font-size: 0.8rem;
     }
