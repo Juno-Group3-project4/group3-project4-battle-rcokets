@@ -28,6 +28,14 @@ function App() {
     })
   }, []);
 
+  useEffect(() => {
+    if (window.location.pathname === '/form') {
+      console.log( 'Yes it is form' );
+      setSelectedRockets([]);
+    }
+  }, [window.location.pathname])
+
+
   const navigate = useNavigate();
 
   // onchange event to listen for users selected choices and update selectedRockets state
@@ -44,10 +52,12 @@ function App() {
   // function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
+
     // alerted if player does not choose 3 rockets
     if (selectedRockets.length !== 3) {
 
       alert("Please only select 3 rockets!!");
+
     } else {
       // update form submission state
       // setFormSubmitted(!false);
@@ -80,7 +90,7 @@ function App() {
       <Footer />
     </div>
   );
-  
+
 }
 
 export default App;
