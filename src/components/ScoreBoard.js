@@ -58,9 +58,10 @@ const ScoreBoard = ({ playerTotalScore }) => {
   return (
     <>
       <div className="leaderBoardCont">
-        <h2>LeaderBoard</h2>
         {leaderBoardUpdated ?
           <form onSubmit={handleSubmit}>
+            <h2>LeaderBoard</h2>
+            <p className='totalScore'>Your score is: {playerTotalScore}</p>
             <p>Submit your score</p>
             <p>Enter your name</p>
             <label

@@ -5,14 +5,12 @@
     width: 90%;
     margin: 0 auto;
 }
-
 .rocket {
     display: block;
     height: 200px;
     width: 200px;
     border-radius: 10px;
 }
-
 form {
     display: flex;
     flex-direction: column;
@@ -85,11 +83,9 @@ form {
     }
     }
 }
-
 .description {
     text-align: left;
 }
-
 [type="checkbox"] {
     border: 2px solid #EDA65E;
     width: 30px;
