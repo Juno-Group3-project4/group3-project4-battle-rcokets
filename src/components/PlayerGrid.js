@@ -8,7 +8,7 @@ import gridData from "./gridData";
 import playerTurn from "./playerTurn";
 import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
-import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
+import { generateRandomLocation, npcRocketData } from "./GenerateComputerGrid";
 
 
 // PLAYER GRID Component 
