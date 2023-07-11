@@ -1,3 +1,4 @@
+// APP.JS COMPONENT !!!!! //
 import './App.scss';
 import Header from './components/Header';
 import LandingPage from './components/LandingPage';
@@ -50,7 +51,7 @@ function App() {
       setFormSubmitted(!false);
     }
   }
-
+  // JSX returning header, landing page, form, and playerGrid & footers components.
   return (
     <div className="App">
       <Header />

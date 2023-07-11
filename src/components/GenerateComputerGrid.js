@@ -1,4 +1,4 @@
-    // LOGIC TO PLACE COMPUTER ROCKETS ON GRID
+    // LOGIC TO PLACE ROCKETS ON COMPUTER GRID ONLY
 
     // variables
     const gridSize = 10;
@@ -32,8 +32,8 @@
     // number randomizer
     let generateRandomNumber = Math.floor(Math.random() * gridSize);
 
-    // function to generate random locations (x, y values & orientation)
-    // export function to PlayerGrid component
+    // function to generate random locations for the computer rockets (x, y values & orientation)
+    // export generateRandomLocation function to PlayerGrid component
     export const generateRandomLocation = () => {
         // variable to store orientations
         const orientations = ['vertical', 'horizontal'];
@@ -97,7 +97,7 @@
         return true;
     };
 
-    // function to "place" rockets on grid
+    // function to "place" rockets on computer grid
     const placeShip = (orientation, x, y, grid, rocketObj) => {
         if (orientation === 'vertical') {
             rocketObj.NPCGridRef.length = 0;

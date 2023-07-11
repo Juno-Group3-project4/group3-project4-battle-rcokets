@@ -1,14 +1,14 @@
     // MODAL COMPONENT STYLES //
-    .modalContainer {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        border-radius: 20px;
-            .btnContainer {
-                    align-self: center;
-                    margin-top: 20px;
-                }
+.modalContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    .btnContainer {
+        align-self: center;
+        margin-top: 20px;
     }
+}
 
 // **** MOBILE RESPONSIVE LAYOUT - MEDIA QUERIES !!! **** //
 @media (max-width: 500px) {
@@ -27,11 +27,13 @@
         margin: 60px 0px 10px;
     }
 }
+
 @media (min-width: 501px) {
     .modalContainer {
         margin-bottom: 50px;
     }
 }
+
 @media (max-width: 380px) {
     .leaderBoardCont {
         input {

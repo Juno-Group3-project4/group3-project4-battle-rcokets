@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import landing from '../assets/moon-landing-art.png';
 
-
-
 // LANDING PAGE Component
 const LandingPage = () => {
 
@@ -25,7 +23,6 @@ const LandingPage = () => {
                 <li className="instructions-list">If you win, congratulations! You have successfully protected the future of humanity!!</li>
                 <li className="instructions-list">If you lose, you can press "Play again" to attempt to defeat the AI.</li>
             </ol>
-            {/* <ScoreBoard /> */}
             <Link to="/form">
                 <button>PLAY GAME</button>
             </Link>

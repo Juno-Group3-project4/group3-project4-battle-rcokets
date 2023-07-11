@@ -16,7 +16,7 @@
   label,
   p {
     color: #fff;
-    font-family: ‘Maitree’, serif;
+    font-family: 'Maitree', serif;
     margin: 5px;
   }
   .totalScore {
@@ -35,7 +35,7 @@
     list-style: none;
     padding-left: 0;
     li {
-      font-family: ‘Maitree’, serif;
+      font-family: 'Maitree', serif;
       margin: 0;
       letter-spacing: 1px;
       .bold {
@@ -47,7 +47,6 @@
 }
 
 // **** MOBILE RESPONSIVE LAYOUT - MEDIA QUERIES !!!! **** //
-
 @media (max-width: 400px) {
   .leaderBoardCont {
     h3 {

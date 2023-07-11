@@ -1,4 +1,4 @@
-// Form Component
+// Form Component. This display all the rockets to chose from which is called from a third party API. Props are passed as below. User prompted to select 3 rockets and then click submit.
 const Form = ({ rockets, submitForm, handleChange }) => {
     
     return (
