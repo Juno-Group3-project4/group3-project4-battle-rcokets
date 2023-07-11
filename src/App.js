@@ -28,14 +28,6 @@ function App() {
     })
   }, []);
 
-  useEffect(() => {
-    if (window.location.pathname === '/form') {
-
-      setSelectedRockets([]);
-    }
-  })
-
-
   const navigate = useNavigate();
 
   // onchange event to listen for users selected choices and update selectedRockets state

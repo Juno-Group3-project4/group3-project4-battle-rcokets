@@ -70,12 +70,6 @@ const PlayerGrid = ({ selectedRockets }) => {
     const newPlayerGridRef = [];
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (window.location.pathname === '/play') {
-            handleReset()
-        }
-    })
-
     // useEffect for finding all grid cells & storing into an array
     useEffect(() => {
         const cells = document.querySelectorAll('.gridCell.div');
@@ -598,7 +592,7 @@ const PlayerGrid = ({ selectedRockets }) => {
     // function to close the modal
     const closeModal = () => {
         setOpenModal(false);
-        navigate('/form');
+        // navigate('/form');
     };
 
     return (
