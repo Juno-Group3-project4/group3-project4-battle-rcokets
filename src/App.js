@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     if (window.location.pathname === '/form') {
-      console.log( 'Yes it is form' );
+
       setSelectedRockets([]);
     }
   })
