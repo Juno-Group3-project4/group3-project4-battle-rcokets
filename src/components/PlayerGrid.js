@@ -8,8 +8,8 @@ import gridData from "./gridData";
 import playerTurn from "./playerTurn";
 import { npcTurn } from "./npcTurn";
 import { Typewriter } from "react-simple-typewriter";
-import { generateRandomLocation, npcRocketData } from "./generateComputerGrid";
-import { useNavigate } from 'react-router-dom';
+import { generateRandomLocation, npcRocketData } from "./GenerateComputerGrid";
+
 
 // PLAYER GRID Component 
 const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
@@ -69,7 +69,6 @@ const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
     // DEFINED GLOBAL VARIABLES:
     // store all player's grid references into one consolidated array
     const newPlayerGridRef = [];
-    const navigate = useNavigate();
 
     // useEffect for finding all grid cells & storing into an array
     useEffect(() => {
@@ -148,6 +147,7 @@ const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
 
     }, [npcShipData, shipData]);
 
+
     // METHOD TO REMOVE ROCKET FROM DISPLAY ONCE PLACED ON GRID
     const removeRocket = () => {
 
@@ -163,7 +163,7 @@ const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
     }
 
     // METHOD TO RESET GRID PLACEMENTS ONCE BUTTON IS CLICKED
-    const handleReset = () => {
+    function handleReset() {
         // When user clicks reset grid button, we map through shipData and reset all the data in the shipData array
         const initialShipData = shipData.map((ship) => ({
             ...ship,
@@ -185,6 +185,7 @@ const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
             attackedCells: []
         }));
         // For each rocket selection placed on grid wipe the grid ref arrays, reset orientation to vertical and put images back on webpage
+        
         ships.forEach((ship) => {
             ship.style.display = 'flex';
             if (ship.children[1].style.transform === 'rotate(-90deg)') {
@@ -469,7 +470,7 @@ const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
         setHitVisible(true);
     };
 
-    console.log('npcComparisonArray', npcComparisonArray);
+ 
     // handle click for each div in grid
     const handleClick = (e) => {
         // store selected grid in variable
@@ -588,8 +589,7 @@ const PlayerGrid = ({ selectedRockets, setSelectedRockets }) => {
     // function to close the modal
     const closeModal = () => {
         setOpenModal(false);
-        handleReset();
-        navigate('/form');
+        // navigate('/form');
     };
 
     return (
